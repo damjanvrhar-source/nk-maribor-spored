@@ -188,6 +188,35 @@
   footer .foot-crest{opacity:0.5;margin-bottom:8px;}
 
   /* ===== COUNTDOWN ===== */
+  /* ===== TOP ROW: odštevalnik (levo) + lestvica (desno) ===== */
+  .top-row{
+    display:flex;
+    gap:18px;
+    align-items:stretch;
+    margin-bottom:22px;
+  }
+  .top-row .countdown{
+    flex:0 0 320px;
+    margin-bottom:0;
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+  }
+  .top-row .table-wrap{
+    flex:1;
+    min-width:0;
+    margin-bottom:0;
+    display:flex;
+    flex-direction:column;
+  }
+  .top-row .table-wrap > div:last-child{
+    flex:1;
+  }
+  @media(max-width:800px){
+    .top-row{flex-direction:column;}
+    .top-row .countdown{flex:none;}
+  }
+
   .countdown{
     background:linear-gradient(150deg,var(--vijola-dark) 0%,var(--vijola) 100%);
     border:2px solid var(--zlata);
@@ -252,6 +281,78 @@
     margin-top:14px;
   }
 
+  /* ===== LESTVICA ===== */
+  .table-wrap{
+    background:var(--card);
+    border-radius:16px;
+    overflow:hidden;
+    box-shadow:0 8px 22px rgba(46,15,77,0.18);
+    margin-bottom:22px;
+    border:2px solid var(--zlata);
+  }
+  .table-header{
+    background:linear-gradient(90deg,var(--vijola),var(--vijola-2));
+    color:#fff;
+    padding:12px 16px;
+    font-size:13px;
+    font-weight:800;
+    text-transform:uppercase;
+    letter-spacing:1px;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+  }
+  .table-header .updated{
+    font-size:10.5px;
+    font-weight:400;
+    text-transform:none;
+    letter-spacing:0;
+    opacity:0.8;
+  }
+  table.lestvica{
+    width:100%;
+    border-collapse:collapse;
+    font-size:13px;
+  }
+  table.lestvica th{
+    text-align:center;
+    padding:8px 4px;
+    font-size:10.5px;
+    color:var(--muted);
+    text-transform:uppercase;
+    letter-spacing:0.5px;
+    border-bottom:2px solid #f0e9fb;
+  }
+  table.lestvica th.name-col, table.lestvica td.name-col{
+    text-align:left;
+    padding-left:14px;
+  }
+  table.lestvica td{
+    text-align:center;
+    padding:9px 4px;
+    border-bottom:1px solid #f5f0fc;
+  }
+  table.lestvica tr:last-child td{border-bottom:none;}
+  table.lestvica td.pos{font-weight:800;color:var(--vijola-dark);width:26px;}
+  table.lestvica td.points{font-weight:900;color:var(--vijola-2);}
+  table.lestvica tr.maribor-row{
+    background:linear-gradient(90deg,#f3e9ff,#fff);
+    font-weight:800;
+  }
+  table.lestvica tr.maribor-row td.name-col{color:var(--vijola-2);}
+  .lestvica-note{
+    font-size:11.5px;
+    color:var(--muted);
+    text-align:center;
+    padding:12px;
+  }
+  .lestvica-error{
+    font-size:12.5px;
+    color:var(--muted);
+    text-align:center;
+    padding:24px 16px;
+  }
+
   @media(max-width:640px){
     .match{flex-wrap:wrap;}
     .venue{width:100%;text-align:left;margin-top:4px;}
@@ -279,16 +380,25 @@
   <div class="stripe-bar"></div>
 </header>
 
-<div class="countdown" id="countdownBox">
-  <div class="label">Do naslednje tekme</div>
-  <div class="next-match" id="nextMatchLabel">Nalagam…</div>
-  <div class="timer">
-    <div class="unit"><div class="num" id="cd-days">--</div><div class="unit-label">dni</div></div>
-    <div class="unit"><div class="num" id="cd-hours">--</div><div class="unit-label">ur</div></div>
-    <div class="unit"><div class="num" id="cd-mins">--</div><div class="unit-label">minut</div></div>
-    <div class="unit"><div class="num" id="cd-secs">--</div><div class="unit-label">sekund</div></div>
+<div class="top-row">
+  <div class="countdown" id="countdownBox">
+    <div class="label">Do naslednje tekme</div>
+    <div class="next-match" id="nextMatchLabel">Nalagam…</div>
+    <div class="timer">
+      <div class="unit"><div class="num" id="cd-days">--</div><div class="unit-label">dni</div></div>
+      <div class="unit"><div class="num" id="cd-hours">--</div><div class="unit-label">ur</div></div>
+      <div class="unit"><div class="num" id="cd-mins">--</div><div class="unit-label">minut</div></div>
+      <div class="unit"><div class="num" id="cd-secs">--</div><div class="unit-label">sekund</div></div>
+    </div>
   </div>
 
+  <div class="table-wrap" id="lestvicaBox">
+    <div class="table-header">
+      Lestvica · Prva liga Telemach 26/27
+      <span class="updated" id="lestvicaUpdated"></span>
+    </div>
+    <div id="lestvicaContent" class="lestvica-note">Nalagam lestvico…</div>
+  </div>
 </div>
 
 <div id="fixtures"></div>
@@ -462,6 +572,99 @@ window.addEventListener('load', () => {
     if(rowEl) rowEl.scrollIntoView({block:"center", behavior:"instant"});
   }
 });
+
+/* ===== LESTVICA ===== */
+const KLUBI_26_27 = [
+  "Aluminij", "Bravo", "Brinje-Grosuplje", "Celje", "Kalcer Radomlje",
+  "Koper", "Maribor", "Mura", "Nafta 1903", "Olimpija"
+].sort((a,b) => a.localeCompare(b, 'sl'));
+
+function prazenSeznamKlubov(){
+  return KLUBI_26_27.map((name, i) => ({
+    position: i + 1,
+    name,
+    played: 0, wins: 0, draws: 0, losses: 0,
+    goalsFor: 0, goalsAgainst: 0, diff: 0, points: 0,
+    isMaribor: name === "Maribor",
+  }));
+}
+
+async function nalozLestvico(){
+  const contentEl = document.getElementById('lestvicaContent');
+  const updatedEl = document.getElementById('lestvicaUpdated');
+  let teams = [];
+  let sezonaSeZacela = true;
+
+  try{
+    const res = await fetch('/api/lestvica');
+    const data = await res.json();
+
+    if(data.error || !data.teams || data.teams.length === 0){
+      teams = prazenSeznamKlubov();
+      sezonaSeZacela = false;
+    } else {
+      const allZero = data.teams.every(t => t.played === 0);
+      if(allZero){
+        // razvrstimo po abecedi, dokler sezona ne steče
+        teams = [...data.teams].sort((a,b) => a.name.localeCompare(b.name, 'sl'))
+                                .map((t,i) => ({...t, position: i+1}));
+        sezonaSeZacela = false;
+      } else {
+        teams = data.teams;
+      }
+    }
+  }catch(err){
+    teams = prazenSeznamKlubov();
+    sezonaSeZacela = false;
+  }
+
+  let rows = teams.map(t => `
+    <tr class="${t.isMaribor ? 'maribor-row' : ''}">
+      <td class="pos">${t.position}.</td>
+      <td class="name-col">${t.name}</td>
+      <td>${t.played}</td>
+      <td>${t.wins}</td>
+      <td>${t.draws}</td>
+      <td>${t.losses}</td>
+      <td>${t.goalsFor}:${t.goalsAgainst}</td>
+      <td>${t.diff > 0 ? '+' : ''}${t.diff}</td>
+      <td class="points">${t.points}</td>
+    </tr>
+  `).join('');
+
+  contentEl.outerHTML = `
+    <div style="overflow-x:auto;">
+      ${!sezonaSeZacela ? '<div class="lestvica-note" style="padding:8px 14px;text-align:left;">Sezona se še ni začela — klubi so razvrščeni po abecedi.</div>' : ''}
+      <table class="lestvica" id="lestvicaContent">
+        <thead>
+          <tr>
+            <th></th>
+            <th class="name-col">Klub</th>
+            <th title="Odigrane">T</th>
+            <th title="Zmage">Z</th>
+          <th title="Neodločeno">N</th>
+          <th title="Porazi">P</th>
+          <th title="Goli">D:P</th>
+          <th title="Gol razlika">+/-</th>
+          <th title="Točke">T</th>
+        </tr>
+      </thead>
+      <tbody>${rows}</tbody>
+    </table>
+  </div>`;
+
+  if(updatedEl){
+    if(sezonaSeZacela){
+      updatedEl.textContent = `posodobljeno ${new Date().toLocaleTimeString('sl-SI',{hour:'2-digit',minute:'2-digit'})}`;
+    } else {
+      updatedEl.textContent = "";
+    }
+  }
+}
+
+nalozLestvico();
+setInterval(nalozLestvico, 10 * 60 * 1000); // osveži vsakih 10 minut
 </script>
 </body>
 </html>
+
