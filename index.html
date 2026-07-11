@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="sl">
 <head>
@@ -28,8 +29,38 @@
       var(--bg);
     color:var(--text);
     padding:20px;
+    position:relative;
+    overflow-x:hidden;
   }
-  .wrap{max-width:920px;margin:0 auto;}
+  body::before, body::after{
+    content:"";
+    position:fixed;
+    width:520px;height:520px;
+    border-radius:50%;
+    filter:blur(70px);
+    opacity:0.16;
+    z-index:-1;
+    pointer-events:none;
+  }
+  body::before{
+    top:-180px; left:-160px;
+    background:radial-gradient(circle, var(--vijola-2), transparent 70%);
+    animation:blobFloat1 16s ease-in-out infinite;
+  }
+  body::after{
+    bottom:-200px; right:-160px;
+    background:radial-gradient(circle, var(--zlata), transparent 70%);
+    animation:blobFloat2 20s ease-in-out infinite;
+  }
+  @keyframes blobFloat1{
+    0%,100%{ transform:translate(0,0) scale(1); }
+    50%{ transform:translate(40px,60px) scale(1.15); }
+  }
+  @keyframes blobFloat2{
+    0%,100%{ transform:translate(0,0) scale(1); }
+    50%{ transform:translate(-50px,-40px) scale(1.2); }
+  }
+  .wrap{max-width:920px;margin:0 auto;position:relative;z-index:1;}
 
   header{
     position:relative;
@@ -66,11 +97,23 @@
   .crest{
     flex-shrink:0;
     filter:drop-shadow(0 4px 10px rgba(0,0,0,0.35));
-    animation:crestGlow 3.5s ease-in-out infinite;
+    animation:crestEnter .7s cubic-bezier(.34,1.56,.64,1) both,
+              crestGlow 3.5s ease-in-out .7s infinite,
+              crestSway 6s ease-in-out .7s infinite;
+    transform-origin:50% 90%;
+  }
+  @keyframes crestEnter{
+    0%{ opacity:0; transform:scale(0.4) rotate(-25deg); }
+    100%{ opacity:1; transform:scale(1) rotate(0deg); }
   }
   @keyframes crestGlow{
     0%,100%{ filter:drop-shadow(0 4px 10px rgba(0,0,0,0.35)) drop-shadow(0 0 0 rgba(245,197,24,0)); }
     50%{ filter:drop-shadow(0 4px 14px rgba(0,0,0,0.4)) drop-shadow(0 0 18px rgba(245,197,24,0.55)); }
+  }
+  @keyframes crestSway{
+    0%,100%{ transform:rotate(0deg); }
+    25%{ transform:rotate(-3deg); }
+    75%{ transform:rotate(3deg); }
   }
   .header-text{flex:1;min-width:220px;}
   header h1{
@@ -85,6 +128,12 @@
     height:8px;
     width:100%;
     background:repeating-linear-gradient(90deg,var(--zlata) 0 26px,var(--vijola-darker) 26px 52px);
+    background-size:104px 8px;
+    animation:stripeMove 3s linear infinite;
+  }
+  @keyframes stripeMove{
+    0%{ background-position:0 0; }
+    100%{ background-position:104px 0; }
   }
 
   .legend{
@@ -123,17 +172,24 @@
     border-top:1px solid #eee2ff;
     transition:transform .18s ease, box-shadow .18s ease;
     opacity:0;
-    transform:translateY(14px);
+    transform:translateY(18px) scale(0.97);
   }
   .match.visible{
-    animation:matchFadeIn .5s ease forwards;
+    animation:matchFadeIn .55s cubic-bezier(.21,.86,.4,1) forwards;
   }
   @keyframes matchFadeIn{
-    to{ opacity:1; transform:translateY(0); }
+    to{ opacity:1; transform:translateY(0) scale(1); }
   }
   .match:hover{
     transform:translateY(-2px);
     box-shadow:0 6px 16px rgba(46,15,77,0.16);
+  }
+  .match.next-up{
+    animation:nextUpPulse 2.2s ease-in-out infinite;
+  }
+  @keyframes nextUpPulse{
+    0%,100%{ box-shadow:0 2px 6px rgba(46,15,77,0.08), 0 0 0 rgba(245,197,24,0.5); }
+    50%{ box-shadow:0 4px 14px rgba(46,15,77,0.14), 0 0 14px rgba(245,197,24,0.6); }
   }
   .match.away{border-left-color:#d8c8ee;}
   .match.derby{
@@ -201,7 +257,11 @@
   }
   .badge.h{background:var(--zlata);color:#4a3800;}
   .badge.a{background:#ede4fa;color:var(--vijola);}
-  .badge.derby{background:var(--derby);color:#fff;}
+  .badge.derby{background:var(--derby);color:#fff;animation:derbyPulse 1.6s ease-in-out infinite;}
+  @keyframes derbyPulse{
+    0%,100%{ box-shadow:0 0 0 rgba(232,51,46,0.5); }
+    50%{ box-shadow:0 0 10px rgba(232,51,46,0.75); }
+  }
 
   footer{
     margin-top:34px;
@@ -252,6 +312,12 @@
     color:#fff;
     text-align:center;
     box-shadow:0 10px 26px rgba(46,15,77,0.3);
+    position:relative;
+    animation:countdownGlow 3s ease-in-out infinite;
+  }
+  @keyframes countdownGlow{
+    0%,100%{ box-shadow:0 10px 26px rgba(46,15,77,0.3), 0 0 0 rgba(245,197,24,0); }
+    50%{ box-shadow:0 10px 30px rgba(46,15,77,0.35), 0 0 24px rgba(245,197,24,0.35); }
   }
   .countdown .label{
     font-size:11px;
@@ -366,6 +432,24 @@
     border-bottom:1px solid #f5f0fc;
   }
   table.lestvica tr:last-child td{border-bottom:none;}
+  table.lestvica tbody tr{
+    opacity:0;
+    animation:rowFadeIn .4s ease forwards;
+  }
+  @keyframes rowFadeIn{
+    from{ opacity:0; transform:translateX(-6px); }
+    to{ opacity:1; transform:translateX(0); }
+  }
+  table.lestvica tbody tr:nth-child(1){animation-delay:.02s;}
+  table.lestvica tbody tr:nth-child(2){animation-delay:.06s;}
+  table.lestvica tbody tr:nth-child(3){animation-delay:.10s;}
+  table.lestvica tbody tr:nth-child(4){animation-delay:.14s;}
+  table.lestvica tbody tr:nth-child(5){animation-delay:.18s;}
+  table.lestvica tbody tr:nth-child(6){animation-delay:.22s;}
+  table.lestvica tbody tr:nth-child(7){animation-delay:.26s;}
+  table.lestvica tbody tr:nth-child(8){animation-delay:.30s;}
+  table.lestvica tbody tr:nth-child(9){animation-delay:.34s;}
+  table.lestvica tbody tr:nth-child(10){animation-delay:.38s;}
   table.lestvica td.pos{font-weight:800;color:var(--vijola-dark);width:26px;}
   table.lestvica td.points{font-weight:900;color:var(--vijola-2);}
   table.lestvica tr.maribor-row{
@@ -607,10 +691,10 @@ function updateCountdown(){
 // da preprečimo morebitno "scroll anchoring" obnašanje brskalnika med skrolanjem.
 function highlightNextMatch(){
   const next = getNextFixture();
-  document.querySelectorAll('.match').forEach(el => el.style.outline = "");
+  document.querySelectorAll('.match').forEach(el => el.classList.remove('next-up'));
   if(next){
     const rowEl = document.getElementById(`match-${next.krog}`);
-    if(rowEl){ rowEl.style.outline = "2px solid #f5c518"; }
+    if(rowEl){ rowEl.classList.add('next-up'); }
   }
 }
 highlightNextMatch();
