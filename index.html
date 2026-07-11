@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="sl">
 <head>
@@ -411,6 +412,11 @@
 </div>
 
 <script>
+// Uradno potrjene ure tekem (sproti dopolnjujemo, ko jih prvaliga.si objavi)
+const POTRJENE_URE = {
+  1: "18:00",
+};
+
 const fixtures = [
  [1,"2026-07-19","Aluminij","Maribor","Športni park Kidričevo",false],
  [2,"2026-07-25","Maribor","Brinje-Grosuplje","Ljudski vrt Maribor",true],
@@ -478,6 +484,7 @@ fixtures.forEach(f => {
   }
 
   const {dan, label} = formatDate(datum);
+  const ura = POTRJENE_URE[krog];
 
   const row = document.createElement('div');
   row.className = 'match ' + (homeMatch ? 'home' : 'away') + (isDerby ? ' derby' : '');
@@ -487,7 +494,7 @@ fixtures.forEach(f => {
 
   row.innerHTML = `
     <div class="krog">${krog}. krog</div>
-    <div class="datum">${label}<span class="dan">${dan}</span></div>
+    <div class="datum">${label}<span class="dan">${dan}${ura ? ' · ' + ura : ''}</span></div>
     <div class="tekma">${domHtml} — ${gostHtml}
       ${isDerby ? '<span class="badge derby">VEČNI DERBI</span>' : (homeMatch ? '<span class="badge h">DOMA</span>' : '<span class="badge a">V GOSTEH</span>')}
     </div>
@@ -505,7 +512,8 @@ function getNextFixture(){
   const now = new Date();
   for(const f of fixtures){
     const [krog, datum, dom, gost] = f;
-    const kickoff = new Date(`${datum}T${ASSUMED_KICKOFF}`);
+    const uraTekme = POTRJENE_URE[krog] ? POTRJENE_URE[krog] + ":00" : ASSUMED_KICKOFF;
+    const kickoff = new Date(`${datum}T${uraTekme}`);
     if(kickoff.getTime() > now.getTime()){
       return {krog, datum, dom, gost, kickoff, prizorisce: f[4], derby: f[5] === "derby"};
     }
