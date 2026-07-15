@@ -154,9 +154,23 @@
     margin:30px 0 12px;
     padding:8px 16px;
     background:linear-gradient(90deg,var(--vijola),var(--vijola-2));
+    background-size:200% 100%;
     border-left:5px solid var(--zlata);
     border-radius:8px;
     display:inline-block;
+    opacity:0;
+    transform:translateX(-24px);
+  }
+  .polsezon.visible{
+    animation:polsezonEnter .6s cubic-bezier(.21,.86,.4,1) forwards,
+              polsezonSheen 2.5s ease .6s 1;
+  }
+  @keyframes polsezonEnter{
+    to{ opacity:1; transform:translateX(0); }
+  }
+  @keyframes polsezonSheen{
+    0%{ background-position:100% 0; }
+    100%{ background-position:0 0; }
   }
 
   .match{
@@ -255,7 +269,27 @@
     vertical-align:middle;
     letter-spacing:0.3px;
   }
-  .badge.h{background:var(--zlata);color:#4a3800;}
+  .badge.h{background:var(--zlata);color:#4a3800;position:relative;}
+  .badge.h::after{
+    content:"";
+    position:absolute; inset:-8px -12px;
+    background-image:
+      radial-gradient(circle, var(--zlata) 2px, transparent 2.5px),
+      radial-gradient(circle, var(--vijola-2) 2px, transparent 2.5px),
+      radial-gradient(circle, var(--derby) 1.6px, transparent 2px),
+      radial-gradient(circle, var(--vijola) 1.6px, transparent 2px);
+    background-position:0 20%, 100% 10%, 25% 100%, 75% 90%;
+    background-repeat:no-repeat;
+    opacity:0;
+    pointer-events:none;
+  }
+  .match.home:hover .badge.h::after{
+    animation:confettiBurst .65s ease-out;
+  }
+  @keyframes confettiBurst{
+    0%{ opacity:1; transform:scale(0.3) translateY(0) rotate(0deg); }
+    100%{ opacity:0; transform:scale(1.4) translateY(-16px) rotate(35deg); }
+  }
   .badge.a{background:#ede4fa;color:var(--vijola);}
   .badge.derby{background:var(--derby);color:#fff;animation:derbyPulse 1.6s ease-in-out infinite;}
   @keyframes derbyPulse{
@@ -340,6 +374,12 @@
     display:block;
     margin-top:2px;
   }
+  .countdown .kickoff-time{
+    opacity:1;
+    font-weight:700;
+  }
+  .countdown .kickoff-time.confirmed{ color:var(--zlata); }
+  .countdown .kickoff-time.tentative{ color:#e7d7fa; font-weight:400; font-style:italic; }
   .timer{
     display:flex;
     justify-content:center;
@@ -630,7 +670,7 @@ const fadeObserver = new IntersectionObserver((entries) => {
   });
 }, { threshold: 0.1, rootMargin: "0px 0px -40px 0px" });
 
-document.querySelectorAll('.match').forEach(el => fadeObserver.observe(el));
+document.querySelectorAll('.match, .polsezon').forEach(el => fadeObserver.observe(el));
 
 /* ===== ODŠTEVALNIK DO NASLEDNJE TEKME ===== */
 /* Ker uradne ure tekem še niso objavljene, uporabljamo oceno 18:00 (lokalni čas, Europe/Ljubljana). */
@@ -643,7 +683,11 @@ function getNextFixture(){
     const uraTekme = POTRJENE_URE[krog] ? POTRJENE_URE[krog] + ":00" : ASSUMED_KICKOFF;
     const kickoff = new Date(`${datum}T${uraTekme}`);
     if(kickoff.getTime() > now.getTime()){
-      return {krog, datum, dom, gost, kickoff, prizorisce: f[4], derby: f[5] === "derby"};
+      return {
+        krog, datum, dom, gost, kickoff, prizorisce: f[4], derby: f[5] === "derby",
+        ura: POTRJENE_URE[krog] || null,
+        uraPotrjena: !!POTRJENE_URE[krog]
+      };
     }
   }
   return null;
@@ -667,8 +711,12 @@ function updateCountdown(){
 
   const domHtml = next.dom === "Maribor" ? '<span class="maribor">Maribor</span>' : next.dom;
   const gostHtml = next.gost === "Maribor" ? '<span class="maribor">Maribor</span>' : next.gost;
+  const uraPrikaz = next.ura || ASSUMED_KICKOFF.slice(0,5);
+  const uraHtml = next.uraPotrjena
+    ? `<span class="kickoff-time confirmed">🕒 ${uraPrikaz}</span>`
+    : `<span class="kickoff-time tentative">🕒 predvidoma ${uraPrikaz}</span>`;
   labelEl.innerHTML = `${next.krog}. krog: ${domHtml} — ${gostHtml}${next.derby ? ' ⚡' : ''}
-    <span class="venue-mini">${next.prizorisce}</span>`;
+    <span class="venue-mini">${next.prizorisce} · ${uraHtml}</span>`;
 
   const diff = next.kickoff.getTime() - Date.now();
   const totalSec = Math.max(0, Math.floor(diff / 1000));
