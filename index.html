@@ -16,8 +16,9 @@
     --text:#241536;
     --muted:#7d6d95;
     --derby:#e8332e;
-    --liga-prvakov:#2e9e5b;
+    --liga-prvakov:#7b2fb5;
     --konferencna:#2f7cd6;
+    --kvalifikacije:#2e9e5b;
   }
   *{box-sizing:border-box;}
   body{
@@ -600,14 +601,24 @@
     0%,100%{ box-shadow:0 0 0 rgba(245,197,24,0.5); }
     50%{ box-shadow:0 0 10px rgba(245,197,24,0.85); }
   }
-  tr.zone-cl{ box-shadow:inset 4px 0 0 var(--liga-prvakov); }
-  tr.zone-conf{ box-shadow:inset 4px 0 0 var(--konferencna); }
-  tr.zone-warn{ box-shadow:inset 4px 0 0 #e0a020; }
-  tr.zone-out{ box-shadow:inset 4px 0 0 var(--derby); }
+  table.lestvica tbody tr.zone-cl{
+    background:repeating-linear-gradient(135deg,
+      rgba(123,47,181,0.12) 0 9px,
+      rgba(91,31,140,0.06) 9px 18px);
+  }
+  table.lestvica tbody tr.zone-conf{ background:rgba(47,124,214,0.08); }
+  table.lestvica tbody tr.zone-warn{ background:rgba(46,158,91,0.09); }
+  table.lestvica tbody tr.zone-out{ background:rgba(232,51,46,0.08); }
+  tr.zone-cl td:first-child{ box-shadow:inset 5px 0 0 var(--liga-prvakov); }
+  tr.zone-conf td:first-child{ box-shadow:inset 5px 0 0 var(--konferencna); }
+  tr.zone-warn td:first-child{ box-shadow:inset 5px 0 0 var(--kvalifikacije); }
+  tr.zone-out td:first-child{ box-shadow:inset 5px 0 0 var(--derby); }
   tr.zone-out td.name-col{ color:#b23026; }
 
   tr.zone-label td{
-    padding:6px 14px 4px !important;
+    height:24px;
+    padding:0 14px !important;
+    line-height:24px;
     font-size:10px;
     text-transform:uppercase;
     letter-spacing:0.6px;
@@ -622,8 +633,16 @@
   }
   tr.zone-label-cl td{ color:var(--liga-prvakov); }
   tr.zone-label-conf td{ color:var(--konferencna); }
-  tr.zone-label-warn td{ color:#c07f00; }
+  tr.zone-label-warn td{ color:var(--kvalifikacije); }
   tr.zone-label-out td{ color:var(--derby); }
+  table.lestvica tbody tr.zone-gap{ background:transparent; }
+  tr.zone-gap td{
+    height:24px;
+    padding:0 14px !important;
+    line-height:24px;
+    font-size:10px;
+    border-bottom:none !important;
+  }
 
   table.lestvica td.points{ padding:6px 4px; }
   .points-pill{
@@ -1071,15 +1090,18 @@ function nalozLestvico(){
   const { teams, sezonaSeZacela } = izracunajLestvico();
 
   const steviloKlubov = teams.length;
-  let zadnjaCona = null;
+  let zadnjaCona = undefined;
   let rows = teams.map(t => {
-    const cona = sezonaSeZacela ? conaZaPozicijo(t.position, steviloKlubov) : null;
+    const cona = conaZaPozicijo(t.position, steviloKlubov);
+    const conaKljuc = cona ? cona.key : 'none';
     let labelRow = '';
-    if(cona && cona.key !== zadnjaCona){
-      labelRow = `<tr class="zone-label zone-label-${cona.key}"><td colspan="9">${cona.label}</td></tr>`;
-      zadnjaCona = cona.key;
+    if(conaKljuc !== zadnjaCona){
+      labelRow = cona
+        ? `<tr class="zone-label zone-label-${cona.key}"><td colspan="9">${cona.label}</td></tr>`
+        : `<tr class="zone-gap"><td colspan="9"></td></tr>`;
+      zadnjaCona = conaKljuc;
     }
-    const posClass = sezonaSeZacela && t.position <= 3 ? `pos-${t.position}` : '';
+    const posClass = t.position <= 3 ? `pos-${t.position}` : '';
     const zoneClass = cona ? `zone-${cona.key}` : '';
     const cls = [t.isMaribor ? 'maribor-row' : '', posClass, zoneClass].filter(Boolean).join(' ');
     return `${labelRow}
@@ -1116,12 +1138,12 @@ function nalozLestvico(){
       </thead>
       <tbody>${rows}</tbody>
     </table>
-    ${sezonaSeZacela ? `<div class="lestvica-legend">
+    <div class="lestvica-legend">
         <span><span class="legend-dot" style="background:var(--liga-prvakov);"></span> Liga prvakov</span>
         <span><span class="legend-dot" style="background:var(--konferencna);"></span> Konferenčna liga</span>
-        <span><span class="legend-dot" style="background:#e0a020;"></span> Kvalifikacije za obstanek</span>
+        <span><span class="legend-dot" style="background:var(--kvalifikacije);"></span> Kvalifikacije za obstanek</span>
         <span><span class="legend-dot" style="background:var(--derby);"></span> Izpad</span>
-      </div>` : ''}
+      </div>
   </div>`;
 
   if(updatedEl){
