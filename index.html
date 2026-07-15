@@ -140,15 +140,29 @@
   }
   header p.sub{margin:0;opacity:0.9;font-size:13.5px;}
   .stripe-bar{
-    height:8px;
+    height:10px;
     width:100%;
-    background:repeating-linear-gradient(90deg,var(--zlata) 0 26px,var(--vijola-darker) 26px 52px);
-    background-size:104px 8px;
-    animation:stripeMove 3s linear infinite;
+    position:relative;
+    overflow:hidden;
+    background:repeating-linear-gradient(90deg,var(--zlata) 0 24px,var(--vijola-2) 24px 48px);
+    background-size:96px 10px;
+    animation:stripeMove 2.5s linear infinite;
   }
   @keyframes stripeMove{
     0%{ background-position:0 0; }
-    100%{ background-position:104px 0; }
+    100%{ background-position:96px 0; }
+  }
+  .stripe-bar::after{
+    content:"";
+    position:absolute; inset:0;
+    width:40%;
+    background:linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.65) 50%, transparent 100%);
+    animation:stripeShine 2.4s ease-in-out infinite;
+    pointer-events:none;
+  }
+  @keyframes stripeShine{
+    0%{ transform:translateX(-140%); }
+    100%{ transform:translateX(360%); }
   }
 
   .legend{
