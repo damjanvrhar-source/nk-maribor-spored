@@ -908,6 +908,24 @@ const KLUBI_26_27 = [
   "Koper", "Maribor", "Mura", "Nafta 1903", "Olimpija"
 ].sort((a,b) => a.localeCompare(b, 'sl'));
 
+/* ROČNO POSODABLJANA LESTVICA
+   Po vsakem odigranem krogu se tu posodobijo številke za posamezen klub.
+   played = odigrane, wins = zmage, draws = neodločeno, losses = porazi,
+   goalsFor = doseženi goli, goalsAgainst = prejeti goli.
+   Zadnja posodobitev: pred 1. krogom (vsi na 0). */
+const LESTVICA_PODATKI = {
+  "Aluminij":          {played:0, wins:0, draws:0, losses:0, goalsFor:0, goalsAgainst:0},
+  "Bravo":             {played:0, wins:0, draws:0, losses:0, goalsFor:0, goalsAgainst:0},
+  "Brinje-Grosuplje":  {played:0, wins:0, draws:0, losses:0, goalsFor:0, goalsAgainst:0},
+  "Celje":             {played:0, wins:0, draws:0, losses:0, goalsFor:0, goalsAgainst:0},
+  "Kalcer Radomlje":   {played:0, wins:0, draws:0, losses:0, goalsFor:0, goalsAgainst:0},
+  "Koper":             {played:0, wins:0, draws:0, losses:0, goalsFor:0, goalsAgainst:0},
+  "Maribor":           {played:0, wins:0, draws:0, losses:0, goalsFor:0, goalsAgainst:0},
+  "Mura":              {played:0, wins:0, draws:0, losses:0, goalsFor:0, goalsAgainst:0},
+  "Nafta 1903":        {played:0, wins:0, draws:0, losses:0, goalsFor:0, goalsAgainst:0},
+  "Olimpija":          {played:0, wins:0, draws:0, losses:0, goalsFor:0, goalsAgainst:0},
+};
+
 function prazenSeznamKlubov(){
   return KLUBI_26_27.map((name, i) => ({
     position: i + 1,
@@ -918,34 +936,39 @@ function prazenSeznamKlubov(){
   }));
 }
 
-async function nalozLestvico(){
+function izracunajLestvico(){
+  const sezonaSeZacela = Object.values(LESTVICA_PODATKI).some(t => t.played > 0);
+
+  let teams = Object.entries(LESTVICA_PODATKI).map(([name, s]) => ({
+    name,
+    played: s.played,
+    wins: s.wins,
+    draws: s.draws,
+    losses: s.losses,
+    goalsFor: s.goalsFor,
+    goalsAgainst: s.goalsAgainst,
+    diff: s.goalsFor - s.goalsAgainst,
+    points: s.wins * 3 + s.draws,
+    isMaribor: name === "Maribor",
+  }));
+
+  if(sezonaSeZacela){
+    // razvrstitev: točke, nato gol razlika, nato doseženi goli
+    teams.sort((a,b) => b.points - a.points || b.diff - a.diff || b.goalsFor - a.goalsFor || a.name.localeCompare(b.name, 'sl'));
+  } else {
+    // dokler sezona ne steče, razvrstimo po abecedi
+    teams.sort((a,b) => a.name.localeCompare(b.name, 'sl'));
+  }
+  teams = teams.map((t, i) => ({...t, position: i + 1}));
+
+  return { teams, sezonaSeZacela };
+}
+
+function nalozLestvico(){
   const contentEl = document.getElementById('lestvicaContent');
   const updatedEl = document.getElementById('lestvicaUpdated');
-  let teams = [];
-  let sezonaSeZacela = true;
 
-  try{
-    const res = await fetch('/api/lestvica');
-    const data = await res.json();
-
-    if(data.error || !data.teams || data.teams.length === 0){
-      teams = prazenSeznamKlubov();
-      sezonaSeZacela = false;
-    } else {
-      const allZero = data.teams.every(t => t.played === 0);
-      if(allZero){
-        // razvrstimo po abecedi, dokler sezona ne steče
-        teams = [...data.teams].sort((a,b) => a.name.localeCompare(b.name, 'sl'))
-                                .map((t,i) => ({...t, position: i+1}));
-        sezonaSeZacela = false;
-      } else {
-        teams = data.teams;
-      }
-    }
-  }catch(err){
-    teams = prazenSeznamKlubov();
-    sezonaSeZacela = false;
-  }
+  const { teams, sezonaSeZacela } = izracunajLestvico();
 
   let rows = teams.map(t => `
     <tr class="${t.isMaribor ? 'maribor-row' : ''}">
@@ -983,16 +1006,11 @@ async function nalozLestvico(){
   </div>`;
 
   if(updatedEl){
-    if(sezonaSeZacela){
-      updatedEl.textContent = `posodobljeno ${new Date().toLocaleTimeString('sl-SI',{hour:'2-digit',minute:'2-digit'})}`;
-    } else {
-      updatedEl.textContent = "";
-    }
+    updatedEl.textContent = sezonaSeZacela ? "ročno posodobljeno" : "";
   }
 }
 
 nalozLestvico();
-setInterval(nalozLestvico, 10 * 60 * 1000); // osveži vsakih 10 minut
 
 /* ===== GLASBENA PODLAGA ===== */
 const bgMusic = document.getElementById('bgMusic');
