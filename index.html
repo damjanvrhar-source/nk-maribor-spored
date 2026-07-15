@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="sl">
 <head>
@@ -582,6 +583,55 @@
     .datum{width:120px;}
     .header-inner{padding:20px 18px 18px;}
   }
+
+  /* ===== GLASBENI GUMB ===== */
+  #musicToggle{
+    position:fixed;
+    right:22px; bottom:22px;
+    z-index:50;
+    width:58px; height:58px;
+    border-radius:50%;
+    border:2px solid var(--zlata);
+    background:linear-gradient(150deg,var(--vijola-2),var(--vijola-dark));
+    color:#fff;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    cursor:pointer;
+    box-shadow:0 8px 22px rgba(46,15,77,0.4);
+    animation:musicBtnFloat 3s ease-in-out infinite;
+    transition:transform .2s ease, box-shadow .2s ease;
+  }
+  #musicToggle:hover{
+    transform:scale(1.08);
+    box-shadow:0 10px 26px rgba(46,15,77,0.5), 0 0 16px rgba(245,197,24,0.5);
+  }
+  @keyframes musicBtnFloat{
+    0%,100%{ transform:translateY(0); }
+    50%{ transform:translateY(-5px); }
+  }
+  #musicToggle .music-icon{font-size:24px;}
+  #musicToggle .eq{
+    display:none;
+    align-items:flex-end;
+    gap:3px;
+    height:20px;
+  }
+  #musicToggle.playing .music-icon{display:none;}
+  #musicToggle.playing .eq{display:flex;}
+  #musicToggle .eq .bar{
+    width:4px;
+    background:var(--zlata);
+    border-radius:2px;
+    animation:eqBounce 0.9s ease-in-out infinite;
+  }
+  #musicToggle .eq .bar:nth-child(1){height:8px; animation-delay:0s;}
+  #musicToggle .eq .bar:nth-child(2){height:18px; animation-delay:.2s;}
+  #musicToggle .eq .bar:nth-child(3){height:12px; animation-delay:.4s;}
+  @keyframes eqBounce{
+    0%,100%{ transform:scaleY(0.4); }
+    50%{ transform:scaleY(1); }
+  }
 </style>
 </head>
 <body>
@@ -632,6 +682,19 @@
   Vir podatkov: prvaliga.si, Sportklub.si (žreb objavljen 19. 6. 2026)
 </footer>
 </div>
+
+<audio id="bgMusic" loop preload="none">
+  <source src="audio/Maribor.mp3" type="audio/mpeg">
+</audio>
+
+<button id="musicToggle" aria-label="Vklopi/izklopi glasbo" title="Himna Viole">
+  <span class="music-icon">🎵</span>
+  <span class="eq">
+    <span class="bar"></span>
+    <span class="bar"></span>
+    <span class="bar"></span>
+  </span>
+</button>
 
 <script>
 // Uradno potrjene ure tekem (sproti dopolnjujemo, ko jih prvaliga.si objavi)
@@ -918,6 +981,24 @@ async function nalozLestvico(){
 
 nalozLestvico();
 setInterval(nalozLestvico, 10 * 60 * 1000); // osveži vsakih 10 minut
+
+/* ===== GLASBENA PODLAGA ===== */
+const bgMusic = document.getElementById('bgMusic');
+const musicBtn = document.getElementById('musicToggle');
+
+musicBtn.addEventListener('click', () => {
+  if(bgMusic.paused){
+    bgMusic.volume = 0.5;
+    bgMusic.play().catch(err => {
+      console.warn('Predvajanje ni uspelo:', err);
+      alert('Datoteke audio/himna.mp3 ni bilo mogoče predvajati. Preveri, ali je naložena v repo.');
+    });
+    musicBtn.classList.add('playing');
+  } else {
+    bgMusic.pause();
+    musicBtn.classList.remove('playing');
+  }
+});
 </script>
 </body>
 </html>
