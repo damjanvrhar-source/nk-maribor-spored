@@ -16,6 +16,8 @@
     --text:#241536;
     --muted:#7d6d95;
     --derby:#e8332e;
+    --liga-prvakov:#2e9e5b;
+    --konferencna:#2f7cd6;
   }
   *{box-sizing:border-box;}
   body{
@@ -549,7 +551,16 @@
   table.lestvica tbody tr{
     opacity:0;
     animation:rowFadeIn .4s ease forwards;
+    transition:transform .18s ease, box-shadow .18s ease, background-color .18s ease;
   }
+  table.lestvica tbody tr:hover{
+    transform:translateX(3px) scale(1.01);
+    background:#faf6ff;
+    box-shadow:0 3px 10px rgba(46,15,77,0.1);
+    position:relative;
+    z-index:1;
+  }
+  table.lestvica tbody tr:nth-child(even){ background:#fbf8ff; }
   @keyframes rowFadeIn{
     from{ opacity:0; transform:translateX(-6px); }
     to{ opacity:1; transform:translateX(0); }
@@ -564,8 +575,72 @@
   table.lestvica tbody tr:nth-child(8){animation-delay:.30s;}
   table.lestvica tbody tr:nth-child(9){animation-delay:.34s;}
   table.lestvica tbody tr:nth-child(10){animation-delay:.38s;}
-  table.lestvica td.pos{font-weight:800;color:var(--vijola-dark);width:26px;}
-  table.lestvica td.points{font-weight:900;color:var(--vijola-2);}
+
+  table.lestvica td.pos{width:30px;padding:6px 2px;}
+  .pos-badge{
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+    width:22px;height:22px;
+    border-radius:50%;
+    font-weight:800;
+    font-size:11.5px;
+    color:var(--vijola-dark);
+    background:#ece0fa;
+  }
+  tr.pos-1 .pos-badge{
+    background:linear-gradient(150deg,#ffe27a,#e0a812);
+    color:#5a3d00;
+    box-shadow:0 0 0 rgba(245,197,24,0.6);
+    animation:medalGlow 2.2s ease-in-out infinite;
+  }
+  tr.pos-2 .pos-badge{ background:linear-gradient(150deg,#e9edf3,#b7c0cc); color:#3c4550; }
+  tr.pos-3 .pos-badge{ background:linear-gradient(150deg,#e4b58a,#a8703f); color:#4a2c10; }
+  @keyframes medalGlow{
+    0%,100%{ box-shadow:0 0 0 rgba(245,197,24,0.5); }
+    50%{ box-shadow:0 0 10px rgba(245,197,24,0.85); }
+  }
+  tr.zone-cl{ box-shadow:inset 4px 0 0 var(--liga-prvakov); }
+  tr.zone-conf{ box-shadow:inset 4px 0 0 var(--konferencna); }
+  tr.zone-warn{ box-shadow:inset 4px 0 0 #e0a020; }
+  tr.zone-out{ box-shadow:inset 4px 0 0 var(--derby); }
+  tr.zone-out td.name-col{ color:#b23026; }
+
+  tr.zone-label td{
+    padding:6px 14px 4px !important;
+    font-size:10px;
+    text-transform:uppercase;
+    letter-spacing:0.6px;
+    font-weight:800;
+    border-bottom:none !important;
+    opacity:0;
+    animation:zoneLabelFade .35s ease forwards;
+  }
+  @keyframes zoneLabelFade{
+    from{ opacity:0; transform:translateY(-3px); }
+    to{ opacity:1; transform:translateY(0); }
+  }
+  tr.zone-label-cl td{ color:var(--liga-prvakov); }
+  tr.zone-label-conf td{ color:var(--konferencna); }
+  tr.zone-label-warn td{ color:#c07f00; }
+  tr.zone-label-out td{ color:var(--derby); }
+
+  table.lestvica td.points{ padding:6px 4px; }
+  .points-pill{
+    display:inline-block;
+    min-width:26px;
+    padding:3px 8px;
+    border-radius:20px;
+    font-weight:900;
+    font-size:12.5px;
+    color:#fff;
+    background:linear-gradient(150deg,var(--vijola-2),var(--vijola));
+    animation:pillPop .3s ease backwards;
+  }
+  @keyframes pillPop{
+    from{ transform:scale(0.5); opacity:0; }
+    to{ transform:scale(1); opacity:1; }
+  }
   table.lestvica tr.maribor-row{
     background:linear-gradient(90deg,#f3e9ff,#fff);
     font-weight:800;
@@ -576,12 +651,27 @@
     50%{ box-shadow:inset 3px 0 0 var(--vijola-2); }
   }
   table.lestvica tr.maribor-row td.name-col{color:var(--vijola-2);}
+  table.lestvica tr.maribor-row .points-pill{
+    background:linear-gradient(150deg,var(--zlata),var(--zlata-dark));
+    color:#4a3800;
+  }
   .lestvica-note{
     font-size:11.5px;
     color:var(--muted);
     text-align:center;
     padding:12px;
   }
+  .lestvica-legend{
+    display:flex;
+    gap:16px;
+    justify-content:center;
+    flex-wrap:wrap;
+    font-size:10.5px;
+    color:var(--muted);
+    padding:8px 12px 12px;
+  }
+  .lestvica-legend span{display:inline-flex;align-items:center;gap:5px;}
+  .legend-dot{width:8px;height:8px;border-radius:50%;display:inline-block;}
   .lestvica-error{
     font-size:12.5px;
     color:var(--muted);
@@ -712,6 +802,8 @@
 // Uradno potrjene ure tekem (sproti dopolnjujemo, ko jih prvaliga.si objavi)
 const POTRJENE_URE = {
   1: "18:00",
+  2: "20:15",
+  3: "20:15",
 };
 
 const fixtures = [
@@ -964,15 +1056,35 @@ function izracunajLestvico(){
   return { teams, sezonaSeZacela };
 }
 
+function conaZaPozicijo(position, steviloKlubov){
+  if(position === 1) return {key:'cl', label:'Liga prvakov'};
+  if(position === 2 || position === 3) return {key:'conf', label:'Konferenčna liga'};
+  if(position === steviloKlubov - 1) return {key:'warn', label:'Kvalifikacije za obstanek'};
+  if(position === steviloKlubov) return {key:'out', label:'Izpad'};
+  return null;
+}
+
 function nalozLestvico(){
   const contentEl = document.getElementById('lestvicaContent');
   const updatedEl = document.getElementById('lestvicaUpdated');
 
   const { teams, sezonaSeZacela } = izracunajLestvico();
 
-  let rows = teams.map(t => `
-    <tr class="${t.isMaribor ? 'maribor-row' : ''}">
-      <td class="pos">${t.position}.</td>
+  const steviloKlubov = teams.length;
+  let zadnjaCona = null;
+  let rows = teams.map(t => {
+    const cona = sezonaSeZacela ? conaZaPozicijo(t.position, steviloKlubov) : null;
+    let labelRow = '';
+    if(cona && cona.key !== zadnjaCona){
+      labelRow = `<tr class="zone-label zone-label-${cona.key}"><td colspan="9">${cona.label}</td></tr>`;
+      zadnjaCona = cona.key;
+    }
+    const posClass = sezonaSeZacela && t.position <= 3 ? `pos-${t.position}` : '';
+    const zoneClass = cona ? `zone-${cona.key}` : '';
+    const cls = [t.isMaribor ? 'maribor-row' : '', posClass, zoneClass].filter(Boolean).join(' ');
+    return `${labelRow}
+    <tr class="${cls}">
+      <td class="pos"><span class="pos-badge">${t.position}</span></td>
       <td class="name-col">${t.name}</td>
       <td>${t.played}</td>
       <td>${t.wins}</td>
@@ -980,9 +1092,10 @@ function nalozLestvico(){
       <td>${t.losses}</td>
       <td>${t.goalsFor}:${t.goalsAgainst}</td>
       <td>${t.diff > 0 ? '+' : ''}${t.diff}</td>
-      <td class="points">${t.points}</td>
+      <td class="points"><span class="points-pill">${t.points}</span></td>
     </tr>
-  `).join('');
+  `;
+  }).join('');
 
   contentEl.outerHTML = `
     <div style="overflow-x:auto;">
@@ -1003,6 +1116,12 @@ function nalozLestvico(){
       </thead>
       <tbody>${rows}</tbody>
     </table>
+    ${sezonaSeZacela ? `<div class="lestvica-legend">
+        <span><span class="legend-dot" style="background:var(--liga-prvakov);"></span> Liga prvakov</span>
+        <span><span class="legend-dot" style="background:var(--konferencna);"></span> Konferenčna liga</span>
+        <span><span class="legend-dot" style="background:#e0a020;"></span> Kvalifikacije za obstanek</span>
+        <span><span class="legend-dot" style="background:var(--derby);"></span> Izpad</span>
+      </div>` : ''}
   </div>`;
 
   if(updatedEl){
