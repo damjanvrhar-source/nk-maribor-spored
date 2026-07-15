@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="sl">
 <head>
@@ -72,6 +71,11 @@
     overflow:hidden;
     box-shadow:0 14px 34px rgba(46,15,77,0.35);
     border:2px solid var(--zlata);
+    animation:headerEnter .6s cubic-bezier(.21,.86,.4,1) both;
+  }
+  @keyframes headerEnter{
+    0%{ opacity:0; transform:translateY(-18px); }
+    100%{ opacity:1; transform:translateY(0); }
   }
   header::before{
     content:"";
@@ -122,7 +126,18 @@
     letter-spacing:0.3px;
     text-shadow:0 2px 8px rgba(0,0,0,0.25);
   }
-  header h1 .accent{color:var(--zlata);}
+  header h1 .accent{
+    background:linear-gradient(90deg, var(--zlata) 0%, #fff6d0 50%, var(--zlata) 100%);
+    background-size:200% auto;
+    -webkit-background-clip:text;
+    background-clip:text;
+    color:transparent;
+    animation:accentShine 3.5s linear infinite;
+  }
+  @keyframes accentShine{
+    0%{ background-position:0% 0; }
+    100%{ background-position:-200% 0; }
+  }
   header p.sub{margin:0;opacity:0.9;font-size:13.5px;}
   .stripe-bar{
     height:8px;
@@ -143,7 +158,11 @@
   .dot{width:11px;height:11px;border-radius:50%;display:inline-block;border:1px solid rgba(255,255,255,0.5);}
   .dot.home{background:var(--zlata);}
   .dot.away{background:transparent;}
-  .dot.derby{background:var(--derby);}
+  .dot.derby{background:var(--derby);animation:dotPulse 1.6s ease-in-out infinite;}
+  @keyframes dotPulse{
+    0%,100%{ box-shadow:0 0 0 rgba(232,51,46,0.6); transform:scale(1); }
+    50%{ box-shadow:0 0 8px rgba(232,51,46,0.85); transform:scale(1.2); }
+  }
 
   .polsezon{
     font-size:12.5px;
@@ -222,6 +241,11 @@
     background:var(--vijola);
     border-radius:8px;
     padding:6px 4px;
+    transition:transform .25s ease, background-color .25s ease;
+  }
+  .match:hover .krog{
+    transform:scale(1.08) rotate(-2deg);
+    background:var(--vijola-2);
   }
   .datum{
     width:150px;
@@ -246,7 +270,14 @@
   .tekma .maribor::after{
     content:"";
     position:absolute;left:0;right:0;bottom:-2px;height:3px;
-    background:var(--zlata);border-radius:2px;
+    border-radius:2px;
+    background:linear-gradient(90deg, var(--zlata) 0%, #fff2b8 50%, var(--zlata) 100%);
+    background-size:220% auto;
+    animation:mariborUnderline 3s linear infinite;
+  }
+  @keyframes mariborUnderline{
+    0%{ background-position:0% 0; }
+    100%{ background-position:-220% 0; }
   }
   .venue{
     font-size:12px;
@@ -305,7 +336,16 @@
     line-height:1.7;
     padding-bottom:10px;
   }
-  footer .foot-crest{opacity:0.5;margin-bottom:8px;}
+  footer .foot-crest{
+    opacity:0.6;
+    margin-bottom:8px;
+    display:inline-block;
+    animation:footCrestFloat 3s ease-in-out infinite;
+  }
+  @keyframes footCrestFloat{
+    0%,100%{ transform:translateY(0) rotate(0deg); }
+    50%{ transform:translateY(-4px) rotate(6deg); }
+  }
 
   /* ===== COUNTDOWN ===== */
   /* ===== TOP ROW: odštevalnik (levo) + lestvica (desno) ===== */
@@ -321,6 +361,7 @@
     display:flex;
     flex-direction:column;
     justify-content:center;
+    animation:slideInLeft .6s .15s cubic-bezier(.21,.86,.4,1) both;
   }
   .top-row .table-wrap{
     flex:1;
@@ -328,6 +369,15 @@
     margin-bottom:0;
     display:flex;
     flex-direction:column;
+    animation:slideInRight .6s .25s cubic-bezier(.21,.86,.4,1) both;
+  }
+  @keyframes slideInLeft{
+    0%{ opacity:0; transform:translateX(-24px); }
+    100%{ opacity:1; transform:translateX(0); }
+  }
+  @keyframes slideInRight{
+    0%{ opacity:0; transform:translateX(24px); }
+    100%{ opacity:1; transform:translateX(0); }
   }
   .top-row .table-wrap > div:last-child{
     flex:1;
@@ -392,6 +442,11 @@
     border-radius:12px;
     padding:10px 16px;
     min-width:68px;
+    transition:transform .2s ease, background-color .2s ease;
+  }
+  .timer .unit:hover{
+    transform:translateY(-3px) scale(1.05);
+    background:rgba(245,197,24,0.18);
   }
   .timer .num{
     font-size:28px;
@@ -430,7 +485,9 @@
     border:2px solid var(--zlata);
   }
   .table-header{
-    background:linear-gradient(90deg,var(--vijola),var(--vijola-2));
+    background:linear-gradient(90deg,var(--vijola),var(--vijola-2),var(--vijola));
+    background-size:200% 100%;
+    animation:tableHeaderSheen 6s ease-in-out infinite;
     color:#fff;
     padding:12px 16px;
     font-size:13px;
@@ -440,6 +497,10 @@
     display:flex;
     justify-content:space-between;
     align-items:center;
+  }
+  @keyframes tableHeaderSheen{
+    0%,100%{ background-position:0% 0; }
+    50%{ background-position:100% 0; }
   }
   .table-header .updated{
     font-size:10.5px;
@@ -495,6 +556,11 @@
   table.lestvica tr.maribor-row{
     background:linear-gradient(90deg,#f3e9ff,#fff);
     font-weight:800;
+    animation:mariborRowGlow 3s ease-in-out infinite;
+  }
+  @keyframes mariborRowGlow{
+    0%,100%{ box-shadow:inset 0 0 0 rgba(123,47,181,0); }
+    50%{ box-shadow:inset 3px 0 0 var(--vijola-2); }
   }
   table.lestvica tr.maribor-row td.name-col{color:var(--vijola-2);}
   .lestvica-note{
