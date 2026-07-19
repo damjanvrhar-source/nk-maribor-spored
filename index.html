@@ -284,6 +284,23 @@
     font-size:15px;
     font-weight:800;
   }
+  .rezultat{
+    display:inline-block;
+    background:var(--vijola);
+    color:#fff;
+    font-weight:900;
+    font-size:13.5px;
+    padding:2px 10px;
+    border-radius:8px;
+    margin:0 4px;
+    animation:pillPop .3s ease backwards;
+  }
+  .match.played{
+    border-left-color:var(--vijola-2);
+  }
+  .match.played .badge{
+    opacity:0.65;
+  }
   .tekma .maribor{color:var(--vijola-2);position:relative;}
   .tekma .maribor::after{
     content:"";
@@ -867,6 +884,12 @@ function formatDate(iso){
 const container = document.getElementById('fixtures');
 let currentHalf = null;
 
+/* ROČNO VNESENI REZULTATI ODIGRANIH TEKEM
+   Ko je tekma odigrana, se tu doda: krog: "goli_doma:goli_gostov" */
+const REZULTATI = {
+  1: "0:0",
+};
+
 fixtures.forEach(f => {
   const [krog, datum, dom, gost, prizorisce, homeMatch, derby] = f;
   const isDerby = derby === "derby";
@@ -882,17 +905,18 @@ fixtures.forEach(f => {
 
   const {dan, label} = formatDate(datum);
   const ura = POTRJENE_URE[krog];
+  const rezultat = REZULTATI[krog];
 
   const row = document.createElement('div');
-  row.className = 'match ' + (homeMatch ? 'home' : 'away') + (isDerby ? ' derby' : '');
+  row.className = 'match ' + (homeMatch ? 'home' : 'away') + (isDerby ? ' derby' : '') + (rezultat ? ' played' : '');
 
   const domHtml = dom === "Maribor" ? '<span class="maribor">Maribor</span>' : dom;
   const gostHtml = gost === "Maribor" ? '<span class="maribor">Maribor</span>' : gost;
 
   row.innerHTML = `
     <div class="krog">${krog}. krog</div>
-    <div class="datum">${label}<span class="dan">${dan}${ura ? ' · ' + ura : ''}</span></div>
-    <div class="tekma">${domHtml} — ${gostHtml}
+    <div class="datum">${label}<span class="dan">${dan}${rezultat ? ' · končano' : (ura ? ' · ' + ura : '')}</span></div>
+    <div class="tekma">${domHtml} ${rezultat ? `<span class="rezultat">${rezultat}</span>` : '—'} ${gostHtml}
       ${isDerby ? '<span class="badge derby">VEČNI DERBI</span>' : (homeMatch ? '<span class="badge h">DOMA</span>' : '<span class="badge a">V GOSTEH</span>')}
     </div>
     <div class="venue">${prizorisce}</div>
@@ -1014,13 +1038,13 @@ const KLUBI_26_27 = [
    goalsFor = doseženi goli, goalsAgainst = prejeti goli.
    Zadnja posodobitev: pred 1. krogom (vsi na 0). */
 const LESTVICA_PODATKI = {
-  "Aluminij":          {played:0, wins:0, draws:0, losses:0, goalsFor:0, goalsAgainst:0},
+  "Aluminij":          {played:1, wins:0, draws:1, losses:0, goalsFor:0, goalsAgainst:0},
   "Bravo":             {played:1, wins:1, draws:0, losses:0, goalsFor:2, goalsAgainst:0},
   "Brinje-Grosuplje":  {played:1, wins:1, draws:0, losses:0, goalsFor:2, goalsAgainst:0},
   "Celje":             {played:1, wins:0, draws:1, losses:0, goalsFor:2, goalsAgainst:2},
   "Kalcer Radomlje":   {played:1, wins:0, draws:0, losses:1, goalsFor:0, goalsAgainst:2},
   "Koper":             {played:1, wins:1, draws:0, losses:0, goalsFor:2, goalsAgainst:0},
-  "Maribor":           {played:0, wins:0, draws:0, losses:0, goalsFor:0, goalsAgainst:0},
+  "Maribor":           {played:1, wins:0, draws:1, losses:0, goalsFor:0, goalsAgainst:0},
   "Mura":              {played:1, wins:0, draws:1, losses:0, goalsFor:2, goalsAgainst:2},
   "Nafta 1903":        {played:1, wins:0, draws:0, losses:1, goalsFor:0, goalsAgainst:2},
   "Olimpija":          {played:1, wins:0, draws:0, losses:1, goalsFor:0, goalsAgainst:2},
