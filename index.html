@@ -590,18 +590,6 @@
     color:var(--vijola-dark);
     background:#ece0fa;
   }
-  tr.pos-1 .pos-badge{
-    background:linear-gradient(150deg,#ffe27a,#e0a812);
-    color:#5a3d00;
-    box-shadow:0 0 0 rgba(245,197,24,0.6);
-    animation:medalGlow 2.2s ease-in-out infinite;
-  }
-  tr.pos-2 .pos-badge{ background:linear-gradient(150deg,#e9edf3,#b7c0cc); color:#3c4550; }
-  tr.pos-3 .pos-badge{ background:linear-gradient(150deg,#e4b58a,#a8703f); color:#4a2c10; }
-  @keyframes medalGlow{
-    0%,100%{ box-shadow:0 0 0 rgba(245,197,24,0.5); }
-    50%{ box-shadow:0 0 10px rgba(245,197,24,0.85); }
-  }
   table.lestvica tbody tr.zone-cl{
     background:repeating-linear-gradient(135deg,
       rgba(123,47,181,0.12) 0 9px,
@@ -1102,9 +1090,8 @@ function nalozLestvico(){
         : `<tr class="zone-gap"><td colspan="9"></td></tr>`;
       zadnjaCona = conaKljuc;
     }
-    const posClass = t.position <= 3 ? `pos-${t.position}` : '';
     const zoneClass = cona ? `zone-${cona.key}` : '';
-    const cls = [t.isMaribor ? 'maribor-row' : '', posClass, zoneClass].filter(Boolean).join(' ');
+    const cls = [t.isMaribor ? 'maribor-row' : '', zoneClass].filter(Boolean).join(' ');
     return `${labelRow}
     <tr class="${cls}">
       <td class="pos"><span class="pos-badge">${t.position}</span></td>
