@@ -568,12 +568,13 @@
   }
   table.lestvica th{
     text-align:center;
-    padding:8px 4px;
+    padding:10px 4px;
     font-size:10.5px;
     color:var(--muted);
     text-transform:uppercase;
-    letter-spacing:0.5px;
-    border-bottom:2px solid #f0e9fb;
+    letter-spacing:0.6px;
+    font-weight:700;
+    border-bottom:2px solid #ece3fa;
   }
   table.lestvica th.name-col, table.lestvica td.name-col{
     text-align:left;
@@ -581,79 +582,58 @@
   }
   table.lestvica td{
     text-align:center;
-    padding:9px 4px;
-    border-bottom:1px solid #f5f0fc;
+    padding:10px 4px;
+    border-bottom:1px solid #f2ecfa;
   }
   table.lestvica tr:last-child td{border-bottom:none;}
   table.lestvica tbody tr{
     opacity:0;
-    animation:rowFadeIn .4s ease forwards;
-    transition:transform .18s ease, box-shadow .18s ease, background-color .18s ease;
+    animation:rowFadeIn .35s ease forwards;
+    transition:background-color .15s ease;
   }
-  table.lestvica tbody tr:hover{
-    transform:translateX(3px) scale(1.01);
-    background:#faf6ff;
-    box-shadow:0 3px 10px rgba(46,15,77,0.1);
-    position:relative;
-    z-index:1;
-  }
-  table.lestvica tbody tr:nth-child(even){ background:#fbf8ff; }
+  table.lestvica tbody tr:hover{ background:#faf7ff; }
+  table.lestvica tbody tr:nth-child(even){ background:#fbf9ff; }
   @keyframes rowFadeIn{
-    from{ opacity:0; transform:translateX(-6px); }
-    to{ opacity:1; transform:translateX(0); }
+    from{ opacity:0; transform:translateY(4px); }
+    to{ opacity:1; transform:translateY(0); }
   }
   table.lestvica tbody tr:nth-child(1){animation-delay:.02s;}
-  table.lestvica tbody tr:nth-child(2){animation-delay:.06s;}
-  table.lestvica tbody tr:nth-child(3){animation-delay:.10s;}
-  table.lestvica tbody tr:nth-child(4){animation-delay:.14s;}
-  table.lestvica tbody tr:nth-child(5){animation-delay:.18s;}
-  table.lestvica tbody tr:nth-child(6){animation-delay:.22s;}
-  table.lestvica tbody tr:nth-child(7){animation-delay:.26s;}
-  table.lestvica tbody tr:nth-child(8){animation-delay:.30s;}
-  table.lestvica tbody tr:nth-child(9){animation-delay:.34s;}
-  table.lestvica tbody tr:nth-child(10){animation-delay:.38s;}
+  table.lestvica tbody tr:nth-child(2){animation-delay:.05s;}
+  table.lestvica tbody tr:nth-child(3){animation-delay:.08s;}
+  table.lestvica tbody tr:nth-child(4){animation-delay:.11s;}
+  table.lestvica tbody tr:nth-child(5){animation-delay:.14s;}
+  table.lestvica tbody tr:nth-child(6){animation-delay:.17s;}
+  table.lestvica tbody tr:nth-child(7){animation-delay:.20s;}
+  table.lestvica tbody tr:nth-child(8){animation-delay:.23s;}
+  table.lestvica tbody tr:nth-child(9){animation-delay:.26s;}
+  table.lestvica tbody tr:nth-child(10){animation-delay:.29s;}
 
-  table.lestvica td.pos{width:30px;padding:6px 2px;}
+  table.lestvica td.pos{width:28px;padding:10px 2px;}
   .pos-badge{
     display:inline-flex;
     align-items:center;
     justify-content:center;
-    width:22px;height:22px;
+    width:20px;height:20px;
     border-radius:50%;
-    font-weight:800;
-    font-size:11.5px;
+    font-weight:700;
+    font-size:11px;
     color:var(--vijola-dark);
-    background:#ece0fa;
+    background:#efe7fb;
   }
-  table.lestvica tbody tr.zone-cl{
-    background:repeating-linear-gradient(135deg,
-      rgba(123,47,181,0.12) 0 9px,
-      rgba(91,31,140,0.06) 9px 18px);
-  }
-  table.lestvica tbody tr.zone-conf{ background:rgba(47,124,214,0.08); }
-  table.lestvica tbody tr.zone-warn{ background:rgba(46,158,91,0.09); }
-  table.lestvica tbody tr.zone-out{ background:rgba(232,51,46,0.08); }
-  tr.zone-cl td:first-child{ box-shadow:inset 5px 0 0 var(--liga-prvakov); }
-  tr.zone-conf td:first-child{ box-shadow:inset 5px 0 0 var(--konferencna); }
-  tr.zone-warn td:first-child{ box-shadow:inset 5px 0 0 var(--kvalifikacije); }
-  tr.zone-out td:first-child{ box-shadow:inset 5px 0 0 var(--derby); }
-  tr.zone-out td.name-col{ color:#b23026; }
+  tr.zone-cl td:first-child{ box-shadow:inset 3px 0 0 var(--liga-prvakov); }
+  tr.zone-conf td:first-child{ box-shadow:inset 3px 0 0 var(--konferencna); }
+  tr.zone-warn td:first-child{ box-shadow:inset 3px 0 0 var(--kvalifikacije); }
+  tr.zone-out td:first-child{ box-shadow:inset 3px 0 0 var(--derby); }
 
   tr.zone-label td{
-    height:24px;
+    height:22px;
     padding:0 14px !important;
-    line-height:24px;
-    font-size:10px;
+    line-height:22px;
+    font-size:9.5px;
     text-transform:uppercase;
     letter-spacing:0.6px;
-    font-weight:800;
+    font-weight:700;
     border-bottom:none !important;
-    opacity:0;
-    animation:zoneLabelFade .35s ease forwards;
-  }
-  @keyframes zoneLabelFade{
-    from{ opacity:0; transform:translateY(-3px); }
-    to{ opacity:1; transform:translateY(0); }
   }
   tr.zone-label-cl td{ color:var(--liga-prvakov); }
   tr.zone-label-conf td{ color:var(--konferencna); }
@@ -661,9 +641,9 @@
   tr.zone-label-out td{ color:var(--derby); }
   table.lestvica tbody tr.zone-gap{ background:transparent; }
   tr.zone-gap td{
-    height:24px;
+    height:22px;
     padding:0 14px !important;
-    line-height:24px;
+    line-height:22px;
     font-size:10px;
     border-bottom:none !important;
   }
@@ -685,50 +665,19 @@
     to{ transform:scale(1); opacity:1; }
   }
   table.lestvica tbody tr.maribor-row{
-    background:repeating-linear-gradient(135deg,
-      rgba(123,47,181,0.14) 0 10px,
-      rgba(245,197,24,0.10) 10px 20px);
-    background-size:200% 200%;
-    font-weight:800;
-    animation:rowFadeIn .4s ease forwards, mariborStripeMove 5s linear infinite;
-    position:relative;
-  }
-  @keyframes mariborStripeMove{
-    0%{ background-position:0 0; }
-    100%{ background-position:56px 0; }
+    background:#f6effc;
+    font-weight:700;
   }
   tr.maribor-row td:first-child{
-    box-shadow:inset 6px 0 0 var(--vijola-2);
-    animation:mariborBorderGlow 2.2s ease-in-out infinite;
+    animation:mariborColorShift 4s ease-in-out infinite;
   }
-  @keyframes mariborBorderGlow{
-    0%,100%{ box-shadow:inset 6px 0 0 var(--vijola-2); }
-    50%{ box-shadow:inset 6px 0 0 var(--zlata); }
+  @keyframes mariborColorShift{
+    0%,100%{ box-shadow:inset 4px 0 0 var(--vijola-2); }
+    50%{ box-shadow:inset 4px 0 0 var(--vijola-dark); }
   }
   table.lestvica tr.maribor-row td.name-col{
     color:var(--vijola-2);
-    position:relative;
-    padding-left:30px !important;
-  }
-  table.lestvica tr.maribor-row td.name-col::before{
-    content:"⚽";
-    position:absolute;
-    left:12px;
-    font-size:12px;
-    animation:mariborBounce 1.4s ease-in-out infinite;
-  }
-  @keyframes mariborBounce{
-    0%,100%{ transform:translateY(0) rotate(0deg); }
-    50%{ transform:translateY(-3px) rotate(12deg); }
-  }
-  table.lestvica tr.maribor-row .pos-badge{
-    background:linear-gradient(150deg,var(--vijola-2),var(--zlata));
-    color:#fff;
-    animation:mariborBadgePulse 2.2s ease-in-out infinite;
-  }
-  @keyframes mariborBadgePulse{
-    0%,100%{ box-shadow:0 0 0 rgba(245,197,24,0.5); transform:scale(1); }
-    50%{ box-shadow:0 0 10px rgba(245,197,24,0.85); transform:scale(1.12); }
+    font-weight:800;
   }
   table.lestvica tr.maribor-row .points-pill{
     background:linear-gradient(150deg,var(--zlata),var(--zlata-dark));
