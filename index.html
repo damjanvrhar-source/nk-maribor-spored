@@ -66,6 +66,20 @@
     50%{ transform:translate(-50px,-40px) scale(1.2); }
   }
   .wrap{max-width:920px;margin:0 auto;position:relative;z-index:1;}
+  .navijaci-banner{
+    border-radius:18px;
+    overflow:hidden;
+    margin-bottom:22px;
+    box-shadow:0 10px 26px rgba(46,15,77,0.25);
+    border:2px solid var(--zlata);
+  }
+  .navijaci-banner img{
+    display:block;
+    width:100%;
+    max-height:420px;
+    object-fit:cover;
+    object-position:center 20%;
+  }
 
   header{
     position:relative;
@@ -782,6 +796,10 @@
   </div>
 </div>
 
+<div class="navijaci-banner">
+  <img src="ozadje-navijaci.jpg" alt="NK Maribor navijači" loading="lazy">
+</div>
+
 <div id="fixtures"></div>
 
 <footer>
@@ -964,8 +982,8 @@ function updateCountdown(){
   const uraHtml = next.uraPotrjena
     ? `<span class="kickoff-time confirmed">🕒 ${uraPrikaz}</span>`
     : `<span class="kickoff-time tentative">🕒 predvidoma ${uraPrikaz}</span>`;
-  labelEl.innerHTML = `${next.krog}. krog: ${domHtml} — ${gostHtml}${next.derby ? ' ⚡' : ''}
-    <span class="venue-mini">${next.prizorisce} · ${uraHtml}</span>`;
+  labelEl.innerHTML = `${next.krog}. krog: ${domHtml} — ${gostHtml}${next.derby ? ' ⚡' : ''} ${uraHtml}
+    <span class="venue-mini">${next.prizorisce}</span>`;
 
   const diff = next.kickoff.getTime() - Date.now();
   const totalSec = Math.max(0, Math.floor(diff / 1000));
