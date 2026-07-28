@@ -721,10 +721,10 @@
 
   /* ===== GLASBENI GUMB ===== */
   #musicToggle{
-    position:fixed;
-    right:22px; bottom:22px;
-    z-index:50;
-    width:58px; height:58px;
+    position:absolute;
+    right:18px; bottom:14px;
+    z-index:5;
+    width:50px; height:50px;
     border-radius:50%;
     border:2px solid var(--zlata);
     background:linear-gradient(150deg,var(--vijola-2),var(--vijola-dark));
@@ -781,6 +781,14 @@
     </div>
   </div>
   <div class="stripe-bar"></div>
+  <button id="musicToggle" aria-label="Vklopi/izklopi glasbo" title="Himna Viole">
+    <span class="music-icon">🎵</span>
+    <span class="eq">
+      <span class="bar"></span>
+      <span class="bar"></span>
+      <span class="bar"></span>
+    </span>
+  </button>
 </header>
 
 <div class="top-row">
@@ -806,7 +814,6 @@
 <div id="fixtures"></div>
 
 <footer>
-  <div class="foot-crest">🟣🟡</div>
   Ure tekem še niso določene (TBD) — objavljene bodo naknadno s strani NZS / Prve lige Telemach.<br>
   Vir podatkov: prvaliga.si, Sportklub.si (žreb objavljen 19. 6. 2026)
 </footer>
@@ -815,15 +822,6 @@
 <audio id="bgMusic" loop preload="none">
   <source src="Maribor.mp3" type="audio/mpeg">
 </audio>
-
-<button id="musicToggle" aria-label="Vklopi/izklopi glasbo" title="Himna Viole">
-  <span class="music-icon">🎵</span>
-  <span class="eq">
-    <span class="bar"></span>
-    <span class="bar"></span>
-    <span class="bar"></span>
-  </span>
-</button>
 
 <script>
 // Uradno potrjene ure tekem (sproti dopolnjujemo, ko jih prvaliga.si objavi)
@@ -1155,7 +1153,7 @@ function nalozLestvico(){
   </div>`;
 
   if(updatedEl){
-    updatedEl.textContent = sezonaSeZacela ? "ročno posodobljeno" : "";
+    updatedEl.textContent = "";
   }
 }
 
