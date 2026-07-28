@@ -443,7 +443,7 @@
 
   .countdown{
     background:
-      linear-gradient(150deg, rgba(46,15,77,0.55) 0%, rgba(91,31,140,0.5) 100%),
+      linear-gradient(150deg, rgba(46,15,77,0.35) 0%, rgba(91,31,140,0.3) 100%),
       url('ozadje-navijaci.jpg') center top / cover no-repeat;
     border:2px solid var(--zlata);
     border-radius:18px;
@@ -471,7 +471,12 @@
     font-size:19px;
     font-weight:800;
     margin-bottom:16px;
-    text-shadow:0 2px 6px rgba(0,0,0,0.55);
+    text-shadow:0 2px 10px rgba(0,0,0,0.85), 0 0 20px rgba(0,0,0,0.5);
+    animation:textFlicker 3s ease-in-out infinite;
+  }
+  @keyframes textFlicker{
+    0%,100%{ text-shadow:0 2px 10px rgba(0,0,0,0.85), 0 0 20px rgba(0,0,0,0.5); }
+    50%{ text-shadow:0 2px 10px rgba(0,0,0,0.85), 0 0 14px rgba(245,197,24,0.4); }
   }
   .countdown .next-match .maribor{color:var(--zlata);}
   .countdown .venue-mini{
@@ -480,7 +485,7 @@
     font-weight:400;
     display:block;
     margin-top:2px;
-    text-shadow:0 1px 4px rgba(0,0,0,0.6);
+    text-shadow:0 2px 8px rgba(0,0,0,0.85);
   }
   .countdown .kickoff-time{
     opacity:1;
@@ -512,6 +517,12 @@
     font-variant-numeric:tabular-nums;
     color:var(--zlata);
     line-height:1;
+    text-shadow:0 2px 8px rgba(0,0,0,0.8);
+    animation:numGlow 2.4s ease-in-out infinite;
+  }
+  @keyframes numGlow{
+    0%,100%{ text-shadow:0 2px 8px rgba(0,0,0,0.8); }
+    50%{ text-shadow:0 2px 8px rgba(0,0,0,0.8), 0 0 12px rgba(245,197,24,0.6); }
   }
   @keyframes numPop{
     0%{ transform:scale(1.35); opacity:0.5; }
@@ -966,8 +977,8 @@ function updateCountdown(){
   const gostHtml = next.gost === "Maribor" ? '<span class="maribor">Maribor</span>' : next.gost;
   const uraPrikaz = next.ura || ASSUMED_KICKOFF.slice(0,5);
   const uraHtml = next.uraPotrjena
-    ? `<span class="kickoff-time confirmed">🕒 ${uraPrikaz}</span>`
-    : `<span class="kickoff-time tentative">🕒 predvidoma ${uraPrikaz}</span>`;
+    ? `<span class="kickoff-time confirmed">${uraPrikaz}</span>`
+    : `<span class="kickoff-time tentative">predvidoma ${uraPrikaz}</span>`;
   labelEl.innerHTML = `${next.krog}. krog: ${domHtml} — ${gostHtml}${next.derby ? ' ⚡' : ''} ${uraHtml}
     <span class="venue-mini">${next.prizorisce}</span>`;
 
