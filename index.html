@@ -66,20 +66,6 @@
     50%{ transform:translate(-50px,-40px) scale(1.2); }
   }
   .wrap{max-width:920px;margin:0 auto;position:relative;z-index:1;}
-  .navijaci-banner{
-    border-radius:18px;
-    overflow:hidden;
-    margin-bottom:22px;
-    box-shadow:0 10px 26px rgba(46,15,77,0.25);
-    border:2px solid var(--zlata);
-  }
-  .navijaci-banner img{
-    display:block;
-    width:100%;
-    max-height:420px;
-    object-fit:cover;
-    object-position:center 20%;
-  }
 
   header{
     position:relative;
@@ -456,7 +442,9 @@
   }
 
   .countdown{
-    background:linear-gradient(150deg,var(--vijola-dark) 0%,var(--vijola) 100%);
+    background:
+      linear-gradient(150deg, rgba(46,15,77,0.88) 0%, rgba(91,31,140,0.85) 100%),
+      url('ozadje-navijaci.jpg') center top / cover no-repeat;
     border:2px solid var(--zlata);
     border-radius:18px;
     padding:20px 24px;
@@ -465,6 +453,7 @@
     text-align:center;
     box-shadow:0 10px 26px rgba(46,15,77,0.3);
     position:relative;
+    overflow:hidden;
   }
   @keyframes countdownGlow{
     0%,100%{ box-shadow:0 10px 26px rgba(46,15,77,0.3), 0 0 0 rgba(245,197,24,0); }
@@ -794,10 +783,6 @@
     </div>
     <div id="lestvicaContent" class="lestvica-note">Nalagam lestvico…</div>
   </div>
-</div>
-
-<div class="navijaci-banner">
-  <img src="ozadje-navijaci.jpg" alt="NK Maribor navijači" loading="lazy">
 </div>
 
 <div id="fixtures"></div>
