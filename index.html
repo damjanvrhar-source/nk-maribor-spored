@@ -127,10 +127,22 @@
   }
   .header-text{flex:1;min-width:220px;}
   header h1{
-    margin:0 0 6px;
-    font-size:26px;
-    letter-spacing:0.3px;
-    text-shadow:0 2px 8px rgba(0,0,0,0.25);
+    margin:0 0 8px;
+    font-size:44px;
+    font-weight:900;
+    letter-spacing:0.5px;
+    text-shadow:0 4px 18px rgba(0,0,0,0.5);
+    animation:titlePop .8s cubic-bezier(.2,1.4,.4,1) both, titleFlash 1.4s ease-out .8s;
+  }
+  @keyframes titlePop{
+    0%{ opacity:0; transform:scale(1.5) translateY(-14px); filter:blur(8px); }
+    55%{ opacity:1; transform:scale(0.94) translateY(2px); filter:blur(0); }
+    75%{ transform:scale(1.03); }
+    100%{ transform:scale(1); }
+  }
+  @keyframes titleFlash{
+    0%{ text-shadow:0 4px 18px rgba(0,0,0,0.5), 0 0 40px rgba(245,197,24,0.9); }
+    100%{ text-shadow:0 4px 18px rgba(0,0,0,0.5), 0 0 0 rgba(245,197,24,0); }
   }
   header h1 .accent{
     background:linear-gradient(90deg, var(--zlata) 0%, #fff6d0 50%, var(--zlata) 100%);
@@ -144,7 +156,19 @@
     0%{ background-position:0% 0; }
     100%{ background-position:-200% 0; }
   }
-  header p.sub{margin:0;opacity:0.9;font-size:13.5px;}
+  header p.sub{
+    margin:0;
+    opacity:0.95;
+    font-size:16px;
+    font-weight:600;
+    letter-spacing:0.4px;
+    text-shadow:0 2px 8px rgba(0,0,0,0.35);
+    animation:subFadeIn .6s cubic-bezier(.21,.86,.4,1) .45s both;
+  }
+  @keyframes subFadeIn{
+    0%{ opacity:0; transform:translateY(10px) scale(0.9); }
+    100%{ opacity:0.95; transform:translateY(0) scale(1); }
+  }
   .stripe-bar{
     height:10px;
     width:100%;
@@ -169,47 +193,6 @@
   @keyframes stripeShine{
     0%{ transform:translateX(-140%); }
     100%{ transform:translateX(360%); }
-  }
-
-  .legend{
-    display:flex;gap:10px;margin-top:14px;flex-wrap:wrap;font-size:12px;position:relative;
-  }
-  .legend span{
-    display:flex;align-items:center;gap:6px;font-weight:600;
-    background:rgba(255,255,255,0.08);
-    border:1px solid rgba(245,197,24,0.25);
-    border-radius:20px;
-    padding:5px 12px 5px 10px;
-    opacity:0;
-    animation:legendIn .4s ease forwards;
-    transition:background-color .2s ease, transform .2s ease;
-  }
-  .legend span:hover{
-    background:rgba(255,255,255,0.15);
-    transform:translateY(-1px);
-  }
-  .legend span:nth-child(1){animation-delay:.1s;}
-  .legend span:nth-child(2){animation-delay:.2s;}
-  .legend span:nth-child(3){animation-delay:.3s;}
-  @keyframes legendIn{
-    from{ opacity:0; transform:translateY(4px); }
-    to{ opacity:1; transform:translateY(0); }
-  }
-  .dot{width:11px;height:11px;border-radius:50%;display:inline-block;border:1px solid rgba(255,255,255,0.5);}
-  .dot.home{background:var(--zlata);animation:dotGlowGold 2s ease-in-out infinite;}
-  @keyframes dotGlowGold{
-    0%,100%{ box-shadow:0 0 0 rgba(245,197,24,0.5); }
-    50%{ box-shadow:0 0 7px rgba(245,197,24,0.9); }
-  }
-  .dot.away{background:transparent;animation:dotGlowWhite 2s ease-in-out infinite;}
-  @keyframes dotGlowWhite{
-    0%,100%{ box-shadow:0 0 0 rgba(255,255,255,0.4); }
-    50%{ box-shadow:0 0 6px rgba(255,255,255,0.7); }
-  }
-  .dot.derby{background:var(--derby);animation:dotPulse 1.6s ease-in-out infinite;}
-  @keyframes dotPulse{
-    0%,100%{ box-shadow:0 0 0 rgba(232,51,46,0.6); transform:scale(1); }
-    50%{ box-shadow:0 0 8px rgba(232,51,46,0.85); transform:scale(1.2); }
   }
 
   .polsezon{
@@ -795,11 +778,6 @@
     <div class="header-text">
       <h1>NK <span class="accent">MARIBOR</span></h1>
       <p class="sub">Spored sezone 26/27</p>
-      <div class="legend">
-        <span><span class="dot home"></span> Doma · Ljudski vrt</span>
-        <span><span class="dot away"></span> V gosteh</span>
-        <span><span class="dot derby"></span> Večni derbi</span>
-      </div>
     </div>
   </div>
   <div class="stripe-bar"></div>
