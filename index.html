@@ -67,6 +67,72 @@
     0%,100%{ transform:translate(0,0) scale(1); }
     50%{ transform:translate(-50px,-40px) scale(1.2); }
   }
+  #introScreen{
+    position:fixed;
+    inset:0;
+    z-index:1000;
+    background:radial-gradient(circle at 50% 40%, var(--vijola-2) 0%, var(--vijola-dark) 70%, #14081f 100%);
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    gap:18px;
+    animation:introOut .6s ease 1.9s forwards;
+  }
+  @keyframes introOut{
+    0%{ opacity:1; visibility:visible; }
+    99%{ opacity:0; visibility:visible; }
+    100%{ opacity:0; visibility:hidden; pointer-events:none; }
+  }
+  .intro-crest{
+    width:130px;
+    height:130px;
+    object-fit:contain;
+    filter:drop-shadow(0 6px 18px rgba(0,0,0,0.5));
+    animation:introCrestPop 1s cubic-bezier(.34,1.56,.64,1) both;
+  }
+  @keyframes introCrestPop{
+    0%{ opacity:0; transform:scale(0.2) rotate(-40deg); }
+    60%{ opacity:1; transform:scale(1.12) rotate(6deg); }
+    100%{ transform:scale(1) rotate(0deg); }
+  }
+  .intro-title{
+    color:#fff;
+    font-size:26px;
+    font-weight:900;
+    letter-spacing:1px;
+    opacity:0;
+    animation:introTitleIn .6s ease .5s forwards;
+  }
+  @keyframes introTitleIn{
+    from{ opacity:0; transform:translateY(10px); }
+    to{ opacity:1; transform:translateY(0); }
+  }
+  .intro-accent{
+    background:linear-gradient(90deg, var(--zlata) 0%, #fff6d0 50%, var(--zlata) 100%);
+    background-size:200% auto;
+    -webkit-background-clip:text;
+    background-clip:text;
+    color:transparent;
+    animation:accentShine 2s linear infinite;
+  }
+  .intro-dots{
+    display:flex;
+    gap:8px;
+    opacity:0;
+    animation:introTitleIn .5s ease .9s forwards;
+  }
+  .intro-dots span{
+    width:9px;height:9px;border-radius:50%;
+    background:var(--zlata);
+    animation:introDotBounce 1s ease-in-out infinite;
+  }
+  .intro-dots span:nth-child(2){animation-delay:.15s;}
+  .intro-dots span:nth-child(3){animation-delay:.3s;}
+  @keyframes introDotBounce{
+    0%,100%{ transform:translateY(0); opacity:0.5; }
+    50%{ transform:translateY(-8px); opacity:1; }
+  }
   .wrap{max-width:920px;margin:0 auto;position:relative;z-index:1;}
 
   header{
@@ -108,6 +174,9 @@
   }
   .crest{
     flex-shrink:0;
+    width:88px;
+    height:88px;
+    object-fit:contain;
     filter:drop-shadow(0 4px 10px rgba(0,0,0,0.35));
     animation:crestEnter .7s cubic-bezier(.34,1.56,.64,1) both,
               crestGlow 3.5s ease-in-out .7s infinite,
@@ -772,6 +841,11 @@
 </style>
 </head>
 <body>
+<div id="introScreen">
+  <img src="grb.png" alt="NK Maribor" class="intro-crest">
+  <div class="intro-title">NK <span class="intro-accent">MARIBOR</span></div>
+  <div class="intro-dots"><span></span><span></span><span></span></div>
+</div>
 <div class="wrap">
 
 <header>
@@ -824,6 +898,8 @@
   </span>
 </button>
 <script>
+if("scrollRestoration" in history){ history.scrollRestoration = "manual"; }
+window.scrollTo(0, 0);
 // Uradno potrjene ure tekem (sproti dopolnjujemo, ko jih prvaliga.si objavi)
 const POTRJENE_URE = {
   1: "18:00",
@@ -1020,15 +1096,6 @@ setInterval(highlightNextMatch, 60000);
 
 updateCountdown();
 setInterval(updateCountdown, 1000);
-
-// samo ob prvem nalaganju strani nežno pomaknemo pogled do naslednje tekme
-window.addEventListener('load', () => {
-  const next = getNextFixture();
-  if(next){
-    const rowEl = document.getElementById(`match-${next.krog}`);
-    if(rowEl) rowEl.scrollIntoView({block:"center", behavior:"instant"});
-  }
-});
 
 /* ===== LESTVICA ===== */
 const KLUBI_26_27 = [
