@@ -78,7 +78,7 @@
     justify-content:center;
     gap:14px;
     overflow:hidden;
-    animation:introOut .7s cubic-bezier(.5,0,.7,0) 1.9s forwards;
+    animation:introOut .7s cubic-bezier(.5,0,.7,0) 3.9s forwards;
   }
   @keyframes introOut{
     0%{ opacity:1; visibility:visible; transform:scale(1); }
@@ -103,20 +103,26 @@
     letter-spacing:3px;
     text-transform:uppercase;
     text-shadow:0 2px 6px rgba(0,0,0,0.5);
-    animation:introCrestPop 1s cubic-bezier(.34,1.56,.64,1) both;
+    animation:introCrestPop 1s cubic-bezier(.34,1.56,.64,1) both,
+              introGrow 2.9s ease-in 1s forwards;
   }
   .intro-crest{
     width:130px;
     height:130px;
     object-fit:contain;
     filter:drop-shadow(0 6px 18px rgba(0,0,0,0.5));
-    animation:introCrestPop 1s cubic-bezier(.34,1.56,.64,1) both;
+    animation:introCrestPop 1s cubic-bezier(.34,1.56,.64,1) both,
+              introGrow 2.9s ease-in 1s forwards;
     position:relative;
   }
   @keyframes introCrestPop{
     0%{ opacity:0; transform:scale(0.2) rotate(-40deg); }
     60%{ opacity:1; transform:scale(1.12) rotate(6deg); }
     100%{ transform:scale(1) rotate(0deg); }
+  }
+  @keyframes introGrow{
+    0%{ transform:scale(1); }
+    100%{ transform:scale(1.35); }
   }
   .intro-title{
     color:#fff;
