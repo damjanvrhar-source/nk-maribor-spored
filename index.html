@@ -334,13 +334,13 @@
 
   .match{
     background:var(--card);
-    border-radius:12px;
+    border-radius:14px;
     padding:14px 16px;
-    margin-bottom:9px;
+    margin-bottom:10px;
     display:flex;
     align-items:center;
     gap:14px;
-    box-shadow:0 2px 6px rgba(46,15,77,0.08);
+    box-shadow:0 2px 8px rgba(46,15,77,0.09);
     border-left:5px solid var(--zlata);
     border-top:1px solid #eee2ff;
     transition:transform .18s ease, box-shadow .18s ease;
@@ -441,7 +441,7 @@
   .match.played .badge{
     opacity:0.65;
   }
-  .tekma .maribor{color:var(--vijola-2);position:relative;}
+  .tekma .maribor{color:var(--vijola-2);position:relative;display:inline-block;}
   .tekma .tim{white-space:nowrap;}
   .tekma .maribor::after{
     content:"";
@@ -475,6 +475,7 @@
     margin-left:8px;
     vertical-align:middle;
     letter-spacing:0.3px;
+    box-shadow:0 2px 5px rgba(0,0,0,0.12);
   }
   .badge.h{background:var(--zlata);color:#4a3800;position:relative;}
   .badge.h::after{
