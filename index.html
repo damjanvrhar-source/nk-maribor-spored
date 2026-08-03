@@ -87,10 +87,17 @@
   }
   .intro-halo{
     position:absolute;
-    width:220px; height:220px;
+    width:250px; height:250px;
     border-radius:50%;
     border:2px solid rgba(245,197,24,0.5);
     animation:introHaloPulse 1.8s ease-out .3s infinite;
+  }
+  .intro-halo-2{
+    position:absolute;
+    width:250px; height:250px;
+    border-radius:50%;
+    border:2px solid rgba(245,197,24,0.35);
+    animation:introHaloPulse 1.8s ease-out .9s infinite;
   }
   @keyframes introHaloPulse{
     0%{ transform:scale(0.4); opacity:0.9; }
@@ -101,16 +108,15 @@
     font-size:11px;
     font-weight:800;
     letter-spacing:3px;
-    text-transform:uppercase;
     text-shadow:0 2px 6px rgba(0,0,0,0.5);
     animation:introCrestPop 1s cubic-bezier(.34,1.56,.64,1) both,
               introGrow 2.9s ease-in 1s forwards;
   }
   .intro-crest{
-    width:130px;
-    height:130px;
+    width:190px;
+    height:190px;
     object-fit:contain;
-    filter:drop-shadow(0 6px 18px rgba(0,0,0,0.5));
+    filter:drop-shadow(0 6px 18px rgba(0,0,0,0.5)) drop-shadow(0 0 22px rgba(245,197,24,0.45));
     animation:introCrestPop 1s cubic-bezier(.34,1.56,.64,1) both,
               introGrow 2.9s ease-in 1s forwards;
     position:relative;
@@ -126,9 +132,10 @@
   }
   .intro-title{
     color:#fff;
-    font-size:26px;
+    font-size:40px;
     font-weight:900;
-    letter-spacing:1px;
+    letter-spacing:1.5px;
+    text-shadow:0 4px 16px rgba(0,0,0,0.5);
     opacity:0;
     animation:introTitleIn .6s ease .5s forwards;
   }
@@ -183,11 +190,15 @@
     overflow:hidden;
     box-shadow:0 14px 34px rgba(46,15,77,0.35);
     border:2px solid var(--zlata);
-    animation:headerEnter .6s cubic-bezier(.21,.86,.4,1) both;
+    animation:headerEnter .6s cubic-bezier(.21,.86,.4,1) both, headerGlow 4s ease-in-out 1s infinite;
   }
   @keyframes headerEnter{
     0%{ opacity:0; transform:translateY(-18px); }
     100%{ opacity:1; transform:translateY(0); }
+  }
+  @keyframes headerGlow{
+    0%,100%{ box-shadow:0 14px 34px rgba(46,15,77,0.35); }
+    50%{ box-shadow:0 14px 34px rgba(46,15,77,0.35), 0 0 26px rgba(245,197,24,0.35); }
   }
   header::before{
     content:"";
@@ -277,6 +288,16 @@
   @keyframes subFadeIn{
     0%{ opacity:0; transform:translateY(10px) scale(0.9); }
     100%{ opacity:0.95; transform:translateY(0) scale(1); }
+  }
+  .header-slogan{
+    margin-top:8px;
+    color:var(--zlata);
+    font-size:11px;
+    font-weight:800;
+    letter-spacing:2.5px;
+    text-shadow:0 2px 6px rgba(0,0,0,0.4);
+    opacity:0;
+    animation:subFadeIn .6s cubic-bezier(.21,.86,.4,1) .7s forwards;
   }
   .stripe-bar{
     height:10px;
@@ -909,10 +930,11 @@
 <body>
 <div id="introScreen">
   <div class="intro-halo"></div>
-  <div class="intro-slogan">EN KLUB, ENA ČAST</div>
+  <div class="intro-halo-2"></div>
+  <div class="intro-slogan">en klub, ena čast</div>
   <img src="grb.png" alt="NK Maribor" class="intro-crest">
   <div class="intro-title">NK <span class="intro-accent">MARIBOR</span></div>
-  <div class="intro-subtitle">Spored sezone 26/27</div>
+  <div class="intro-subtitle">Spored in lestvica sezone 26/27</div>
   <div class="intro-dots"><span></span><span></span><span></span></div>
 </div>
 <div class="wrap">
@@ -922,7 +944,8 @@
     <img class="crest" src="grb.png" alt="NK Maribor grb">
     <div class="header-text">
       <h1>NK <span class="accent">MARIBOR</span></h1>
-      <p class="sub">Spored sezone 26/27</p>
+      <p class="sub">Spored in lestvica sezone 26/27</p>
+      <div class="header-slogan">en klub, ena čast</div>
     </div>
   </div>
   <div class="stripe-bar"></div>
