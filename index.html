@@ -397,18 +397,23 @@
     font-size:13px;
   }
   .strelci-col{ text-align:center; }
-  .strelci-klub{
-    font-weight:800;
-    color:var(--vijola-dark);
-    margin-bottom:6px;
-    font-size:12.5px;
-  }
   .strelci-prazno{ color:var(--muted); }
+  .strelci-panel.open .strelci-col > div{
+    opacity:0;
+    animation:strelciRowIn .35s ease forwards;
+  }
+  .strelci-panel.open .strelci-col > div:nth-child(2){animation-delay:.15s;}
+  .strelci-panel.open .strelci-col > div:nth-child(3){animation-delay:.25s;}
+  .strelci-panel.open .strelci-col > div:nth-child(4){animation-delay:.35s;}
+  @keyframes strelciRowIn{
+    from{ opacity:0; transform:translateY(4px); }
+    to{ opacity:1; transform:translateY(0); }
+  }
   .strelci-content strong{color:var(--vijola-2);}
   .strelec-mb{
     color:var(--vijola-2);
     font-weight:800;
-    display:inline-block;
+    display:block;
     animation:strelecPulse 2s ease-in-out infinite;
   }
   @keyframes strelecPulse{
@@ -1171,11 +1176,9 @@ fixtures.forEach(f => {
     ${rezultat ? `<div class="strelci-panel" id="strelci-${krog}">
       <div class="strelci-grid">
         <div class="strelci-col">
-          <div class="strelci-klub">⚽ ${dom}</div>
           ${izrisiStrelce(strelciPodatki.dom, dom)}
         </div>
         <div class="strelci-col">
-          <div class="strelci-klub">⚽ ${gost}</div>
           ${izrisiStrelce(strelciPodatki.gost, gost)}
         </div>
       </div>
