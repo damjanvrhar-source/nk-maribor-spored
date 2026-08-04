@@ -390,21 +390,21 @@
   }
   .strelci-grid{
     display:grid;
-    grid-template-columns:56px 150px 1fr 170px;
+    grid-template-columns:1fr 1fr;
     gap:14px;
     padding-top:12px;
     border-top:1px dashed #e5d9f5;
     font-size:13px;
   }
-  .strelci-notranja{
-    grid-column:3;
-    display:grid;
-    grid-template-columns:95px auto 1fr;
-    gap:6px;
+  .strelci-col{ min-width:0; white-space:nowrap; text-align:center; }
+  .strelci-col-label{
+    font-size:11px;
+    font-weight:800;
+    color:var(--muted);
+    text-transform:uppercase;
+    letter-spacing:0.5px;
+    margin-bottom:6px;
   }
-  .strelci-col{ min-width:0; white-space:nowrap; }
-  .strelci-col.dom{ grid-column:1; text-align:right; }
-  .strelci-col.gost{ grid-column:3; text-align:left; }
   .strelci-prazno{ color:var(--muted); }
   .strelci-panel.open .strelci-col > div{
     opacity:0;
@@ -616,7 +616,7 @@
   .top-row{
     display:flex;
     gap:18px;
-    align-items:stretch;
+    align-items:flex-start;
     margin-bottom:22px;
   }
   .top-row .countdown{
@@ -653,9 +653,7 @@
   }
 
   .countdown{
-    background:
-      linear-gradient(150deg, rgba(46,15,77,0.35) 0%, rgba(91,31,140,0.3) 100%),
-      url('slika3.jpg') center 25% / cover no-repeat;
+    background:linear-gradient(150deg, var(--vijola-dark) 0%, var(--vijola) 100%);
     border:2px solid var(--zlata);
     border-radius:18px;
     padding:20px 24px;
@@ -665,6 +663,27 @@
     box-shadow:0 10px 26px rgba(46,15,77,0.3);
     position:relative;
     overflow:hidden;
+    min-height:280px;
+  }
+  .countdown-bg-img{
+    position:absolute;
+    inset:0;
+    width:100%;
+    height:100%;
+    object-fit:cover;
+    object-position:center 20%;
+    z-index:0;
+  }
+  .countdown::before{
+    content:"";
+    position:absolute;
+    inset:0;
+    background:linear-gradient(150deg, rgba(46,15,77,0.4) 0%, rgba(91,31,140,0.35) 100%);
+    z-index:1;
+  }
+  .countdown > *:not(.countdown-bg-img){
+    position:relative;
+    z-index:2;
   }
   @keyframes countdownGlow{
     0%,100%{ box-shadow:0 10px 26px rgba(46,15,77,0.3), 0 0 0 rgba(245,197,24,0); }
@@ -939,10 +958,6 @@
     .venue{width:100%;text-align:left;margin-top:4px;}
     .datum{width:120px;}
     .header-inner{padding:20px 18px 18px;}
-    .strelci-grid{grid-template-columns:1fr;}
-    .strelci-notranja{grid-column:1;grid-template-columns:1fr 1fr;}
-    .strelci-col.dom{grid-column:1;text-align:center;}
-    .strelci-col.gost{grid-column:2;text-align:center;}
   }
 
   /* ===== GLASBENI GUMB ===== */
@@ -1024,6 +1039,7 @@
 
 <div class="top-row">
   <div class="countdown" id="countdownBox">
+    <img src="slika3.jpg" alt="" class="countdown-bg-img">
     <div class="next-match" id="nextMatchLabel">Nalagam…</div>
     <div class="timer">
       <div class="unit"><div class="num" id="cd-days">--</div><div class="unit-label">dni</div></div>
@@ -1187,14 +1203,13 @@ fixtures.forEach(f => {
     </div>
     ${rezultat ? `<div class="strelci-panel" id="strelci-${krog}">
       <div class="strelci-grid">
-        <div class="strelci-notranja">
-          <div class="strelci-col dom">
-            ${izrisiStrelce(strelciPodatki.dom, dom)}
-          </div>
-          <div></div>
-          <div class="strelci-col gost">
-            ${izrisiStrelce(strelciPodatki.gost, gost)}
-          </div>
+        <div class="strelci-col">
+          <div class="strelci-col-label">${dom}</div>
+          ${izrisiStrelce(strelciPodatki.dom, dom)}
+        </div>
+        <div class="strelci-col">
+          <div class="strelci-col-label">${gost}</div>
+          ${izrisiStrelce(strelciPodatki.gost, gost)}
         </div>
       </div>
     </div>` : ''}
