@@ -358,15 +358,62 @@
     border-radius:14px;
     padding:14px 16px;
     margin-bottom:10px;
-    display:flex;
-    align-items:center;
-    gap:14px;
     box-shadow:0 2px 8px rgba(46,15,77,0.09);
     border-left:5px solid var(--zlata);
     border-top:1px solid #eee2ff;
     transition:transform .18s ease, box-shadow .18s ease;
     opacity:0;
     transform:translateY(18px) scale(0.97);
+  }
+  .match-row{
+    display:flex;
+    align-items:center;
+    gap:14px;
+  }
+  .strelci-panel{
+    max-height:0;
+    overflow:hidden;
+    opacity:0;
+    transition:max-height .35s ease, opacity .3s ease, margin-top .35s ease;
+  }
+  .strelci-panel.open{
+    max-height:200px;
+    opacity:1;
+    margin-top:12px;
+  }
+  .strelci-content{
+    padding-top:12px;
+    border-top:1px dashed #e5d9f5;
+    font-size:13px;
+    color:var(--vijola-dark);
+    line-height:1.6;
+  }
+  .strelci-grid{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:10px;
+    padding-top:12px;
+    border-top:1px dashed #e5d9f5;
+    font-size:13px;
+  }
+  .strelci-col{ text-align:center; }
+  .strelci-klub{
+    font-weight:800;
+    color:var(--vijola-dark);
+    margin-bottom:6px;
+    font-size:12.5px;
+  }
+  .strelci-prazno{ color:var(--muted); }
+  .strelci-content strong{color:var(--vijola-2);}
+  .strelec-mb{
+    color:var(--vijola-2);
+    font-weight:800;
+    display:inline-block;
+    animation:strelecPulse 2s ease-in-out infinite;
+  }
+  @keyframes strelecPulse{
+    0%,100%{ text-shadow:0 0 0 rgba(123,47,181,0); }
+    50%{ text-shadow:0 0 8px rgba(123,47,181,0.6); }
   }
   .match.visible{
     animation:matchFadeIn .55s cubic-bezier(.21,.86,.4,1) forwards;
@@ -452,8 +499,12 @@
     text-align:center;
     border-radius:8px;
     margin:0 4px;
+    cursor:pointer;
+    transition:transform .15s ease;
     animation:pillPop .3s ease backwards, rezultatGlow 2.4s ease-in-out .3s infinite;
   }
+  .rezultat:hover{ transform:scale(1.1); }
+  .rezultat:active{ transform:scale(0.95); }
   @keyframes rezultatGlow{
     0%,100%{ box-shadow:0 0 0 rgba(245,197,24,0); }
     50%{ box-shadow:0 0 10px rgba(245,197,24,0.65); }
@@ -1067,6 +1118,14 @@ const REZULTATI = {
   3: "1:1",
 };
 
+/* STRELCI ZADETKOV - ko je znano, kdo je zabil, dodaj sem: krog: "besedilo s strelci"
+   Primer: 2: "Kramarič 23', Rajčević 67', Šporn 89'" */
+const STRELCI = {
+  1: { dom: [], gost: [] },
+  2: { dom: ["Bradley M'bondo 13'", "Isaac Tshipamba 78'", "Tio Cipot 83'"], gost: [] },
+  3: { dom: ["Darko Hrka 79'"], gost: ["Žiga Repas 3'"] },
+};
+
 fixtures.forEach(f => {
   const [krog, datum, dom, gost, prizorisce, homeMatch, derby] = f;
   const isDerby = derby === "derby";
@@ -1090,17 +1149,48 @@ fixtures.forEach(f => {
   const domHtml = dom === "Maribor" ? '<span class="maribor">Maribor</span>' : `<span class="tim">${dom}</span>`;
   const gostHtml = gost === "Maribor" ? '<span class="maribor">Maribor</span>' : `<span class="tim">${gost}</span>`;
 
+  const strelciPodatki = STRELCI[krog] || {dom:[], gost:[]};
+  const izrisiStrelce = (seznam, imeKluba) => {
+    if(!seznam || seznam.length === 0) return '<div class="strelci-prazno">—</div>';
+    return seznam.map(s => {
+      const jeMB = imeKluba === "Maribor";
+      return `<div class="${jeMB ? 'strelec-mb' : ''}">${s}</div>`;
+    }).join('');
+  };
+
   row.innerHTML = `
-    <div class="krog">${krog}. krog</div>
-    <div class="datum">${label}<span class="dan">${rezultat ? 'Končano' : (ura ? dan + ' · ' + ura : '')}</span></div>
-    <div class="tekma">
-      <span class="tekma-glavno">${domHtml} ${rezultat ? `<span class="rezultat">${rezultat}</span>` : '—'} ${gostHtml}</span>
-      ${isDerby ? '<span class="badge derby">VEČNI DERBI</span>' : (rezultat ? '' : (homeMatch ? '<span class="badge h">DOMA</span>' : '<span class="badge a">V GOSTEH</span>'))}
+    <div class="match-row">
+      <div class="krog">${krog}. krog</div>
+      <div class="datum">${label}<span class="dan">${rezultat ? 'Končano' : (ura ? dan + ' · ' + ura : '')}</span></div>
+      <div class="tekma">
+        <span class="tekma-glavno">${domHtml} ${rezultat ? `<span class="rezultat" data-krog="${krog}">${rezultat}</span>` : '—'} ${gostHtml}</span>
+        ${isDerby ? '<span class="badge derby">VEČNI DERBI</span>' : (rezultat ? '' : (homeMatch ? '<span class="badge h">DOMA</span>' : '<span class="badge a">V GOSTEH</span>'))}
+      </div>
+      <div class="venue">${prizorisce}</div>
     </div>
-    <div class="venue">${prizorisce}</div>
+    ${rezultat ? `<div class="strelci-panel" id="strelci-${krog}">
+      <div class="strelci-grid">
+        <div class="strelci-col">
+          <div class="strelci-klub">⚽ ${dom}</div>
+          ${izrisiStrelce(strelciPodatki.dom, dom)}
+        </div>
+        <div class="strelci-col">
+          <div class="strelci-klub">⚽ ${gost}</div>
+          ${izrisiStrelce(strelciPodatki.gost, gost)}
+        </div>
+      </div>
+    </div>` : ''}
   `;
   row.id = `match-${krog}`;
   container.appendChild(row);
+});
+
+// Klik na rezultat odpre/zapre prikaz strelcev
+container.addEventListener('click', (e) => {
+  const rez = e.target.closest('.rezultat');
+  if(!rez) return;
+  const panel = document.getElementById(`strelci-${rez.dataset.krog}`);
+  if(panel) panel.classList.toggle('open');
 });
 
 // Postopno pojavljanje vrstic razporeda pri skrolanju navzdol
