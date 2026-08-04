@@ -390,15 +390,21 @@
   }
   .strelci-grid{
     display:grid;
-    grid-template-columns:1fr 1fr;
-    gap:10px;
+    grid-template-columns:56px 150px 1fr 170px;
+    gap:14px;
     padding-top:12px;
-    padding-left:234px;
-    padding-right:184px;
     border-top:1px dashed #e5d9f5;
     font-size:13px;
   }
-  .strelci-col{ text-align:center; }
+  .strelci-notranja{
+    grid-column:3;
+    display:grid;
+    grid-template-columns:95px auto 1fr;
+    gap:6px;
+  }
+  .strelci-col{ min-width:0; white-space:nowrap; }
+  .strelci-col.dom{ grid-column:1; text-align:right; }
+  .strelci-col.gost{ grid-column:3; text-align:left; }
   .strelci-prazno{ color:var(--muted); }
   .strelci-panel.open .strelci-col > div{
     opacity:0;
@@ -933,7 +939,10 @@
     .venue{width:100%;text-align:left;margin-top:4px;}
     .datum{width:120px;}
     .header-inner{padding:20px 18px 18px;}
-    .strelci-grid{padding-left:0;padding-right:0;}
+    .strelci-grid{grid-template-columns:1fr;}
+    .strelci-notranja{grid-column:1;grid-template-columns:1fr 1fr;}
+    .strelci-col.dom{grid-column:1;text-align:center;}
+    .strelci-col.gost{grid-column:2;text-align:center;}
   }
 
   /* ===== GLASBENI GUMB ===== */
@@ -1178,11 +1187,14 @@ fixtures.forEach(f => {
     </div>
     ${rezultat ? `<div class="strelci-panel" id="strelci-${krog}">
       <div class="strelci-grid">
-        <div class="strelci-col">
-          ${izrisiStrelce(strelciPodatki.dom, dom)}
-        </div>
-        <div class="strelci-col">
-          ${izrisiStrelce(strelciPodatki.gost, gost)}
+        <div class="strelci-notranja">
+          <div class="strelci-col dom">
+            ${izrisiStrelce(strelciPodatki.dom, dom)}
+          </div>
+          <div></div>
+          <div class="strelci-col gost">
+            ${izrisiStrelce(strelciPodatki.gost, gost)}
+          </div>
         </div>
       </div>
     </div>` : ''}
