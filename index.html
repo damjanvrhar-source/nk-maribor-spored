@@ -143,8 +143,31 @@
     font-size:20px;
     font-weight:700;
     letter-spacing:3px;
+    animation:headerTextGlow 3.5s ease-in-out 1.5s infinite;
+  }
+  .intro-year .digit{
+    display:inline-block;
     opacity:0;
-    animation:introTitleIn .5s ease .65s forwards, headerTextGlow 3.5s ease-in-out 1.5s infinite;
+  }
+  .intro-year .d1{ animation:flyD1 .8s cubic-bezier(.22,.9,.32,1) .6s forwards; }
+  .intro-year .d2{ animation:flyD2 .8s cubic-bezier(.22,.9,.32,1) .68s forwards; }
+  .intro-year .d3{ animation:flyD3 .8s cubic-bezier(.22,.9,.32,1) .76s forwards; }
+  .intro-year .d4{ animation:flyD4 .8s cubic-bezier(.22,.9,.32,1) .84s forwards; }
+  @keyframes flyD1{
+    0%{ opacity:0; transform:translate(-130px,-110px) rotate(-260deg) scale(0.3); }
+    100%{ opacity:1; transform:translate(0,0) rotate(0) scale(1); }
+  }
+  @keyframes flyD2{
+    0%{ opacity:0; transform:translate(140px,-95px) rotate(240deg) scale(0.3); }
+    100%{ opacity:1; transform:translate(0,0) rotate(0) scale(1); }
+  }
+  @keyframes flyD3{
+    0%{ opacity:0; transform:translate(-150px,115px) rotate(-220deg) scale(0.3); }
+    100%{ opacity:1; transform:translate(0,0) rotate(0) scale(1); }
+  }
+  @keyframes flyD4{
+    0%{ opacity:0; transform:translate(130px,105px) rotate(200deg) scale(0.3); }
+    100%{ opacity:1; transform:translate(0,0) rotate(0) scale(1); }
   }
   @keyframes introTitleIn{
     from{ opacity:0; transform:translateY(10px); }
@@ -1064,7 +1087,7 @@
   <div class="intro-slogan">en klub, ena čast</div>
   <img src="grb.png" alt="NK Maribor" class="intro-crest">
   <div class="intro-title">NK <span class="intro-accent">MARIBOR</span></div>
-  <div class="intro-year">1960</div>
+  <div class="intro-year"><span class="digit d1">1</span><span class="digit d2">9</span><span class="digit d3">6</span><span class="digit d4">0</span></div>
   <div class="intro-subtitle">Spored in lestvica sezone 26/27</div>
   <div class="intro-dots"><span></span><span></span><span></span></div>
 </div>
