@@ -104,13 +104,13 @@
     100%{ transform:scale(1.6); opacity:0; }
   }
   .intro-slogan{
-    color:var(--zlata);
+    color:#fff;
     font-size:11px;
     font-weight:800;
     letter-spacing:3px;
-    text-shadow:0 2px 6px rgba(0,0,0,0.5);
     animation:introCrestPop 1s cubic-bezier(.34,1.56,.64,1) both,
-              introGrow 2.9s ease-in 1s forwards;
+              introGrow 2.9s ease-in 1s forwards,
+              headerTextGlow 3.5s ease-in-out 1.5s infinite;
   }
   .intro-crest{
     width:190px;
@@ -135,9 +135,8 @@
     font-size:40px;
     font-weight:900;
     letter-spacing:1.5px;
-    text-shadow:0 4px 16px rgba(0,0,0,0.5);
     opacity:0;
-    animation:introTitleIn .6s ease .5s forwards;
+    animation:introTitleIn .6s ease .5s forwards, headerTextGlow 3.5s ease-in-out 1.5s infinite;
   }
   .intro-year{
     color:#fff;
@@ -145,7 +144,7 @@
     font-weight:700;
     letter-spacing:3px;
     opacity:0;
-    animation:introTitleIn .5s ease .65s forwards;
+    animation:introTitleIn .5s ease .65s forwards, headerTextGlow 3.5s ease-in-out 1.5s infinite;
   }
   @keyframes introTitleIn{
     from{ opacity:0; transform:translateY(10px); }
@@ -254,8 +253,7 @@
     font-size:54px;
     font-weight:900;
     letter-spacing:0.5px;
-    text-shadow:0 4px 18px rgba(0,0,0,0.5);
-    animation:titlePop .8s cubic-bezier(.2,1.4,.4,1) both, titleFlash 1.4s ease-out .8s;
+    animation:titlePop .8s cubic-bezier(.2,1.4,.4,1) both, titleFlash 1.4s ease-out .8s, headerTextGlow 3.5s ease-in-out 2.2s infinite;
   }
   .header-year{
     color:#fff;
@@ -263,7 +261,11 @@
     font-weight:700;
     letter-spacing:3px;
     opacity:0;
-    animation:subFadeIn .6s cubic-bezier(.21,.86,.4,1) .6s forwards;
+    animation:subFadeIn .6s cubic-bezier(.21,.86,.4,1) .6s forwards, headerTextGlow 3.5s ease-in-out 2.2s infinite;
+  }
+  @keyframes headerTextGlow{
+    0%,100%{ text-shadow:0 4px 18px rgba(0,0,0,0.5); }
+    50%{ text-shadow:0 4px 18px rgba(0,0,0,0.5), 0 0 22px rgba(255,255,255,0.55); }
   }
   @keyframes titlePop{
     0%{ opacity:0; transform:scale(1.5) translateY(-14px); filter:blur(8px); }
@@ -310,7 +312,7 @@
   }
   .header-slogan{
     margin:0;
-    color:var(--zlata);
+    color:#fff;
     font-size:11px;
     font-weight:800;
     letter-spacing:1.5px;
@@ -318,7 +320,7 @@
     white-space:nowrap;
     text-shadow:0 2px 6px rgba(0,0,0,0.4);
     opacity:0;
-    animation:subFadeIn .6s cubic-bezier(.21,.86,.4,1) .55s forwards;
+    animation:subFadeIn .6s cubic-bezier(.21,.86,.4,1) .55s forwards, headerTextGlow 3.5s ease-in-out 2.2s infinite;
   }
 
   .polsezon{
