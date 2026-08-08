@@ -153,37 +153,49 @@
   .intro-year .d2{ animation:flyD2 .7s cubic-bezier(.22,.9,.32,1) .68s forwards, fixD2 .4s ease-in-out 1.6s forwards; }
   .intro-year .d3{ animation:flyD3 .7s cubic-bezier(.22,.9,.32,1) .76s forwards, fixD3 .4s ease-in-out 1.6s forwards; }
   .intro-year .d4{ animation:flyD4 .7s cubic-bezier(.22,.9,.32,1) .84s forwards, fixD4 .4s ease-in-out 1.6s forwards; }
-  @keyframes flyD1{
-    0%{ opacity:0; transform:translate(-130px,-110px) rotate(-260deg) scale(0.3); }
-    100%{ opacity:1; transform:translate(0,0) rotate(180deg) scale(1); }
+  .intro-year .d1{ animation:chaosD1 5.3s cubic-bezier(.45,0,.2,1) .6s forwards; }
+  .intro-year .d2{ animation:chaosD2 5.22s cubic-bezier(.45,0,.2,1) .68s forwards; }
+  .intro-year .d3{ animation:chaosD3 5.14s cubic-bezier(.45,0,.2,1) .76s forwards; }
+  .intro-year .d4{ animation:chaosD4 5.06s cubic-bezier(.45,0,.2,1) .84s forwards; }
+  @keyframes chaosD1{
+    0%{ opacity:0; transform:translate(-130px,-110px) rotate(-260deg) skew(0,0) scale(0.3); }
+    9%{ opacity:1; transform:translate(8px,-14px) rotate(150deg) skew(14deg,6deg) scale(1.1); }
+    24%{ transform:translate(-16px,10px) rotate(-100deg) skew(-18deg,10deg) scale(0.88); }
+    38%{ transform:translate(10px,-9px) rotate(210deg) skew(16deg,-12deg) scale(1.08); }
+    52%{ transform:translate(-9px,13px) rotate(-150deg) skew(-10deg,8deg) scale(0.93); }
+    64%{ transform:translate(6px,-6px) rotate(120deg) skew(9deg,-6deg) scale(1.04); }
+    71%{ transform:translate(3px,-3px) rotate(-40deg) skew(4deg,-3deg) scale(1); }
+    100%{ opacity:1; transform:translate(0,0) rotate(0) skew(0,0) scale(1); }
   }
-  @keyframes flyD2{
-    0%{ opacity:0; transform:translate(140px,-95px) rotate(240deg) scale(0.3); }
-    100%{ opacity:1; transform:translate(0,0) rotate(180deg) scale(1); }
+  @keyframes chaosD2{
+    0%{ opacity:0; transform:translate(140px,-95px) rotate(240deg) skew(0,0) scale(0.3); }
+    9%{ opacity:1; transform:translate(-9px,12px) rotate(-160deg) skew(-16deg,8deg) scale(1.12); }
+    24%{ transform:translate(14px,-11px) rotate(110deg) skew(20deg,-9deg) scale(0.86); }
+    38%{ transform:translate(-11px,8px) rotate(-220deg) skew(-14deg,11deg) scale(1.07); }
+    52%{ transform:translate(8px,-13px) rotate(160deg) skew(12deg,-8deg) scale(0.92); }
+    64%{ transform:translate(-6px,6px) rotate(-110deg) skew(-9deg,6deg) scale(1.05); }
+    71%{ transform:translate(-3px,3px) rotate(35deg) skew(-4deg,3deg) scale(1); }
+    100%{ opacity:1; transform:translate(0,0) rotate(0) skew(0,0) scale(1); }
   }
-  @keyframes flyD3{
-    0%{ opacity:0; transform:translate(-150px,115px) rotate(-220deg) scale(0.3); }
-    100%{ opacity:1; transform:translate(0,0) rotate(180deg) scale(1); }
+  @keyframes chaosD3{
+    0%{ opacity:0; transform:translate(-150px,115px) rotate(-220deg) skew(0,0) scale(0.3); }
+    9%{ opacity:1; transform:translate(10px,10px) rotate(170deg) skew(15deg,-7deg) scale(1.09); }
+    24%{ transform:translate(-13px,-9px) rotate(-130deg) skew(-19deg,9deg) scale(0.89); }
+    38%{ transform:translate(9px,11px) rotate(190deg) skew(13deg,-10deg) scale(1.06); }
+    52%{ transform:translate(-8px,-10px) rotate(-160deg) skew(-11deg,7deg) scale(0.94); }
+    64%{ transform:translate(5px,7px) rotate(100deg) skew(8deg,-5deg) scale(1.03); }
+    71%{ transform:translate(3px,3px) rotate(-30deg) skew(3deg,-2deg) scale(1); }
+    100%{ opacity:1; transform:translate(0,0) rotate(0) skew(0,0) scale(1); }
   }
-  @keyframes flyD4{
-    0%{ opacity:0; transform:translate(130px,105px) rotate(200deg) scale(0.3); }
-    100%{ opacity:1; transform:translate(0,0) rotate(180deg) scale(1); }
-  }
-  @keyframes fixD1{
-    0%{ transform:translate(0,0) rotate(180deg) scale(1); }
-    100%{ transform:translate(0,0) rotate(0) scale(1); }
-  }
-  @keyframes fixD2{
-    0%{ transform:translate(0,0) rotate(180deg) scale(1); }
-    100%{ transform:translate(0,0) rotate(0) scale(1); }
-  }
-  @keyframes fixD3{
-    0%{ transform:translate(0,0) rotate(180deg) scale(1); }
-    100%{ transform:translate(0,0) rotate(0) scale(1); }
-  }
-  @keyframes fixD4{
-    0%{ transform:translate(0,0) rotate(180deg) scale(1); }
-    100%{ transform:translate(0,0) rotate(0) scale(1); }
+  @keyframes chaosD4{
+    0%{ opacity:0; transform:translate(130px,105px) rotate(200deg) skew(0,0) scale(0.3); }
+    9%{ opacity:1; transform:translate(-8px,-11px) rotate(-180deg) skew(-13deg,7deg) scale(1.11); }
+    24%{ transform:translate(12px,9px) rotate(140deg) skew(17deg,-8deg) scale(0.87); }
+    38%{ transform:translate(-10px,-8px) rotate(-200deg) skew(-15deg,10deg) scale(1.07); }
+    52%{ transform:translate(7px,10px) rotate(150deg) skew(10deg,-7deg) scale(0.93); }
+    64%{ transform:translate(-5px,-6px) rotate(-90deg) skew(-8deg,5deg) scale(1.04); }
+    71%{ transform:translate(-3px,-3px) rotate(25deg) skew(-3deg,2deg) scale(1); }
+    100%{ opacity:1; transform:translate(0,0) rotate(0) skew(0,0) scale(1); }
   }
   @keyframes introTitleIn{
     from{ opacity:0; transform:translateY(10px); }
@@ -1184,7 +1196,7 @@ setTimeout(() => {
     osc.start(ctx.currentTime);
     osc.stop(ctx.currentTime + 0.3);
   }catch(e){ /* brskalnik ne podpira zvoka - tiho prezremo */ }
-}, 2000);
+}, 5900);
 // Uradno potrjene ure tekem (sproti dopolnjujemo, ko jih prvaliga.si objavi)
 const POTRJENE_URE = {
   1: "18:00",
