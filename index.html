@@ -139,6 +139,14 @@
     opacity:0;
     animation:introTitleIn .6s ease .5s forwards;
   }
+  .intro-year{
+    color:var(--zlata);
+    font-size:14px;
+    font-weight:700;
+    letter-spacing:3px;
+    opacity:0;
+    animation:introTitleIn .5s ease .65s forwards;
+  }
   @keyframes introTitleIn{
     from{ opacity:0; transform:translateY(10px); }
     to{ opacity:1; transform:translateY(0); }
@@ -217,9 +225,9 @@
     position:relative;
     display:flex;
     align-items:center;
-    gap:22px;
+    justify-content:center;
     padding:22px 28px;
-    flex-wrap:wrap;
+    min-height:130px;
   }
   .crest{
     flex-shrink:0;
@@ -245,14 +253,22 @@
     25%{ transform:rotate(-3deg); }
     75%{ transform:rotate(3deg); }
   }
-  .header-text{flex:1;min-width:220px;text-align:center;}
+  .header-text{width:100%;text-align:center;}
   header h1{
-    margin:0 0 8px;
+    margin:0 0 4px;
     font-size:54px;
     font-weight:900;
     letter-spacing:0.5px;
     text-shadow:0 4px 18px rgba(0,0,0,0.5);
     animation:titlePop .8s cubic-bezier(.2,1.4,.4,1) both, titleFlash 1.4s ease-out .8s;
+  }
+  .header-year{
+    color:var(--zlata);
+    font-size:13px;
+    font-weight:700;
+    letter-spacing:3px;
+    opacity:0;
+    animation:subFadeIn .6s cubic-bezier(.21,.86,.4,1) .6s forwards;
   }
   @keyframes titlePop{
     0%{ opacity:0; transform:scale(1.5) translateY(-14px); filter:blur(8px); }
@@ -292,6 +308,10 @@
     100%{ opacity:0.95; transform:translateY(0) scale(1); }
   }
   .header-crest-wrap{
+    position:absolute;
+    left:28px;
+    top:50%;
+    transform:translateY(-50%);
     display:flex;
     flex-direction:column;
     align-items:center;
@@ -987,7 +1007,8 @@
     .match-row{flex-wrap:wrap;}
     .venue{width:100%;text-align:left;margin-top:4px;}
     .datum{width:120px;}
-    .header-inner{padding:20px 18px 18px;}
+    .header-inner{padding:20px 18px 18px;flex-direction:column;}
+    .header-crest-wrap{position:static;transform:none;margin-bottom:6px;}
     .strelci-grid{padding-left:0;padding-right:0;}
   }
 
@@ -1051,6 +1072,7 @@
   <div class="intro-slogan">en klub, ena čast</div>
   <img src="grb.png" alt="NK Maribor" class="intro-crest">
   <div class="intro-title">NK <span class="intro-accent">MARIBOR</span></div>
+  <div class="intro-year">1960</div>
   <div class="intro-subtitle">Spored in lestvica sezone 26/27</div>
   <div class="intro-dots"><span></span><span></span><span></span></div>
 </div>
@@ -1064,6 +1086,7 @@
     </div>
     <div class="header-text">
       <h1>NK <span class="accent">MARIBOR</span></h1>
+      <div class="header-year">1960</div>
     </div>
   </div>
   <p class="sub">Spored in lestvica sezone 26/27</p>
