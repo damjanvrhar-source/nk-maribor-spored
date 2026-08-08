@@ -78,12 +78,24 @@
     justify-content:center;
     gap:14px;
     overflow:hidden;
-    animation:introOut 1.1s ease-in-out 5.9s forwards;
+    animation:introOut 1.1s ease-in-out 4.9s forwards;
   }
   @keyframes introOut{
     0%{ opacity:1; visibility:visible; transform:scale(1); filter:blur(0); }
     60%{ opacity:0.4; visibility:visible; transform:scale(1.08); filter:blur(6px); }
     100%{ opacity:0; visibility:hidden; pointer-events:none; transform:scale(1.15); filter:blur(14px); }
+  }
+  .intro-flash{
+    position:absolute;
+    inset:0;
+    background:#fff;
+    z-index:10;
+    animation:introFlash .5s ease-out forwards;
+    pointer-events:none;
+  }
+  @keyframes introFlash{
+    0%{ opacity:1; }
+    100%{ opacity:0; }
   }
   .intro-halo{
     position:absolute;
@@ -100,8 +112,8 @@
     animation:introHaloPulse 1.8s ease-out .9s infinite;
   }
   @keyframes introHaloPulse{
-    0%{ transform:scale(0.4); opacity:0.9; }
-    100%{ transform:scale(1.6); opacity:0; }
+    0%{ transform:scale(0.3); opacity:1; }
+    100%{ transform:scale(2); opacity:0; }
   }
   .intro-slogan{
     color:#fff;
@@ -109,16 +121,16 @@
     font-weight:800;
     letter-spacing:3px;
     animation:introCrestPop 1s cubic-bezier(.34,1.56,.64,1) both,
-              introGrow 4.9s ease-in 1s forwards,
+              introGrow 3.9s ease-in 1s forwards,
               headerTextGlow 3.5s ease-in-out 1.5s infinite;
   }
   .intro-crest{
-    width:190px;
-    height:190px;
+    width:215px;
+    height:215px;
     object-fit:contain;
-    filter:drop-shadow(0 6px 18px rgba(0,0,0,0.5)) drop-shadow(0 0 22px rgba(245,197,24,0.45));
+    filter:drop-shadow(0 6px 18px rgba(0,0,0,0.5)) drop-shadow(0 0 26px rgba(245,197,24,0.55));
     animation:introCrestPop 1s cubic-bezier(.34,1.56,.64,1) both,
-              introGrow 4.9s ease-in 1s forwards;
+              introGrow 3.9s ease-in 1s forwards;
     position:relative;
   }
   @keyframes introCrestPop{
@@ -149,14 +161,10 @@
     display:inline-block;
     opacity:0;
   }
-  .intro-year .d1{ animation:flyD1 .7s cubic-bezier(.22,.9,.32,1) .6s forwards, fixD1 .4s ease-in-out 1.6s forwards; }
-  .intro-year .d2{ animation:flyD2 .7s cubic-bezier(.22,.9,.32,1) .68s forwards, fixD2 .4s ease-in-out 1.6s forwards; }
-  .intro-year .d3{ animation:flyD3 .7s cubic-bezier(.22,.9,.32,1) .76s forwards, fixD3 .4s ease-in-out 1.6s forwards; }
-  .intro-year .d4{ animation:flyD4 .7s cubic-bezier(.22,.9,.32,1) .84s forwards, fixD4 .4s ease-in-out 1.6s forwards; }
-  .intro-year .d1{ animation:chaosD1 5.3s cubic-bezier(.45,0,.2,1) .6s forwards; }
-  .intro-year .d2{ animation:chaosD2 5.22s cubic-bezier(.45,0,.2,1) .68s forwards; }
-  .intro-year .d3{ animation:chaosD3 5.14s cubic-bezier(.45,0,.2,1) .76s forwards; }
-  .intro-year .d4{ animation:chaosD4 5.06s cubic-bezier(.45,0,.2,1) .84s forwards; }
+  .intro-year .d1{ animation:chaosD1 4.3s cubic-bezier(.45,0,.2,1) .6s forwards; }
+  .intro-year .d2{ animation:chaosD2 4.22s cubic-bezier(.45,0,.2,1) .68s forwards; }
+  .intro-year .d3{ animation:chaosD3 4.14s cubic-bezier(.45,0,.2,1) .76s forwards; }
+  .intro-year .d4{ animation:chaosD4 4.06s cubic-bezier(.45,0,.2,1) .84s forwards; }
   @keyframes chaosD1{
     0%{ opacity:0; transform:translate(-130px,-110px) rotate(-260deg) skew(0,0) scale(0.3); }
     9%{ opacity:1; transform:translate(8px,-14px) rotate(150deg) skew(14deg,6deg) scale(1.1); }
@@ -1110,6 +1118,7 @@
 </head>
 <body>
 <div id="introScreen">
+  <div class="intro-flash"></div>
   <div class="intro-halo"></div>
   <div class="intro-halo-2"></div>
   <div class="intro-slogan">en klub, ena čast</div>
@@ -1196,7 +1205,7 @@ setTimeout(() => {
     osc.start(ctx.currentTime);
     osc.stop(ctx.currentTime + 0.3);
   }catch(e){ /* brskalnik ne podpira zvoka - tiho prezremo */ }
-}, 5900);
+}, 4900);
 // Uradno potrjene ure tekem (sproti dopolnjujemo, ko jih prvaliga.si objavi)
 const POTRJENE_URE = {
   1: "18:00",
