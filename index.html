@@ -807,25 +807,6 @@
     margin-bottom:22px;
     border:2px solid var(--zlata);
   }
-  .graf-wrap{
-    background:var(--card);
-    border-radius:16px;
-    overflow:hidden;
-    box-shadow:0 8px 22px rgba(46,15,77,0.18);
-    margin-bottom:22px;
-    border:2px solid var(--zlata);
-  }
-  .graf-wrap .table-header{
-    background:linear-gradient(90deg,var(--vijola),var(--vijola-2),var(--vijola));
-    background-size:200% 100%;
-    animation:tableHeaderSheen 6s ease-in-out infinite;
-    color:#fff;
-    padding:12px 16px;
-    font-size:13px;
-    font-weight:800;
-    text-transform:uppercase;
-    letter-spacing:1px;
-  }
   .table-header{
     background:linear-gradient(90deg,var(--vijola),var(--vijola-2),var(--vijola));
     background-size:200% 100%;
@@ -1076,7 +1057,6 @@
     50%{ transform:scaleY(1); }
   }
 </style>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.0/chart.umd.min.js"></script>
 </head>
 <body>
 <div id="introScreen">
@@ -1120,13 +1100,6 @@
       <span class="updated" id="lestvicaUpdated"></span>
     </div>
     <div id="lestvicaContent" class="lestvica-note">Nalagam lestvico…</div>
-  </div>
-</div>
-
-<div class="graf-wrap">
-  <div class="table-header">Gibanje Maribora po lestvici</div>
-  <div style="padding:16px;">
-    <canvas id="pozicijaChart" height="140"></canvas>
   </div>
 </div>
 
@@ -1403,58 +1376,6 @@ updateCountdown();
 setInterval(updateCountdown, 1000);
 
 /* ===== LESTVICA ===== */
-/* GIBANJE MARIBORA PO LESTVICI SKOZI SEZONO
-   Po vsakem krogu se tu doda: krog: uvrstitev (1-10)
-   Zgodovina pred krogom 3 ni bila sproti beležena. */
-const MARIBOR_POZICIJA = {
-  3: 3,
-};
-
-function narisiPozicijoGraf(){
-  const canvas = document.getElementById('pozicijaChart');
-  if(!canvas || typeof Chart === 'undefined') return;
-  const krogi = Object.keys(MARIBOR_POZICIJA).map(Number).sort((a,b) => a-b);
-  const pozicije = krogi.map(k => MARIBOR_POZICIJA[k]);
-
-  new Chart(canvas, {
-    type: 'line',
-    data: {
-      labels: krogi.map(k => `${k}. krog`),
-      datasets: [{
-        label: 'Uvrstitev',
-        data: pozicije,
-        borderColor: '#7b2fb5',
-        backgroundColor: 'rgba(123,47,181,0.12)',
-        borderWidth: 3,
-        fill: true,
-        tension: 0.3,
-        pointBackgroundColor: '#f5c518',
-        pointBorderColor: '#7b2fb5',
-        pointBorderWidth: 2,
-        pointRadius: 6,
-        pointHoverRadius: 8,
-      }]
-    },
-    options: {
-      responsive: true,
-      plugins: { legend: { display: false } },
-      scales: {
-        y: {
-          reverse: true,
-          min: 1,
-          max: 10,
-          ticks: { stepSize: 1, color: '#7d6d95', font: { size: 11 } },
-          grid: { color: 'rgba(123,47,181,0.08)' }
-        },
-        x: {
-          ticks: { color: '#7d6d95', font: { size: 11 } },
-          grid: { display: false }
-        }
-      }
-    }
-  });
-}
-narisiPozicijoGraf();
 
 const KLUBI_26_27 = [
   "Aluminij", "Bravo", "Brinje-Grosuplje", "Celje", "Kalcer Radomlje",
