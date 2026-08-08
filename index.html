@@ -223,8 +223,8 @@
   }
   .crest{
     flex-shrink:0;
-    width:88px;
-    height:88px;
+    width:118px;
+    height:118px;
     object-fit:contain;
     filter:drop-shadow(0 4px 10px rgba(0,0,0,0.35));
     animation:crestEnter .7s cubic-bezier(.34,1.56,.64,1) both,
@@ -248,7 +248,7 @@
   .header-text{flex:1;min-width:220px;}
   header h1{
     margin:0 0 8px;
-    font-size:44px;
+    font-size:54px;
     font-weight:900;
     letter-spacing:0.5px;
     text-shadow:0 4px 18px rgba(0,0,0,0.5);
@@ -265,7 +265,7 @@
     100%{ text-shadow:0 4px 18px rgba(0,0,0,0.5), 0 0 0 rgba(245,197,24,0); }
   }
   header h1 .accent{
-    background:linear-gradient(90deg, var(--zlata) 0%, #fff6d0 50%, var(--zlata) 100%);
+    background:linear-gradient(90deg, #ffffff 0%, #d9b8f2 50%, #ffffff 100%);
     background-size:200% auto;
     -webkit-background-clip:text;
     background-clip:text;
@@ -277,9 +277,11 @@
     100%{ background-position:-200% 0; }
   }
   header p.sub{
-    margin:0;
+    margin:6px 0 16px;
+    padding:0 28px;
+    text-align:center;
     opacity:0.95;
-    font-size:16px;
+    font-size:15px;
     font-weight:600;
     letter-spacing:0.4px;
     text-shadow:0 2px 8px rgba(0,0,0,0.35);
@@ -289,40 +291,24 @@
     0%{ opacity:0; transform:translateY(10px) scale(0.9); }
     100%{ opacity:0.95; transform:translateY(0) scale(1); }
   }
+  .header-crest-wrap{
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    gap:6px;
+    flex-shrink:0;
+  }
   .header-slogan{
-    margin:4px 0 8px;
+    margin:0;
     color:var(--zlata);
-    font-size:13px;
+    font-size:11px;
     font-weight:800;
-    letter-spacing:2.5px;
+    letter-spacing:1.5px;
+    text-align:center;
+    white-space:nowrap;
     text-shadow:0 2px 6px rgba(0,0,0,0.4);
     opacity:0;
     animation:subFadeIn .6s cubic-bezier(.21,.86,.4,1) .55s forwards;
-  }
-  .stripe-bar{
-    height:10px;
-    width:100%;
-    position:relative;
-    overflow:hidden;
-    background:repeating-linear-gradient(90deg,var(--zlata) 0 24px,var(--vijola-2) 24px 48px);
-    background-size:96px 10px;
-    animation:stripeMove 2.5s linear infinite;
-  }
-  @keyframes stripeMove{
-    0%{ background-position:0 0; }
-    100%{ background-position:96px 0; }
-  }
-  .stripe-bar::after{
-    content:"";
-    position:absolute; inset:0;
-    width:40%;
-    background:linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.65) 50%, transparent 100%);
-    animation:stripeShine 2.4s ease-in-out infinite;
-    pointer-events:none;
-  }
-  @keyframes stripeShine{
-    0%{ transform:translateX(-140%); }
-    100%{ transform:translateX(360%); }
   }
 
   .polsezon{
@@ -1072,14 +1058,15 @@
 
 <header>
   <div class="header-inner">
-    <img class="crest" src="grb.png" alt="NK Maribor grb">
+    <div class="header-crest-wrap">
+      <img class="crest" src="grb.png" alt="NK Maribor grb">
+      <div class="header-slogan">en klub, ena čast</div>
+    </div>
     <div class="header-text">
       <h1>NK <span class="accent">MARIBOR</span></h1>
-      <div class="header-slogan">en klub, ena čast</div>
-      <p class="sub">Spored in lestvica sezone 26/27</p>
     </div>
   </div>
-  <div class="stripe-bar"></div>
+  <p class="sub">Spored in lestvica sezone 26/27</p>
 </header>
 
 <div class="top-row">
