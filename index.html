@@ -78,7 +78,7 @@
     justify-content:center;
     gap:14px;
     overflow:hidden;
-    animation:introOut .7s cubic-bezier(.5,0,.7,0) 3.9s forwards;
+    animation:introOut .7s cubic-bezier(.5,0,.7,0) 5.9s forwards;
   }
   @keyframes introOut{
     0%{ opacity:1; visibility:visible; transform:scale(1); }
@@ -109,7 +109,7 @@
     font-weight:800;
     letter-spacing:3px;
     animation:introCrestPop 1s cubic-bezier(.34,1.56,.64,1) both,
-              introGrow 2.9s ease-in 1s forwards,
+              introGrow 4.9s ease-in 1s forwards,
               headerTextGlow 3.5s ease-in-out 1.5s infinite;
   }
   .intro-crest{
@@ -118,7 +118,7 @@
     object-fit:contain;
     filter:drop-shadow(0 6px 18px rgba(0,0,0,0.5)) drop-shadow(0 0 22px rgba(245,197,24,0.45));
     animation:introCrestPop 1s cubic-bezier(.34,1.56,.64,1) both,
-              introGrow 2.9s ease-in 1s forwards;
+              introGrow 4.9s ease-in 1s forwards;
     position:relative;
   }
   @keyframes introCrestPop{
@@ -149,25 +149,41 @@
     display:inline-block;
     opacity:0;
   }
-  .intro-year .d1{ animation:flyD1 .8s cubic-bezier(.22,.9,.32,1) .6s forwards; }
-  .intro-year .d2{ animation:flyD2 .8s cubic-bezier(.22,.9,.32,1) .68s forwards; }
-  .intro-year .d3{ animation:flyD3 .8s cubic-bezier(.22,.9,.32,1) .76s forwards; }
-  .intro-year .d4{ animation:flyD4 .8s cubic-bezier(.22,.9,.32,1) .84s forwards; }
+  .intro-year .d1{ animation:flyD1 .7s cubic-bezier(.22,.9,.32,1) .6s forwards, fixD1 .4s ease-in-out 1.6s forwards; }
+  .intro-year .d2{ animation:flyD2 .7s cubic-bezier(.22,.9,.32,1) .68s forwards, fixD2 .4s ease-in-out 1.6s forwards; }
+  .intro-year .d3{ animation:flyD3 .7s cubic-bezier(.22,.9,.32,1) .76s forwards, fixD3 .4s ease-in-out 1.6s forwards; }
+  .intro-year .d4{ animation:flyD4 .7s cubic-bezier(.22,.9,.32,1) .84s forwards, fixD4 .4s ease-in-out 1.6s forwards; }
   @keyframes flyD1{
     0%{ opacity:0; transform:translate(-130px,-110px) rotate(-260deg) scale(0.3); }
-    100%{ opacity:1; transform:translate(0,0) rotate(0) scale(1); }
+    100%{ opacity:1; transform:translate(0,0) rotate(180deg) scale(1); }
   }
   @keyframes flyD2{
     0%{ opacity:0; transform:translate(140px,-95px) rotate(240deg) scale(0.3); }
-    100%{ opacity:1; transform:translate(0,0) rotate(0) scale(1); }
+    100%{ opacity:1; transform:translate(0,0) rotate(180deg) scale(1); }
   }
   @keyframes flyD3{
     0%{ opacity:0; transform:translate(-150px,115px) rotate(-220deg) scale(0.3); }
-    100%{ opacity:1; transform:translate(0,0) rotate(0) scale(1); }
+    100%{ opacity:1; transform:translate(0,0) rotate(180deg) scale(1); }
   }
   @keyframes flyD4{
     0%{ opacity:0; transform:translate(130px,105px) rotate(200deg) scale(0.3); }
-    100%{ opacity:1; transform:translate(0,0) rotate(0) scale(1); }
+    100%{ opacity:1; transform:translate(0,0) rotate(180deg) scale(1); }
+  }
+  @keyframes fixD1{
+    0%{ transform:translate(0,0) rotate(180deg) scale(1); }
+    100%{ transform:translate(0,0) rotate(0) scale(1); }
+  }
+  @keyframes fixD2{
+    0%{ transform:translate(0,0) rotate(180deg) scale(1); }
+    100%{ transform:translate(0,0) rotate(0) scale(1); }
+  }
+  @keyframes fixD3{
+    0%{ transform:translate(0,0) rotate(180deg) scale(1); }
+    100%{ transform:translate(0,0) rotate(0) scale(1); }
+  }
+  @keyframes fixD4{
+    0%{ transform:translate(0,0) rotate(180deg) scale(1); }
+    100%{ transform:translate(0,0) rotate(0) scale(1); }
   }
   @keyframes introTitleIn{
     from{ opacity:0; transform:translateY(10px); }
