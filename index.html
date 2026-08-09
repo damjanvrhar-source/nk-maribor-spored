@@ -1280,6 +1280,7 @@ const REZULTATI = {
   1: "0:0",
   2: "3:0",
   3: "1:1",
+  4: "2:0",
 };
 
 /* STRELCI ZADETKOV - ko je znano, kdo je zabil, dodaj sem: krog: "besedilo s strelci"
@@ -1288,6 +1289,7 @@ const STRELCI = {
   1: { dom: [], gost: [] },
   2: { dom: ["Bradley M'bondo 13'", "Isaac Tshipamba 78'", "Tio Cipot 83'"], gost: [] },
   3: { dom: ["Darko Hrka 79'"], gost: ["Žiga Repas 3'"] },
+  4: { dom: ["Žiga Repas 10'", "Isaac Tshipamba 65'"], gost: [] },
 };
 
 fixtures.forEach(f => {
@@ -1479,22 +1481,22 @@ const PREJSNJA_POZICIJA = {
   "Bravo": 2,
   "Maribor": 3,
   "Koper": 4,
-  "Celje": 8,
+  "Celje": 5,
   "Brinje-Grosuplje": 6,
   "Mura": 7,
-  "Olimpija": 7,
+  "Olimpija": 8,
   "Aluminij": 9,
   "Kalcer Radomlje": 10,
 };
 
 const LESTVICA_PODATKI = {
-  "Aluminij":          {played:2, wins:0, draws:1, losses:1, goalsFor:0, goalsAgainst:1},
+  "Aluminij":          {played:3, wins:0, draws:2, losses:1, goalsFor:1, goalsAgainst:2},
   "Bravo":             {played:3, wins:2, draws:0, losses:1, goalsFor:4, goalsAgainst:4},
   "Brinje-Grosuplje":  {played:3, wins:1, draws:1, losses:1, goalsFor:3, goalsAgainst:4},
   "Celje":             {played:3, wins:1, draws:2, losses:0, goalsFor:4, goalsAgainst:3},
   "Kalcer Radomlje":   {played:3, wins:0, draws:1, losses:2, goalsFor:3, goalsAgainst:6},
-  "Koper":             {played:3, wins:1, draws:2, losses:0, goalsFor:5, goalsAgainst:3},
-  "Maribor":           {played:3, wins:1, draws:2, losses:0, goalsFor:4, goalsAgainst:1},
+  "Koper":             {played:4, wins:1, draws:2, losses:1, goalsFor:5, goalsAgainst:5},
+  "Maribor":           {played:4, wins:2, draws:2, losses:0, goalsFor:6, goalsAgainst:1},
   "Mura":              {played:3, wins:1, draws:1, losses:1, goalsFor:5, goalsAgainst:7},
   "Nafta 1903":        {played:3, wins:2, draws:0, losses:1, goalsFor:8, goalsAgainst:4},
   "Olimpija":          {played:4, wins:1, draws:0, losses:3, goalsFor:1, goalsAgainst:4},
