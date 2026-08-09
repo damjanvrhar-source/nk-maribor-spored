@@ -763,15 +763,15 @@
     margin-bottom:16px;
   }
   .countdown .match-title{
-    font-size:22px;
+    font-size:26px;
     font-weight:900;
     letter-spacing:0.3px;
-    text-shadow:0 2px 10px rgba(0,0,0,0.85), 0 0 20px rgba(0,0,0,0.5);
+    text-shadow:0 2px 12px rgba(0,0,0,0.95), 0 0 24px rgba(0,0,0,0.7);
     animation:nextMatchPop .7s cubic-bezier(.34,1.56,.64,1) both, venueBreathe 4s ease-in-out 1s infinite;
   }
   .countdown .kickoff-line{
-    margin-top:6px;
-    font-size:15px;
+    margin-top:8px;
+    font-size:18px;
     padding:0 10px;
     animation:nextMatchPop .6s cubic-bezier(.34,1.56,.64,1) .15s both, venueBreathe 4s ease-in-out 1s infinite;
   }
@@ -785,11 +785,11 @@
   }
   .countdown .next-match .maribor{color:var(--zlata);}
   .countdown .venue-mini{
-    font-size:13px;
-    font-weight:600;
+    font-size:15px;
+    font-weight:700;
     display:block;
     margin-top:8px;
-    text-shadow:0 2px 8px rgba(0,0,0,0.85);
+    text-shadow:0 2px 10px rgba(0,0,0,0.95);
     opacity:0;
     animation:nextMatchPop .6s cubic-bezier(.34,1.56,.64,1) .3s forwards, venueBreathe 4s ease-in-out 1s infinite;
   }
@@ -811,11 +811,11 @@
     margin-top:14px;
   }
   .timer .unit{
-    background:rgba(20,8,35,0.45);
-    border:1px solid rgba(245,197,24,0.45);
-    border-radius:12px;
-    padding:10px 16px;
-    min-width:68px;
+    background:rgba(20,8,35,0.55);
+    border:1px solid rgba(245,197,24,0.5);
+    border-radius:14px;
+    padding:14px 18px;
+    min-width:76px;
     transition:transform .2s ease, background-color .2s ease;
   }
   .timer .unit:hover{
@@ -823,17 +823,17 @@
     background:rgba(245,197,24,0.18);
   }
   .timer .num{
-    font-size:28px;
+    font-size:36px;
     font-weight:900;
     font-variant-numeric:tabular-nums;
     color:var(--zlata);
     line-height:1;
-    text-shadow:0 2px 8px rgba(0,0,0,0.8);
+    text-shadow:0 2px 10px rgba(0,0,0,0.95);
     animation:numGlow 2.4s ease-in-out infinite;
   }
   @keyframes numGlow{
-    0%,100%{ text-shadow:0 2px 8px rgba(0,0,0,0.8); }
-    50%{ text-shadow:0 2px 8px rgba(0,0,0,0.8), 0 0 12px rgba(245,197,24,0.6); }
+    0%,100%{ text-shadow:0 2px 10px rgba(0,0,0,0.95); }
+    50%{ text-shadow:0 2px 10px rgba(0,0,0,0.95), 0 0 14px rgba(245,197,24,0.7); }
   }
   @keyframes numPop{
     0%{ transform:scale(1.35); opacity:0.5; }
@@ -843,10 +843,11 @@
     animation:numPop 0.35s ease-out;
   }
   .timer .unit-label{
-    font-size:10px;
+    font-size:11px;
     text-transform:uppercase;
     letter-spacing:1px;
-    opacity:0.75;
+    opacity:0.9;
+    text-shadow:0 1px 4px rgba(0,0,0,0.8);
     margin-top:4px;
   }
   .countdown .note{
