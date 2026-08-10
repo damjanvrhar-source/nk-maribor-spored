@@ -1229,11 +1229,6 @@
   </div>
 </div>
 
-<div class="table-wrap" id="strelciBox">
-  <div class="table-header">Lista strelcev · NK Maribor</div>
-  <div id="strelciListaContent" class="lestvica-note">Nalagam strelce…</div>
-</div>
-
 <div id="fixtures"></div>
 
 <footer>
@@ -1349,40 +1344,6 @@ function izrisiStrelceZaLestvico(){
   return naslov + vrstice;
 }
 
-function narisiListoStrelcev(){
-  const el = document.getElementById('strelciListaContent');
-  if(!el) return;
-
-  const seznam = izracunajStrelceMaribora();
-
-  if(seznam.length === 0){
-    el.innerHTML = '<div class="lestvica-note">Strelci še niso vneseni.</div>';
-    return;
-  }
-
-  const vrstice = seznam.map(([ime, st], i) => `
-    <tr>
-      <td class="pos"><span class="pos-badge">${i+1}</span></td>
-      <td class="name-col">${ime}</td>
-      <td class="points"><span class="points-pill">${st}</span></td>
-    </tr>
-  `).join('');
-
-  el.outerHTML = `
-    <div style="overflow-x:auto;">
-      <table class="lestvica" id="strelciListaContent">
-        <thead>
-          <tr>
-            <th></th>
-            <th class="name-col">Igralec</th>
-            <th title="Goli">G</th>
-          </tr>
-        </thead>
-        <tbody>${vrstice}</tbody>
-      </table>
-    </div>`;
-}
-
 const dnevi = ["nedelja","ponedeljek","torek","sreda","četrtek","petek","sobota"];
 const meseci = ["jan","feb","mar","apr","maj","jun","jul","avg","sep","okt","nov","dec"];
 
@@ -1414,7 +1375,6 @@ const STRELCI = {
   3: { dom: ["Darko Hrka 79'"], gost: ["Žiga Repas 3'"] },
   4: { dom: ["Žiga Repas 10'", "Isaac Tshipamba 65'"], gost: [] },
 };
-narisiListoStrelcev();
 
 fixtures.forEach(f => {
   const [krog, datum, dom, gost, prizorisce, homeMatch, derby] = f;
