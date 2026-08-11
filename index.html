@@ -484,24 +484,50 @@
     overflow:hidden;
     opacity:0;
     padding:0 16px;
-    display:flex;
-    flex-direction:column;
-    align-items:flex-start;
-    gap:8px;
-    transition:max-height .35s ease, opacity .3s ease, padding .35s ease;
+    display:block;
+    transition:max-height .4s ease, opacity .3s ease, padding .35s ease;
   }
   tr.lestvica-strelci-panel.open .lestvica-strelci-notranji{
-    max-height:400px;
+    max-height:900px;
+    overflow-y:auto;
     opacity:1;
     padding:12px 16px;
   }
-  .lestvica-strelci-naslov{
+  .lestvica-kader-skupina{ margin-bottom:14px; text-align:left; }
+  .lestvica-kader-skupina:last-child{ margin-bottom:0; }
+  .lestvica-kader-naslov{
     font-size:11px;
     font-weight:800;
     text-transform:uppercase;
     letter-spacing:0.5px;
-    color:var(--muted);
-    width:100%;
+    color:var(--vijola-2);
+    border-bottom:1px solid #ece0fa;
+    padding-bottom:4px;
+    margin-bottom:6px;
+  }
+  .lestvica-kader-seznam{
+    display:grid;
+    grid-template-columns:repeat(auto-fill, minmax(170px, 1fr));
+    gap:6px;
+  }
+  .kader-igralec-mini{
+    font-size:12.5px;
+    color:var(--text);
+    display:flex;
+    align-items:center;
+    gap:6px;
+  }
+  .kader-st-mini{
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+    width:20px;height:20px;
+    border-radius:50%;
+    background:#efe7fb;
+    color:var(--vijola-dark);
+    font-weight:700;
+    font-size:10px;
+    flex-shrink:0;
   }
   .gol-zoga{
     display:inline-block;
@@ -1338,12 +1364,68 @@ function izracunajStrelceMaribora(){
   return Object.entries(goli).sort((a,b) => b[1]-a[1]);
 }
 
+/* KADER NK MARIBOR - razvrščen po pozicijah */
+const KADER = {
+  "Napadalci": [
+    { st: "17", ime: "Jan Mlakar" },
+    { st: "30", ime: "Benjamin Tetteh" },
+    { st: "79", ime: "Luka Zahović" },
+    { st: "7", ime: "Tio Cipot" },
+    { st: "29", ime: "Dario Vizinger" },
+    { st: "27", ime: "Luka Mlakar" },
+    { st: "36", ime: "Matej Tadić" },
+    { st: "-", ime: "Egon Ljubičić" },
+  ],
+  "Vezisti": [
+    { st: "14", ime: "Jean Michaël Seri" },
+    { st: "8", ime: "Claude Gonçalves" },
+    { st: "11", ime: "Ali Reghba" },
+    { st: "4", ime: "Nejc Viher" },
+    { st: "99", ime: "Behar Feta" },
+    { st: "70", ime: "Isaac Tshipamba" },
+    { st: "10", ime: "Žiga Repas" },
+    { st: "38", ime: "Niko Osterc" },
+    { st: "-", ime: "Lanej Bakšič" },
+  ],
+  "Branilci": [
+    { st: "44", ime: "Omar Rekik" },
+    { st: "23", ime: "Žan Karničnik" },
+    { st: "16", ime: "Miha Blažič" },
+    { st: "5", ime: "Žan Jevšenak" },
+    { st: "6", ime: "Bradley M'bondo" },
+    { st: "55", ime: "Mark Španring" },
+    { st: "3", ime: "Čedomir Bumbić" },
+    { st: "50", ime: "Lan Vidmar" },
+    { st: "-", ime: "Luka Kokol" },
+    { st: "34", ime: "Timon Kikec" },
+  ],
+  "Vratarji": [
+    { st: "98", ime: "Téva Gardies" },
+    { st: "1", ime: "Ažbe Jug" },
+    { st: "43", ime: "Tanej Handanović" },
+    { st: "39", ime: "Ivan Lainović" },
+  ],
+};
+
 function izrisiStrelceZaLestvico(){
-  const seznam = izracunajStrelceMaribora();
-  if(seznam.length === 0) return '<span class="strelci-prazno">Strelci še niso vneseni.</span>';
-  const naslov = '<div class="lestvica-strelci-naslov">Zadetki:</div>';
-  const vrstice = seznam.map(([ime, st]) => `<span class="lestvica-strelec">${ime} ${'<span class="gol-zoga"></span>'.repeat(st)}</span>`).join('');
-  return naslov + vrstice;
+  const golovList = izracunajStrelceMaribora();
+  const golovMap = Object.fromEntries(golovList);
+
+  const skupine = Object.entries(KADER).map(([pozicija, igralci]) => {
+    const vrstice = igralci.map(ig => {
+      const st = golovMap[ig.ime] || 0;
+      const zogice = st > 0 ? '<span class="gol-zoga"></span>'.repeat(st) : '';
+      return `<div class="kader-igralec-mini"><span class="kader-st-mini">${ig.st}</span> ${ig.ime} ${zogice}</div>`;
+    }).join('');
+    return `
+      <div class="lestvica-kader-skupina">
+        <div class="lestvica-kader-naslov">${pozicija}</div>
+        <div class="lestvica-kader-seznam">${vrstice}</div>
+      </div>
+    `;
+  }).join('');
+
+  return skupine;
 }
 
 const dnevi = ["nedelja","ponedeljek","torek","sreda","četrtek","petek","sobota"];
@@ -1406,10 +1488,7 @@ fixtures.forEach(f => {
     if(!seznam || seznam.length === 0) return '<div class="strelci-prazno">—</div>';
     return seznam.map(s => {
       const jeMB = imeKluba === "Maribor";
-      const ime = s.replace(/\s*\d.*$/, '').trim();
-      const steviloGolov = (s.match(/\d+'/g) || []).length || 1;
-      const zogice = '<span class="gol-zoga"></span>'.repeat(steviloGolov);
-      return `<div class="${jeMB ? 'strelec-mb' : ''}">${ime} ${zogice}</div>`;
+      return `<div class="${jeMB ? 'strelec-mb' : ''}">${s}</div>`;
     }).join('');
   };
 
@@ -1667,7 +1746,7 @@ function nalozLestvico(){
     return `
     <tr class="${cls}">
       <td class="pos"><span class="pos-badge">${t.position}</span>${gibanje}</td>
-      <td class="name-col">${t.isMaribor ? `<span class="maribor-klik" title="Prikaži strelce">${t.name}</span>` : t.name}</td>
+      <td class="name-col">${t.isMaribor ? `<span class="maribor-klik" title="Prikaži kader">${t.name}</span>` : t.name}</td>
       <td>${t.played}</td>
       <td>${t.wins}</td>
       <td>${t.draws}</td>
