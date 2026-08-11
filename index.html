@@ -244,15 +244,29 @@
 
   header{
     position:relative;
+    margin-bottom:26px;
+    box-shadow:0 14px 34px rgba(46,15,77,0.35);
+    border:none;
+    padding:3px;
+    background:var(--vijola-dark);
+    border-radius:20px;
+    overflow:hidden;
+    animation:headerEnter .6s cubic-bezier(.21,.86,.4,1) both;
+  }
+  .svetlobni-rob::before{
+    content:"";
+    position:absolute;
+    inset:-60%;
+    background:conic-gradient(from 0deg, transparent 0deg, transparent 300deg, var(--zlata) 340deg, #fff8dd 355deg, var(--zlata) 360deg);
+    animation:krogecSvetloba 7s linear infinite;
+  }
+  .svetlobni-rob-notranji{
+    position:relative;
+    z-index:1;
     background:linear-gradient(150deg,var(--vijola-2) 0%,var(--vijola) 45%,var(--vijola-dark) 100%);
     color:#fff;
-    border-radius:20px;
-    padding:0;
-    margin-bottom:26px;
+    border-radius:17px;
     overflow:hidden;
-    box-shadow:0 14px 34px rgba(46,15,77,0.35);
-    border:2px solid var(--zlata);
-    animation:headerEnter .6s cubic-bezier(.21,.86,.4,1) both, headerGlow 4s ease-in-out 1s infinite;
   }
   @keyframes headerEnter{
     0%{ opacity:0; transform:translateY(-18px); }
@@ -411,6 +425,26 @@
     100%{ background-position:0 0; }
   }
 
+  .match-svetli-ovoj{
+    position:relative;
+  }
+  .match-svetli-ovoj.svetlobni-rob{
+    padding:3px;
+    border-radius:17px;
+    overflow:hidden;
+    background:var(--vijola-dark);
+    margin-bottom:10px;
+  }
+  .match-svetli-ovoj.svetlobni-rob::before{
+    border-radius:17px;
+  }
+  .match-svetli-ovoj.svetlobni-rob .match{
+    margin-bottom:0;
+    border-radius:14px;
+    overflow:hidden;
+    position:relative;
+    z-index:1;
+  }
   .match{
     background:linear-gradient(135deg, #ffffff 0%, #f5eefc 55%, #ede0fa 100%);
     border-radius:14px;
@@ -691,6 +725,13 @@
   }
   .match.played .badge{
     opacity:0.65;
+  }
+  .match.played .krog,
+  .match.played .datum,
+  .match.played .venue,
+  .match.played .tekma-glavno .tim,
+  .match.played .tekma-glavno .maribor{
+    opacity:0.6;
   }
   .tekma .maribor{color:var(--vijola-2);position:relative;display:inline-block;}
   .tekma .tim{white-space:nowrap;}
@@ -979,6 +1020,33 @@
     margin-bottom:22px;
     border:2px solid var(--zlata);
   }
+  .lestvica-brez-naslova{
+    position:relative;
+    border:none;
+    padding:3px;
+    background:var(--vijola-dark);
+  }
+  .lestvica-brez-naslova::before{
+    content:"";
+    position:absolute;
+    inset:-60%;
+    background:conic-gradient(from 0deg, transparent 0deg, transparent 300deg, var(--zlata) 340deg, #fff8dd 355deg, var(--zlata) 360deg);
+    animation:krogecSvetloba 7s linear infinite;
+  }
+  @keyframes krogecSvetloba{
+    to{ transform:rotate(360deg); }
+  }
+  .lestvica-glow-inner{
+    position:relative;
+    z-index:1;
+    background:var(--card);
+    border-radius:13px;
+    overflow:hidden;
+    flex:1;
+    display:flex;
+    flex-direction:column;
+    min-height:0;
+  }
   .table-header{
     background:linear-gradient(90deg,var(--vijola),var(--vijola-2),var(--vijola));
     background-size:200% 100%;
@@ -1207,30 +1275,33 @@
   }
   .kader-modal-vsebina{
     position:relative;
-    background:var(--card);
-    border:2px solid var(--zlata);
+    background:var(--vijola-dark);
+    border:none;
+    padding:3px;
     border-radius:18px;
+    overflow:hidden;
     max-width:640px;
     width:100%;
     max-height:85vh;
-    display:flex;
-    flex-direction:column;
     box-shadow:0 20px 50px rgba(0,0,0,0.4);
     transform:scale(0.7) translateY(30px);
     opacity:0;
     transition:transform .1s;
   }
+  .kader-modal-notranji{
+    background:var(--card);
+    border-radius:15px;
+    max-height:calc(85vh - 6px);
+    display:flex;
+    flex-direction:column;
+  }
   .kader-modal.odprt .kader-modal-vsebina{
-    animation:kaderModalPop .5s cubic-bezier(.2,1.4,.4,1) forwards, kaderModalGlow 3s ease-in-out .5s infinite;
+    animation:kaderModalPop .5s cubic-bezier(.2,1.4,.4,1) forwards;
   }
   @keyframes kaderModalPop{
     0%{ transform:scale(0.7) translateY(30px); opacity:0; filter:blur(8px); }
     60%{ transform:scale(1.03) translateY(-4px); opacity:1; filter:blur(0); }
     100%{ transform:scale(1) translateY(0); opacity:1; filter:blur(0); }
-  }
-  @keyframes kaderModalGlow{
-    0%,100%{ box-shadow:0 20px 50px rgba(0,0,0,0.4), 0 0 0 rgba(123,47,181,0.4); }
-    50%{ box-shadow:0 20px 50px rgba(0,0,0,0.4), 0 0 34px rgba(123,47,181,0.65); }
   }
   .kader-modal-glava{
     background:linear-gradient(90deg,var(--vijola),var(--vijola-2),var(--vijola));
@@ -1338,18 +1409,20 @@
 </div>
 <div class="wrap">
 
-<header>
-  <div class="header-inner">
-    <div class="header-crest-wrap">
-      <img class="crest" src="grb.png" alt="NK Maribor grb">
-      <div class="header-slogan">en klub, ena čast</div>
+<header class="svetlobni-rob">
+  <div class="svetlobni-rob-notranji">
+    <div class="header-inner">
+      <div class="header-crest-wrap">
+        <img class="crest" src="grb.png" alt="NK Maribor grb">
+        <div class="header-slogan">en klub, ena čast</div>
+      </div>
+      <div class="header-text">
+        <h1>NK <span class="accent">MARIBOR</span></h1>
+        <div class="header-year">1960</div>
+      </div>
     </div>
-    <div class="header-text">
-      <h1>NK <span class="accent">MARIBOR</span></h1>
-      <div class="header-year">1960</div>
-    </div>
+    <p class="sub">Spored in lestvica sezone 26/27</p>
   </div>
-  <p class="sub">Spored in lestvica sezone 26/27</p>
 </header>
 
 <div class="top-row">
@@ -1364,12 +1437,10 @@
     </div>
   </div>
 
-  <div class="table-wrap" id="lestvicaBox">
-    <div class="table-header">
-      Lestvica · Prva liga Telemach 26/27
-      <span class="updated" id="lestvicaUpdated"></span>
+  <div class="table-wrap lestvica-brez-naslova" id="lestvicaBox">
+    <div class="lestvica-glow-inner">
+      <div id="lestvicaContent" class="lestvica-note">Nalagam lestvico…</div>
     </div>
-    <div id="lestvicaContent" class="lestvica-note">Nalagam lestvico…</div>
   </div>
 </div>
 
@@ -1381,12 +1452,14 @@
 
 <div id="kaderModal" class="kader-modal">
   <div class="kader-modal-ozadje"></div>
-  <div class="kader-modal-vsebina">
-    <div class="kader-modal-glava">
-      <span>Kader · NK Maribor</span>
-      <button id="kaderModalZapri" class="kader-modal-zapri" aria-label="Zapri">✕</button>
+  <div class="kader-modal-vsebina svetlobni-rob">
+    <div class="svetlobni-rob-notranji kader-modal-notranji">
+      <div class="kader-modal-glava">
+        <span>Kader · NK Maribor</span>
+        <button id="kaderModalZapri" class="kader-modal-zapri" aria-label="Zapri">✕</button>
+      </div>
+      <div id="kaderModalTelo" class="kader-modal-telo"></div>
     </div>
-    <div id="kaderModalTelo" class="kader-modal-telo"></div>
   </div>
 </div>
 
@@ -1656,7 +1729,11 @@ fixtures.forEach(f => {
     </div>` : ''}
   `;
   row.id = `match-${krog}`;
-  container.appendChild(row);
+  const ovoj = document.createElement('div');
+  ovoj.className = 'match-svetli-ovoj';
+  ovoj.id = `match-wrap-${krog}`;
+  ovoj.appendChild(row);
+  container.appendChild(ovoj);
 });
 
 // Klik na rezultat odpre/zapre prikaz strelcev
@@ -1788,9 +1865,12 @@ function updateCountdown(){
 function highlightNextMatch(){
   const next = getNextFixture();
   document.querySelectorAll('.match').forEach(el => el.classList.remove('next-up'));
+  document.querySelectorAll('.match-svetli-ovoj').forEach(el => el.classList.remove('svetlobni-rob'));
   if(next){
     const rowEl = document.getElementById(`match-${next.krog}`);
     if(rowEl){ rowEl.classList.add('next-up'); }
+    const ovojEl = document.getElementById(`match-wrap-${next.krog}`);
+    if(ovojEl){ ovojEl.classList.add('svetlobni-rob'); }
   }
 }
 highlightNextMatch();
