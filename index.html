@@ -1247,6 +1247,80 @@
   }
 
   /* ===== GLASBENI GUMB ===== */
+  .countdown-bg-img{
+    cursor:pointer;
+    transition:filter .2s ease;
+  }
+  .countdown-bg-img:hover{
+    filter:brightness(1.08);
+  }
+  .slika-modal{
+    position:fixed;
+    inset:0;
+    z-index:210;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    padding:30px;
+    opacity:0;
+    visibility:hidden;
+    transition:opacity .35s ease, visibility .35s ease;
+  }
+  .slika-modal.odprt{
+    opacity:1;
+    visibility:visible;
+  }
+  .slika-modal-ozadje{
+    position:absolute;
+    inset:0;
+    background:rgba(10,4,18,0.88);
+    backdrop-filter:blur(0px);
+    transition:backdrop-filter .5s ease;
+  }
+  .slika-modal.odprt .slika-modal-ozadje{
+    backdrop-filter:blur(8px);
+  }
+  .slika-modal-slika{
+    position:relative;
+    max-width:90vw;
+    max-height:88vh;
+    border-radius:14px;
+    box-shadow:0 20px 60px rgba(0,0,0,0.6);
+    border:3px solid var(--zlata);
+    transform:scale(0.85);
+    opacity:0;
+    filter:blur(6px);
+    transition:transform .1s;
+  }
+  .slika-modal.odprt .slika-modal-slika{
+    animation:slikaModalPop .5s cubic-bezier(.2,1.4,.4,1) forwards;
+  }
+  @keyframes slikaModalPop{
+    0%{ transform:scale(0.85); opacity:0; filter:blur(6px); }
+    60%{ transform:scale(1.02); opacity:1; filter:blur(0); }
+    100%{ transform:scale(1); opacity:1; filter:blur(0); }
+  }
+  .slika-modal-zapri{
+    position:fixed;
+    top:24px; right:24px;
+    z-index:211;
+    background:rgba(123,47,181,0.85);
+    border:2px solid var(--zlata);
+    color:#fff;
+    width:38px;height:38px;
+    border-radius:50%;
+    cursor:pointer;
+    font-size:16px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    transition:background-color .15s ease, transform .15s ease;
+  }
+  .slika-modal-zapri:hover{
+    background:rgba(123,47,181,1);
+    transform:scale(1.1);
+  }
+
   .kader-modal{
     position:fixed;
     inset:0;
@@ -1448,6 +1522,12 @@
 
 <footer>
 </footer>
+</div>
+
+<div id="slikaModal" class="slika-modal">
+  <div class="slika-modal-ozadje"></div>
+  <button id="slikaModalZapri" class="slika-modal-zapri" aria-label="Zapri">✕</button>
+  <img id="slikaModalImg" src="" alt="NK Maribor" class="slika-modal-slika">
 </div>
 
 <div id="kaderModal" class="kader-modal">
@@ -1771,8 +1851,29 @@ function zapriKaderModal(){
 document.getElementById('kaderModalZapri')?.addEventListener('click', zapriKaderModal);
 document.querySelector('.kader-modal-ozadje')?.addEventListener('click', zapriKaderModal);
 document.addEventListener('keydown', (e) => {
-  if(e.key === 'Escape') zapriKaderModal();
+  if(e.key === 'Escape'){ zapriKaderModal(); zapriSlikoModal(); }
 });
+
+/* Povečava slike v countdown okvirju ob kliku */
+function odpriSlikoModal(){
+  const izvorSlika = document.querySelector('.countdown-bg-img');
+  const modalSlika = document.getElementById('slikaModalImg');
+  const modal = document.getElementById('slikaModal');
+  if(!izvorSlika || !modalSlika || !modal) return;
+  modalSlika.src = izvorSlika.src;
+  modal.classList.add('odprt');
+  document.body.classList.add('kader-modal-odprt');
+}
+function zapriSlikoModal(){
+  const modal = document.getElementById('slikaModal');
+  if(modal){
+    modal.classList.remove('odprt');
+    document.body.classList.remove('kader-modal-odprt');
+  }
+}
+document.querySelector('.countdown-bg-img')?.addEventListener('click', odpriSlikoModal);
+document.getElementById('slikaModalZapri')?.addEventListener('click', zapriSlikoModal);
+document.querySelector('.slika-modal-ozadje')?.addEventListener('click', zapriSlikoModal);
 
 // Postopno pojavljanje vrstic razporeda pri skrolanju navzdol
 const fadeObserver = new IntersectionObserver((entries) => {
