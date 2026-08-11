@@ -824,16 +824,16 @@
     margin-bottom:16px;
   }
   .countdown .match-title{
-    font-size:26px;
+    font-size:17px;
     font-weight:900;
-    letter-spacing:0.3px;
+    letter-spacing:0.2px;
     text-shadow:0 2px 12px rgba(0,0,0,0.95), 0 0 24px rgba(0,0,0,0.7);
     animation:nextMatchPop .7s cubic-bezier(.34,1.56,.64,1) both, venueBreathe 4s ease-in-out 1s infinite;
   }
   .countdown .kickoff-line{
-    margin-top:8px;
-    font-size:18px;
-    padding:0 10px;
+    margin-top:6px;
+    font-size:12px;
+    padding:0 6px;
     animation:nextMatchPop .6s cubic-bezier(.34,1.56,.64,1) .15s both, venueBreathe 4s ease-in-out 1s infinite;
   }
   @keyframes nextMatchPop{
@@ -846,10 +846,10 @@
   }
   .countdown .next-match .maribor{color:var(--zlata);}
   .countdown .venue-mini{
-    font-size:15px;
+    font-size:11px;
     font-weight:700;
     display:block;
-    margin-top:8px;
+    margin-top:6px;
     text-shadow:0 2px 10px rgba(0,0,0,0.95);
     opacity:0;
     animation:nextMatchPop .6s cubic-bezier(.34,1.56,.64,1) .3s forwards, venueBreathe 4s ease-in-out 1s infinite;
@@ -867,16 +867,17 @@
   .timer{
     display:flex;
     justify-content:center;
-    gap:10px;
-    flex-wrap:wrap;
-    margin-top:14px;
+    gap:5px;
+    flex-wrap:nowrap;
+    margin-top:10px;
   }
   .timer .unit{
     background:rgba(20,8,35,0.55);
     border:1px solid rgba(245,197,24,0.5);
-    border-radius:14px;
-    padding:14px 18px;
-    min-width:76px;
+    border-radius:10px;
+    padding:8px 4px;
+    min-width:0;
+    flex:1;
     transition:transform .2s ease, background-color .2s ease;
   }
   .timer .unit:hover{
@@ -884,13 +885,13 @@
     background:rgba(245,197,24,0.18);
   }
   .timer .num{
-    font-size:36px;
+    font-size:19px;
     font-weight:900;
     font-variant-numeric:tabular-nums;
     color:var(--zlata);
     line-height:1;
     text-shadow:0 2px 10px rgba(0,0,0,0.95);
-    animation:numGlow 2.4s ease-in-out infinite;
+    animation:numGlow 2.4s ease-in-out infinite, venueBreathe 4s ease-in-out 1s infinite;
   }
   @keyframes numGlow{
     0%,100%{ text-shadow:0 2px 10px rgba(0,0,0,0.95); }
@@ -904,12 +905,12 @@
     animation:numPop 0.35s ease-out;
   }
   .timer .unit-label{
-    font-size:11px;
+    font-size:8px;
     text-transform:uppercase;
-    letter-spacing:1px;
-    opacity:0.9;
+    letter-spacing:0.5px;
     text-shadow:0 1px 4px rgba(0,0,0,0.8);
-    margin-top:4px;
+    margin-top:2px;
+    animation:venueBreathe 4s ease-in-out 1s infinite;
   }
   .countdown .note{
     font-size:11px;
