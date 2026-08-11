@@ -472,28 +472,20 @@
     align-items:center;
     gap:5px;
   }
-  tr.lestvica-strelci-panel{
-    background:#faf6ff !important;
-  }
-  tr.lestvica-strelci-panel td{
-    padding:0 !important;
-    border-bottom:1px solid #f2ecfa;
-  }
-  .lestvica-strelci-notranji{
-    max-height:0;
-    overflow:hidden;
+  .lestvica-kader-skupina{
+    margin-bottom:14px;
+    text-align:left;
     opacity:0;
-    padding:0 16px;
-    display:block;
-    transition:max-height .4s ease, opacity .3s ease, padding .35s ease;
+    animation:kaderSkupinaIn .4s ease forwards;
   }
-  tr.lestvica-strelci-panel.open .lestvica-strelci-notranji{
-    max-height:900px;
-    overflow-y:auto;
-    opacity:1;
-    padding:12px 16px;
+  .kader-modal-telo .lestvica-kader-skupina:nth-child(1){animation-delay:.15s;}
+  .kader-modal-telo .lestvica-kader-skupina:nth-child(2){animation-delay:.25s;}
+  .kader-modal-telo .lestvica-kader-skupina:nth-child(3){animation-delay:.35s;}
+  .kader-modal-telo .lestvica-kader-skupina:nth-child(4){animation-delay:.45s;}
+  @keyframes kaderSkupinaIn{
+    from{ opacity:0; transform:translateY(8px); }
+    to{ opacity:1; transform:translateY(0); }
   }
-  .lestvica-kader-skupina{ margin-bottom:14px; text-align:left; }
   .lestvica-kader-skupina:last-child{ margin-bottom:0; }
   .lestvica-kader-naslov{
     font-size:11px;
@@ -796,6 +788,7 @@
   .top-row .lestvica-scroll-wrap{
     overflow-y:auto;
     flex:1;
+    min-height:0;
   }
   @keyframes slideInLeft{
     0%{ opacity:0; transform:translateX(-24px); }
@@ -1168,6 +1161,91 @@
   }
 
   /* ===== GLASBENI GUMB ===== */
+  .kader-modal{
+    position:fixed;
+    inset:0;
+    z-index:200;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    padding:20px;
+    opacity:0;
+    visibility:hidden;
+    transition:opacity .25s ease, visibility .25s ease;
+  }
+  .kader-modal.odprt{
+    opacity:1;
+    visibility:visible;
+  }
+  .kader-modal-ozadje{
+    position:absolute;
+    inset:0;
+    background:rgba(20,8,35,0.7);
+    backdrop-filter:blur(3px);
+  }
+  .kader-modal-vsebina{
+    position:relative;
+    background:var(--card);
+    border:2px solid var(--zlata);
+    border-radius:18px;
+    max-width:640px;
+    width:100%;
+    max-height:85vh;
+    display:flex;
+    flex-direction:column;
+    box-shadow:0 20px 50px rgba(0,0,0,0.4);
+    transform:scale(0.7) translateY(30px);
+    opacity:0;
+    transition:transform .1s;
+  }
+  .kader-modal.odprt .kader-modal-vsebina{
+    animation:kaderModalPop .5s cubic-bezier(.2,1.4,.4,1) forwards, kaderModalGlow 3s ease-in-out .5s infinite;
+  }
+  @keyframes kaderModalPop{
+    0%{ transform:scale(0.7) translateY(30px); opacity:0; }
+    60%{ transform:scale(1.03) translateY(-4px); opacity:1; }
+    100%{ transform:scale(1) translateY(0); opacity:1; }
+  }
+  @keyframes kaderModalGlow{
+    0%,100%{ box-shadow:0 20px 50px rgba(0,0,0,0.4), 0 0 0 rgba(123,47,181,0.4); }
+    50%{ box-shadow:0 20px 50px rgba(0,0,0,0.4), 0 0 34px rgba(123,47,181,0.65); }
+  }
+  .kader-modal-glava{
+    background:linear-gradient(90deg,var(--vijola),var(--vijola-2),var(--vijola));
+    background-size:200% 100%;
+    animation:tableHeaderSheen 6s ease-in-out infinite;
+    color:#fff;
+    padding:14px 18px;
+    border-radius:16px 16px 0 0;
+    font-weight:800;
+    font-size:14px;
+    text-transform:uppercase;
+    letter-spacing:0.5px;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    flex-shrink:0;
+  }
+  .kader-modal-zapri{
+    background:rgba(255,255,255,0.15);
+    border:none;
+    color:#fff;
+    width:28px;height:28px;
+    border-radius:50%;
+    cursor:pointer;
+    font-size:14px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    transition:background-color .15s ease;
+  }
+  .kader-modal-zapri:hover{ background:rgba(255,255,255,0.3); }
+  .kader-modal-telo{
+    overflow-y:auto;
+    padding:16px 18px;
+  }
+  body.kader-modal-odprt{ overflow:hidden; }
+
   #musicToggleWrap{
     position:fixed;
     right:18px; top:50%;
@@ -1277,6 +1355,17 @@
 
 <footer>
 </footer>
+</div>
+
+<div id="kaderModal" class="kader-modal">
+  <div class="kader-modal-ozadje"></div>
+  <div class="kader-modal-vsebina">
+    <div class="kader-modal-glava">
+      <span>Kader · NK Maribor</span>
+      <button id="kaderModalZapri" class="kader-modal-zapri" aria-label="Zapri">✕</button>
+    </div>
+    <div id="kaderModalTelo" class="kader-modal-telo"></div>
+  </div>
 </div>
 
 <audio id="bgMusic" loop preload="none">
@@ -1552,8 +1641,31 @@ container.addEventListener('click', (e) => {
 document.addEventListener('click', (e) => {
   const klik = e.target.closest('.maribor-klik');
   if(!klik) return;
-  const panel = document.getElementById('lestvica-strelci-panel');
-  if(panel) panel.classList.toggle('open');
+  odpriKaderModal();
+});
+
+function odpriKaderModal(){
+  const telo = document.getElementById('kaderModalTelo');
+  if(telo) telo.innerHTML = izrisiStrelceZaLestvico();
+  const modal = document.getElementById('kaderModal');
+  if(modal){
+    modal.classList.add('odprt');
+    document.body.classList.add('kader-modal-odprt');
+  }
+}
+
+function zapriKaderModal(){
+  const modal = document.getElementById('kaderModal');
+  if(modal){
+    modal.classList.remove('odprt');
+    document.body.classList.remove('kader-modal-odprt');
+  }
+}
+
+document.getElementById('kaderModalZapri')?.addEventListener('click', zapriKaderModal);
+document.querySelector('.kader-modal-ozadje')?.addEventListener('click', zapriKaderModal);
+document.addEventListener('keydown', (e) => {
+  if(e.key === 'Escape') zapriKaderModal();
 });
 
 // Postopno pojavljanje vrstic razporeda pri skrolanju navzdol
@@ -1777,11 +1889,6 @@ function nalozLestvico(){
       <td>${t.diff > 0 ? '+' : ''}${t.diff}</td>
       <td class="points"><span class="points-pill">${t.points}</span></td>
     </tr>
-    ${t.isMaribor ? `<tr id="lestvica-strelci-panel" class="lestvica-strelci-panel">
-      <td colspan="9">
-        <div class="lestvica-strelci-notranji">${izrisiStrelceZaLestvico()}</div>
-      </td>
-    </tr>` : ''}
   `;
   }).join('');
 
