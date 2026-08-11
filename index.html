@@ -506,8 +506,8 @@
     margin-bottom:6px;
   }
   .lestvica-kader-seznam{
-    display:grid;
-    grid-template-columns:repeat(auto-fill, minmax(170px, 1fr));
+    display:flex;
+    flex-direction:column;
     gap:6px;
   }
   .kader-igralec-mini{
@@ -515,7 +515,17 @@
     color:var(--text);
     display:flex;
     align-items:center;
-    gap:6px;
+    flex-wrap:wrap;
+    gap:4px 6px;
+  }
+  .gol-zoga-stevilo{
+    display:inline-block;
+    background:var(--vijola-2);
+    color:#fff;
+    font-size:10px;
+    font-weight:800;
+    padding:1px 6px;
+    border-radius:10px;
   }
   .kader-st-mini{
     display:inline-flex;
@@ -766,6 +776,7 @@
   .top-row .countdown{
     flex:0 0 260px;
     aspect-ratio:9/16;
+    align-self:flex-start;
     min-width:0;
     margin-bottom:0;
     display:flex;
@@ -776,6 +787,7 @@
   .top-row .table-wrap{
     flex:1;
     min-width:0;
+    min-height:462px;
     margin-bottom:0;
     display:flex;
     flex-direction:column;
@@ -1410,11 +1422,17 @@ const KADER = {
 function izrisiStrelceZaLestvico(){
   const golovList = izracunajStrelceMaribora();
   const golovMap = Object.fromEntries(golovList);
+  const MEJA_ZOGIC = 5;
 
   const skupine = Object.entries(KADER).map(([pozicija, igralci]) => {
     const vrstice = igralci.map(ig => {
       const st = golovMap[ig.ime] || 0;
-      const zogice = st > 0 ? '<span class="gol-zoga"></span>'.repeat(st) : '';
+      let zogice = '';
+      if(st > 0 && st <= MEJA_ZOGIC){
+        zogice = '<span class="gol-zoga"></span>'.repeat(st);
+      } else if(st > MEJA_ZOGIC){
+        zogice = `<span class="gol-zoga-stevilo">×${st}</span>`;
+      }
       return `<div class="kader-igralec-mini"><span class="kader-st-mini">${ig.st}</span> ${ig.ime} ${zogice}</div>`;
     }).join('');
     return `
