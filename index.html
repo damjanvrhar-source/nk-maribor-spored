@@ -1749,6 +1749,7 @@ const REZULTATI = {
   2: "3:0",
   3: "1:1",
   4: "2:0",
+  5: "1:1",
 };
 
 /* STRELCI ZADETKOV - ko je znano, kdo je zabil, dodaj sem: krog: "besedilo s strelci"
@@ -1758,6 +1759,7 @@ const STRELCI = {
   2: { dom: ["Bradley M'bondo 13'", "Isaac Tshipamba 78'", "Tio Cipot 83'"], gost: [] },
   3: { dom: ["Darko Hrka 79'"], gost: ["Žiga Repas 3'"] },
   4: { dom: ["Žiga Repas 10'", "Isaac Tshipamba 65'"], gost: [] },
+  5: { dom: ["Jošt Urbančič 45'+7"], gost: ["Luka Zahović 85'"] },
 };
 
 fixtures.forEach(f => {
@@ -2004,29 +2006,29 @@ const KLUBI_26_27 = [
 /* UVRSTITEV PO PREJŠNJEM KROGU (za prikaz gibanja - rumen/rdeč/zelen krogec)
    Po vsaki posodobitvi lestvice se to prepiše na TRENUTNO uvrstitev pred novo posodobitvijo. */
 const PREJSNJA_POZICIJA = {
-  "Nafta 1903": 1,
-  "Bravo": 2,
-  "Maribor": 3,
-  "Koper": 4,
-  "Celje": 5,
+  "Maribor": 1,
+  "Nafta 1903": 2,
+  "Bravo": 3,
+  "Celje": 4,
+  "Koper": 5,
   "Brinje-Grosuplje": 6,
-  "Mura": 7,
-  "Olimpija": 8,
-  "Aluminij": 9,
-  "Kalcer Radomlje": 10,
+  "Kalcer Radomlje": 7,
+  "Mura": 8,
+  "Olimpija": 9,
+  "Aluminij": 10,
 };
 
 const LESTVICA_PODATKI = {
   "Aluminij":          {played:3, wins:0, draws:2, losses:1, goalsFor:1, goalsAgainst:2},
   "Bravo":             {played:4, wins:2, draws:1, losses:1, goalsFor:5, goalsAgainst:5},
   "Brinje-Grosuplje":  {played:4, wins:1, draws:2, losses:1, goalsFor:4, goalsAgainst:5},
-  "Celje":             {played:3, wins:1, draws:2, losses:0, goalsFor:4, goalsAgainst:3},
+  "Celje":             {played:4, wins:2, draws:2, losses:0, goalsFor:7, goalsAgainst:4},
   "Kalcer Radomlje":   {played:4, wins:1, draws:1, losses:2, goalsFor:6, goalsAgainst:7},
   "Koper":             {played:4, wins:1, draws:2, losses:1, goalsFor:5, goalsAgainst:5},
-  "Maribor":           {played:4, wins:2, draws:2, losses:0, goalsFor:6, goalsAgainst:1},
+  "Maribor":           {played:5, wins:2, draws:3, losses:0, goalsFor:7, goalsAgainst:2},
   "Mura":              {played:4, wins:1, draws:1, losses:2, goalsFor:6, goalsAgainst:10},
-  "Nafta 1903":        {played:4, wins:2, draws:1, losses:1, goalsFor:9, goalsAgainst:5},
-  "Olimpija":          {played:4, wins:1, draws:0, losses:3, goalsFor:1, goalsAgainst:4},
+  "Nafta 1903":        {played:5, wins:2, draws:1, losses:2, goalsFor:10, goalsAgainst:8},
+  "Olimpija":          {played:5, wins:1, draws:1, losses:3, goalsFor:2, goalsAgainst:5},
 };
 
 function prazenSeznamKlubov(){
