@@ -1507,7 +1507,7 @@
 
 <div class="top-row">
   <div class="countdown" id="countdownBox">
-    <img src="slika5.jpg" alt="" class="countdown-bg-img">
+    <video src="ozadje.mp4" class="countdown-bg-img" autoplay muted loop playsinline></video>
     <div class="next-match" id="nextMatchLabel">Nalagam…</div>
     <div class="timer">
       <div class="unit"><div class="num" id="cd-days">--</div><div class="unit-label">dni</div></div>
@@ -1592,6 +1592,7 @@ const POTRJENE_URE = {
   4: "20:15",
   5: "20:15",
   6: "20:15",
+  7: "20:15",
 };
 
 const fixtures = [
@@ -1601,7 +1602,7 @@ const fixtures = [
  [4,"2026-08-09","Maribor","Koper","Ljudski vrt Maribor",true],
  [5,"2026-08-15","Olimpija","Maribor","Stadion Stožice",false,"derby"],
  [6,"2026-08-23","Maribor","Bravo","Ljudski vrt Maribor",true],
- [7,"2026-08-29","Nafta 1903","Maribor","Nafta 1903",false],
+ [7,"2026-08-30","Nafta 1903","Maribor","Nafta 1903",false],
  [8,"2026-09-05","Maribor","Mura","Ljudski vrt Maribor",true],
  [9,"2026-09-12","Kalcer Radomlje","Maribor","Športni park Domžale",false],
  [10,"2026-09-19","Maribor","Aluminij","Ljudski vrt Maribor",true],
@@ -1863,9 +1864,10 @@ document.addEventListener('keydown', (e) => {
 /* Povečava slike v countdown okvirju ob kliku */
 function odpriSlikoModal(){
   const izvorSlika = document.querySelector('.countdown-bg-img');
+  if(!izvorSlika || izvorSlika.tagName === 'VIDEO') return;
   const modalSlika = document.getElementById('slikaModalImg');
   const modal = document.getElementById('slikaModal');
-  if(!izvorSlika || !modalSlika || !modal) return;
+  if(!modalSlika || !modal) return;
   modalSlika.src = izvorSlika.src;
   modal.classList.add('odprt');
   document.body.classList.add('kader-modal-odprt');
