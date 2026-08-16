@@ -50,7 +50,6 @@
     width: 0.5em;
   }
 
-  /* orbiting glow dot around each letter */
   .letter::before {
     content: "";
     position: absolute;
@@ -63,47 +62,55 @@
     filter: blur(3px);
     transform-origin: center;
     animation: orbit 2.6s linear infinite;
-    animation-delay: var(--delay, 0s);
     z-index: 0;
     pointer-events: none;
   }
 
-  .letter span {
-    position: relative;
-    z-index: 1;
-  }
+  .letter span { position: relative; z-index: 1; }
 
   @keyframes orbit {
     0%   { transform: translate(-50%, -50%) rotate(0deg) translateX(0.85em) rotate(0deg); }
     100% { transform: translate(-50%, -50%) rotate(360deg) translateX(0.85em) rotate(-360deg); }
   }
+
+  /* zamik animacije za vsako črko posebej, da nastane valujoč učinek */
+  .title .letter:nth-child(1)::before  { animation-delay: 0.00s; }
+  .title .letter:nth-child(2)::before  { animation-delay: 0.12s; }
+  .title .letter:nth-child(3)::before  { animation-delay: 0.24s; }
+  .title .letter:nth-child(4)::before  { animation-delay: 0.36s; }
+  .title .letter:nth-child(5)::before  { animation-delay: 0.48s; }
+  .title .letter:nth-child(6)::before  { animation-delay: 0.60s; }
+  .title .letter:nth-child(7)::before  { animation-delay: 0.72s; }
+  .title .letter:nth-child(8)::before  { animation-delay: 0.84s; }
+  .title .letter:nth-child(9)::before  { animation-delay: 0.96s; }
+  .title .letter:nth-child(10)::before { animation-delay: 1.08s; }
+
+  .year .letter:nth-child(1)::before { animation-delay: 0.00s; }
+  .year .letter:nth-child(2)::before { animation-delay: 0.12s; }
+  .year .letter:nth-child(3)::before { animation-delay: 0.24s; }
+  .year .letter:nth-child(4)::before { animation-delay: 0.36s; }
 </style>
 </head>
 <body>
   <div class="content">
-    <div class="title" id="title"></div>
-    <div class="year" id="year"></div>
+    <div class="title">
+      <span class="letter"><span>N</span></span>
+      <span class="letter"><span>K</span></span>
+      <span class="letter space"></span>
+      <span class="letter"><span>M</span></span>
+      <span class="letter"><span>A</span></span>
+      <span class="letter"><span>R</span></span>
+      <span class="letter"><span>I</span></span>
+      <span class="letter"><span>B</span></span>
+      <span class="letter"><span>O</span></span>
+      <span class="letter"><span>R</span></span>
+    </div>
+    <div class="year">
+      <span class="letter"><span>1</span></span>
+      <span class="letter"><span>9</span></span>
+      <span class="letter"><span>6</span></span>
+      <span class="letter"><span>0</span></span>
+    </div>
   </div>
-
-  <script>
-    function buildLetters(containerId, text, baseDelay) {
-      const container = document.getElementById(containerId);
-      const chars = text.split('');
-      chars.forEach((ch, i) => {
-        const el = document.createElement('span');
-        el.className = 'letter' + (ch === ' ' ? ' space' : '');
-        el.style.setProperty('--delay', (i * 0.12) + 's');
-        if (ch !== ' ') {
-          const inner = document.createElement('span');
-          inner.textContent = ch;
-          el.appendChild(inner);
-        }
-        container.appendChild(el);
-      });
-    }
-
-    buildLetters('title', 'NK MARIBOR');
-    buildLetters('year', '1960');
-  </script>
 </body>
 </html>
