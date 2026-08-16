@@ -936,9 +936,12 @@
     margin-bottom:16px;
   }
   .countdown .match-title{
-    font-size:21px;
+    font-size:25px;
     font-weight:900;
     letter-spacing:0.2px;
+    white-space:nowrap;
+    display:inline-block;
+    max-width:100%;
     text-shadow:0 2px 12px rgba(0,0,0,0.95), 0 0 24px rgba(0,0,0,0.7);
     animation:nextMatchPop .7s cubic-bezier(.34,1.56,.64,1) both, venueBreathe 4s ease-in-out 1s infinite;
   }
@@ -1965,10 +1968,21 @@ function updateCountdown(){
     const uraHtml = next.uraPotrjena
       ? `<span class="kickoff-time confirmed">${dan}, ${labelBrezLeta} · ${uraPrikaz}</span>`
       : `<span class="kickoff-time tentative">${dan}, ${labelBrezLeta} · predvidoma ${uraPrikaz}</span>`;
-    labelEl.innerHTML = `<span class="match-title">${next.krog}. krog: ${domHtml} — ${gostHtml}${next.derby ? ' ⚡' : ''}</span>
+    labelEl.innerHTML = `<span class="match-title">${domHtml} — ${gostHtml}${next.derby ? ' ⚡' : ''}</span>
       <span class="kickoff-line">${uraHtml}</span>
       <span class="venue-mini">${next.prizorisce}</span>`;
     zadnjiPrikazaniKrog = next.krog;
+    requestAnimationFrame(() => {
+      const naslovEl = labelEl.querySelector('.match-title');
+      if(naslovEl){
+        let velikost = 25;
+        naslovEl.style.fontSize = velikost + 'px';
+        while(naslovEl.scrollWidth > naslovEl.parentElement.clientWidth && velikost > 12){
+          velikost -= 1;
+          naslovEl.style.fontSize = velikost + 'px';
+        }
+      }
+    });
   }
 
   const diff = next.kickoff.getTime() - Date.now();
