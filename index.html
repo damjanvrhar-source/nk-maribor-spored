@@ -4,7 +4,6 @@
 
 
 
-
 <!DOCTYPE html>
 <html lang="sl">
 <head>
@@ -328,7 +327,7 @@
     font-size:54px;
     font-weight:900;
     letter-spacing:0.5px;
-    animation:titlePop .8s cubic-bezier(.2,1.4,.4,1) both, titleFlash 1.4s ease-out .8s, headerTextGlow 3.5s ease-in-out 2.2s infinite;
+    animation:titlePop .8s cubic-bezier(.2,1.4,.4,1) both, titleFlash 1.4s ease-out .8s, letterGlowRing 4s linear 2.2s infinite;
   }
   .header-year{
     color:#fff;
@@ -336,11 +335,21 @@
     font-weight:700;
     letter-spacing:3px;
     opacity:0;
-    animation:subFadeIn .6s cubic-bezier(.21,.86,.4,1) .6s forwards, headerTextGlow 3.5s ease-in-out 2.2s infinite;
+    animation:subFadeIn .6s cubic-bezier(.21,.86,.4,1) .6s forwards, letterGlowRing 4s linear 2.2s infinite;
   }
   @keyframes headerTextGlow{
-    0%,100%{ text-shadow:0 4px 18px rgba(0,0,0,0.5); }
-    50%{ text-shadow:0 4px 18px rgba(0,0,0,0.5), 0 0 22px rgba(255,255,255,0.55); }
+    0%,100%{ text-shadow:0 4px 18px rgba(0,0,0,0.5), 0 0 22px rgba(255,255,255,0.55); }
+  }
+  @keyframes letterGlowRing{
+    0%{   text-shadow:0 4px 18px rgba(0,0,0,0.5), 0 -3px 12px rgba(245,197,24,0.55); }
+    12.5%{ text-shadow:0 4px 18px rgba(0,0,0,0.5), 2.2px -2.2px 12px rgba(245,197,24,0.55); }
+    25%{  text-shadow:0 4px 18px rgba(0,0,0,0.5), 3px 0 12px rgba(245,197,24,0.55); }
+    37.5%{ text-shadow:0 4px 18px rgba(0,0,0,0.5), 2.2px 2.2px 12px rgba(245,197,24,0.55); }
+    50%{  text-shadow:0 4px 18px rgba(0,0,0,0.5), 0 3px 12px rgba(245,197,24,0.55); }
+    62.5%{ text-shadow:0 4px 18px rgba(0,0,0,0.5), -2.2px 2.2px 12px rgba(245,197,24,0.55); }
+    75%{  text-shadow:0 4px 18px rgba(0,0,0,0.5), -3px 0 12px rgba(245,197,24,0.55); }
+    87.5%{ text-shadow:0 4px 18px rgba(0,0,0,0.5), -2.2px -2.2px 12px rgba(245,197,24,0.55); }
+    100%{ text-shadow:0 4px 18px rgba(0,0,0,0.5), 0 -3px 12px rgba(245,197,24,0.55); }
   }
   @keyframes titlePop{
     0%{ opacity:0; transform:scale(1.5) translateY(-14px); filter:blur(8px); }
