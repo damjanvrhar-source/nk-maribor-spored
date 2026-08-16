@@ -14,17 +14,13 @@
     align-items: center;
     justify-content: center;
     font-family: 'Arial Black', 'Helvetica Neue', sans-serif;
-    overflow: hidden;
   }
 
-  .content {
-    text-align: center;
-  }
+  .content { text-align: center; }
 
   .title, .year {
     display: flex;
     justify-content: center;
-    flex-wrap: nowrap;
   }
 
   .title {
@@ -41,75 +37,45 @@
   }
 
   .letter {
-    position: relative;
     display: inline-block;
     color: #ffffff;
+    animation: glowRing 2.4s linear infinite;
   }
 
-  .letter.space {
-    width: 0.5em;
+  .letter.space { width: 0.5em; }
+
+  @keyframes glowRing {
+    0%   { text-shadow:  0 -6px 10px #ffd65a,  0 -2px 4px #ffe89a; }
+    25%  { text-shadow:  6px 0 10px #ffd65a,  2px 0 4px #ffe89a; }
+    50%  { text-shadow:  0 6px 10px #ffd65a,  0 2px 4px #ffe89a; }
+    75%  { text-shadow: -6px 0 10px #ffd65a, -2px 0 4px #ffe89a; }
+    100% { text-shadow:  0 -6px 10px #ffd65a,  0 -2px 4px #ffe89a; }
   }
 
-  .letter::before {
-    content: "";
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    width: 65%;
-    height: 65%;
-    border-radius: 50%;
-    background: radial-gradient(circle, rgba(255, 224, 120, 0.95) 0%, rgba(255, 205, 60, 0.6) 40%, rgba(255, 205, 60, 0) 75%);
-    filter: blur(3px);
-    transform-origin: center;
-    animation: orbit 2.6s linear infinite;
-    z-index: 0;
-    pointer-events: none;
-  }
+  .title .letter:nth-child(1)  { animation-delay: 0.00s; }
+  .title .letter:nth-child(2)  { animation-delay: 0.10s; }
+  .title .letter:nth-child(3)  { animation-delay: 0.20s; }
+  .title .letter:nth-child(4)  { animation-delay: 0.30s; }
+  .title .letter:nth-child(5)  { animation-delay: 0.40s; }
+  .title .letter:nth-child(6)  { animation-delay: 0.50s; }
+  .title .letter:nth-child(7)  { animation-delay: 0.60s; }
+  .title .letter:nth-child(8)  { animation-delay: 0.70s; }
+  .title .letter:nth-child(9)  { animation-delay: 0.80s; }
+  .title .letter:nth-child(10) { animation-delay: 0.90s; }
 
-  .letter span { position: relative; z-index: 1; }
-
-  @keyframes orbit {
-    0%   { transform: translate(-50%, -50%) rotate(0deg) translateX(0.85em) rotate(0deg); }
-    100% { transform: translate(-50%, -50%) rotate(360deg) translateX(0.85em) rotate(-360deg); }
-  }
-
-  /* zamik animacije za vsako črko posebej, da nastane valujoč učinek */
-  .title .letter:nth-child(1)::before  { animation-delay: 0.00s; }
-  .title .letter:nth-child(2)::before  { animation-delay: 0.12s; }
-  .title .letter:nth-child(3)::before  { animation-delay: 0.24s; }
-  .title .letter:nth-child(4)::before  { animation-delay: 0.36s; }
-  .title .letter:nth-child(5)::before  { animation-delay: 0.48s; }
-  .title .letter:nth-child(6)::before  { animation-delay: 0.60s; }
-  .title .letter:nth-child(7)::before  { animation-delay: 0.72s; }
-  .title .letter:nth-child(8)::before  { animation-delay: 0.84s; }
-  .title .letter:nth-child(9)::before  { animation-delay: 0.96s; }
-  .title .letter:nth-child(10)::before { animation-delay: 1.08s; }
-
-  .year .letter:nth-child(1)::before { animation-delay: 0.00s; }
-  .year .letter:nth-child(2)::before { animation-delay: 0.12s; }
-  .year .letter:nth-child(3)::before { animation-delay: 0.24s; }
-  .year .letter:nth-child(4)::before { animation-delay: 0.36s; }
+  .year .letter:nth-child(1) { animation-delay: 0.00s; }
+  .year .letter:nth-child(2) { animation-delay: 0.10s; }
+  .year .letter:nth-child(3) { animation-delay: 0.20s; }
+  .year .letter:nth-child(4) { animation-delay: 0.30s; }
 </style>
 </head>
 <body>
   <div class="content">
     <div class="title">
-      <span class="letter"><span>N</span></span>
-      <span class="letter"><span>K</span></span>
-      <span class="letter space"></span>
-      <span class="letter"><span>M</span></span>
-      <span class="letter"><span>A</span></span>
-      <span class="letter"><span>R</span></span>
-      <span class="letter"><span>I</span></span>
-      <span class="letter"><span>B</span></span>
-      <span class="letter"><span>O</span></span>
-      <span class="letter"><span>R</span></span>
+      <span class="letter">N</span><span class="letter">K</span><span class="letter space"></span><span class="letter">M</span><span class="letter">A</span><span class="letter">R</span><span class="letter">I</span><span class="letter">B</span><span class="letter">O</span><span class="letter">R</span>
     </div>
     <div class="year">
-      <span class="letter"><span>1</span></span>
-      <span class="letter"><span>9</span></span>
-      <span class="letter"><span>6</span></span>
-      <span class="letter"><span>0</span></span>
+      <span class="letter">1</span><span class="letter">9</span><span class="letter">6</span><span class="letter">0</span>
     </div>
   </div>
 </body>
