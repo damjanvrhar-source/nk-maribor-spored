@@ -842,7 +842,7 @@
     margin-bottom:22px;
   }
   .top-row .countdown{
-    flex:0 0 260px;
+    flex:0 0 330px;
     aspect-ratio:9/16;
     align-self:flex-start;
     min-width:0;
@@ -1036,24 +1036,26 @@
   /* ===== LESTVICA ===== */
   .table-wrap{
     background:var(--card);
-    border-radius:16px;
+    border-radius:20px;
     overflow:hidden;
-    box-shadow:0 8px 22px rgba(46,15,77,0.18);
+    box-shadow:0 10px 28px rgba(46,15,77,0.28), 0 2px 8px rgba(46,15,77,0.15);
     margin-bottom:22px;
-    border:2px solid var(--zlata);
+    border:none;
   }
   .lestvica-brez-naslova{
     position:relative;
-    border:none;
-    padding:3px;
-    background:var(--vijola-dark);
+    border-radius:20px;
+    overflow:hidden;
+    padding:2px;
+    background:linear-gradient(135deg, var(--zlata) 0%, var(--vijola-2) 45%, var(--vijola-dark) 75%, var(--zlata) 100%);
   }
   .lestvica-brez-naslova::before{
     content:"";
     position:absolute;
-    inset:-60%;
-    background:conic-gradient(from 0deg, transparent 0deg, transparent 300deg, var(--zlata) 340deg, #fff8dd 355deg, var(--zlata) 360deg);
+    inset:-50%;
+    background:conic-gradient(from 0deg, transparent 0deg, transparent 320deg, var(--zlata) 350deg, #fff8dd 358deg, var(--zlata) 360deg);
     animation:krogecSvetloba 7s linear infinite;
+    opacity:0.85;
   }
   @keyframes krogecSvetloba{
     to{ transform:rotate(360deg); }
@@ -1062,7 +1064,7 @@
     position:relative;
     z-index:1;
     background:var(--card);
-    border-radius:13px;
+    border-radius:18px;
     overflow:hidden;
     flex:1;
     display:flex;
