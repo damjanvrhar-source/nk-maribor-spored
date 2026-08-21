@@ -842,7 +842,8 @@
     margin-bottom:22px;
   }
   .top-row .countdown{
-    flex:0 0 260px;
+    flex:0 0 auto;
+    width:auto;
     aspect-ratio:9/16;
     align-self:flex-start;
     min-width:0;
@@ -2192,6 +2193,21 @@ function nalozLestvico(){
 }
 
 nalozLestvico();
+
+function uskladiVisinoKartic(){
+  const countdown = document.getElementById('countdownBox');
+  const tabela = document.querySelector('.top-row .table-wrap');
+  if(!countdown || !tabela) return;
+  if(window.innerWidth <= 800){
+    countdown.style.height = '';
+    return;
+  }
+  countdown.style.height = tabela.offsetHeight + 'px';
+}
+window.addEventListener('load', uskladiVisinoKartic);
+window.addEventListener('resize', uskladiVisinoKartic);
+setTimeout(uskladiVisinoKartic, 300);
+setTimeout(uskladiVisinoKartic, 1200);
 
 /* ===== GLASBENA PODLAGA ===== */
 const bgMusic = document.getElementById('bgMusic');
