@@ -1118,7 +1118,7 @@
   }
   table.lestvica th{
     text-align:center;
-    padding:10px 4px;
+    padding:8px 4px;
     font-size:10.5px;
     color:var(--muted);
     text-transform:uppercase;
@@ -1136,7 +1136,7 @@
   }
   table.lestvica td{
     text-align:center;
-    padding:10px 4px;
+    padding:8px 4px;
     border-bottom:1px solid #f2ecfa;
   }
   table.lestvica tr:last-child td{border-bottom:none;}
@@ -1238,7 +1238,6 @@
     to{ transform:scale(1); opacity:1; }
   }
   table.lestvica tbody tr.maribor-row{
-    background:#f6effc;
     font-weight:700;
   }
   tr.maribor-row:not(.zone-cl):not(.zone-conf):not(.zone-warn):not(.zone-out) td:first-child{
@@ -2179,13 +2178,13 @@ function nalozLestvico(){
       </thead>
       <tbody>${rows}</tbody>
     </table>
+    </div>
     <div class="lestvica-legend">
         <span><span class="legend-dot" style="background:var(--liga-prvakov);"></span> Liga prvakov</span>
         <span><span class="legend-dot" style="background:var(--konferencna);"></span> Konferenčna liga</span>
         <span><span class="legend-dot" style="background:var(--kvalifikacije);"></span> Kvalifikacije za obstanek</span>
         <span><span class="legend-dot" style="background:var(--derby);"></span> Izpad</span>
-      </div>
-  </div>`;
+      </div>`;
 
   if(updatedEl){
     updatedEl.textContent = "";
