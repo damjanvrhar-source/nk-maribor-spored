@@ -865,6 +865,21 @@
     overflow-y:auto;
     flex:1;
     min-height:0;
+    scrollbar-width:thin;
+    scrollbar-color:var(--zlata) transparent;
+  }
+  .top-row .lestvica-scroll-wrap::-webkit-scrollbar{
+    width:8px;
+  }
+  .top-row .lestvica-scroll-wrap::-webkit-scrollbar-track{
+    background:transparent;
+  }
+  .top-row .lestvica-scroll-wrap::-webkit-scrollbar-thumb{
+    background:linear-gradient(var(--zlata), var(--vijola-2));
+    border-radius:8px;
+  }
+  .top-row .lestvica-scroll-wrap::-webkit-scrollbar-thumb:hover{
+    background:var(--zlata);
   }
   @keyframes slideInLeft{
     0%{ opacity:0; transform:translateX(-24px); }
@@ -1038,7 +1053,7 @@
     background:var(--card);
     border-radius:20px;
     overflow:hidden;
-    box-shadow:0 10px 28px rgba(46,15,77,0.28), 0 2px 8px rgba(46,15,77,0.15);
+    box-shadow:0 14px 34px rgba(46,15,77,0.32), 0 4px 10px rgba(46,15,77,0.18);
     margin-bottom:22px;
     border:none;
   }
@@ -1130,8 +1145,8 @@
     animation:rowFadeIn .35s ease forwards;
     transition:background-color .15s ease;
   }
-  table.lestvica tbody tr:hover{ background:#faf7ff; }
-  table.lestvica tbody tr:nth-child(even){ background:#fbf9ff; }
+  table.lestvica tbody tr:hover{ background:#f3ecff; }
+  table.lestvica tbody tr:nth-child(even){ background:#f6f1fd; }
   @keyframes rowFadeIn{
     from{ opacity:0; transform:translateY(4px); }
     to{ opacity:1; transform:translateY(0); }
