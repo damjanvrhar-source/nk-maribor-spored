@@ -1989,8 +1989,7 @@ function updateCountdown(){
       ? `<span class="kickoff-time confirmed">${dan}, ${labelBrezLeta} · ${uraPrikaz}</span>`
       : `<span class="kickoff-time tentative">${dan}, ${labelBrezLeta} · predvidoma ${uraPrikaz}</span>`;
     labelEl.innerHTML = `<span class="match-title">${domHtml} — ${gostHtml}${next.derby ? ' ⚡' : ''}</span>
-      <span class="kickoff-line">${uraHtml}</span>
-      <span class="venue-mini">${next.prizorisce}</span>`;
+      <span class="kickoff-line">${uraHtml}</span>`;
     zadnjiPrikazaniKrog = next.krog;
     requestAnimationFrame(() => {
       const naslovEl = labelEl.querySelector('.match-title');
