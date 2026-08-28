@@ -304,6 +304,14 @@
     padding:22px 28px;
     min-height:130px;
   }
+  .header-text{width:100%;text-align:center;padding:0 165px;}
+  @media(max-width:900px){
+    .header-text{padding:0 140px;}
+    header h1{font-size:40px;}
+  }
+  @media(max-width:640px){
+    .header-text{padding:0;}
+  }
   .crest{
     flex-shrink:0;
     width:118px;
@@ -412,6 +420,257 @@
     text-shadow:0 2px 6px rgba(0,0,0,0.4);
     opacity:0;
     animation:subFadeIn .6s cubic-bezier(.21,.86,.4,1) .55s forwards, headerTextGlow 3.5s ease-in-out 2.2s infinite;
+  }
+
+  .header-koledar{
+    position:absolute;
+    right:28px;
+    top:50%;
+    transform:translateY(-50%);
+    width:150px;
+    background:rgba(0,0,0,0.18);
+    border:1px solid rgba(245,197,24,0.35);
+    border-radius:12px;
+    padding:8px 8px 6px;
+    box-shadow:none;
+    margin-bottom:0;
+    opacity:0;
+    animation:subFadeIn .6s cubic-bezier(.21,.86,.4,1) .65s forwards;
+    cursor:pointer;
+  }
+  .koledar-povecaj{
+    position:absolute;
+    top:4px;
+    right:4px;
+    width:16px;
+    height:16px;
+    line-height:14px;
+    text-align:center;
+    background:rgba(255,255,255,0.15);
+    color:#fff;
+    border:none;
+    border-radius:4px;
+    font-size:10px;
+    cursor:pointer;
+    z-index:3;
+  }
+  .koledar-povecaj:hover{
+    background:var(--zlata);
+    color:var(--vijola-dark);
+  }
+  .koledar-modal{
+    display:none;
+    position:fixed;
+    inset:0;
+    z-index:999;
+    align-items:center;
+    justify-content:center;
+  }
+  .koledar-modal.odprt{
+    display:flex;
+  }
+  .koledar-modal-ozadje{
+    position:absolute;
+    inset:0;
+    background:rgba(20,8,35,0.72);
+    backdrop-filter:blur(3px);
+  }
+  .koledar-modal-vsebina{
+    position:relative;
+    background:var(--card);
+    border-radius:20px;
+    padding:22px 20px 18px;
+    width:min(380px, 92vw);
+    box-shadow:0 20px 50px rgba(0,0,0,0.4);
+    border:1px solid rgba(123,47,181,0.2);
+    animation:koledarModalPop .25s cubic-bezier(.34,1.56,.64,1) both;
+  }
+  @keyframes koledarModalPop{
+    0%{ opacity:0; transform:scale(0.9); }
+    100%{ opacity:1; transform:scale(1); }
+  }
+  .koledar-modal-zapri{
+    position:absolute;
+    top:14px;
+    right:14px;
+    width:28px;
+    height:28px;
+    border-radius:50%;
+    background:var(--vijola-dark);
+    color:#fff;
+    border:none;
+    font-size:14px;
+    cursor:pointer;
+  }
+  .koledar-modal-zapri:hover{
+    background:var(--vijola-2);
+  }
+  .koledar-modal-vsebina .koledar-naslov{
+    font-size:16px;
+    color:var(--vijola-dark);
+  }
+  .koledar-modal-vsebina .koledar-nav{
+    width:32px;
+    height:32px;
+    font-size:18px;
+  }
+  .koledar-mreza-veliko .koledar-dan{
+    font-size:13px;
+  }
+  .koledar-mreza-veliko .koledar-grb{
+    width:75%;
+    height:75%;
+  }
+  .header-koledar .koledar-glava{
+    margin-bottom:6px;
+  }
+  .header-koledar .koledar-naslov{
+    font-size:10.5px;
+    color:#fff;
+    text-shadow:0 1px 4px rgba(0,0,0,0.5);
+  }
+  .header-koledar .koledar-nav{
+    width:20px;
+    height:20px;
+    font-size:13px;
+    background:rgba(245,197,24,0.25);
+    color:#fff;
+  }
+  .header-koledar .koledar-nav:hover{
+    background:var(--zlata);
+    color:var(--vijola-dark);
+  }
+  .header-koledar .koledar-dnevi-glava span{
+    font-size:7px;
+    color:rgba(255,255,255,0.65);
+  }
+  .header-koledar .koledar-dnevi-glava,
+  .header-koledar .koledar-mreza{
+    gap:2px;
+  }
+  .header-koledar .koledar-dan{
+    font-size:8.5px;
+    border-radius:4px;
+    color:rgba(255,255,255,0.85);
+  }
+  .header-koledar .koledar-dan.danes{
+    box-shadow:inset 0 0 0 1.5px var(--zlata);
+  }
+  .header-koledar .koledar-dan .koledar-pikica{
+    display:none;
+  }
+  @media(max-width:900px){
+    .header-koledar{
+      width:130px;
+    }
+    .header-koledar .koledar-naslov{ font-size:9.5px; }
+  }
+  @media(max-width:640px){
+    .header-koledar{
+      position:relative;
+      transform:none;
+      width:200px;
+      margin:10px auto 0;
+    }
+    .header-koledar .koledar-naslov{ font-size:13px; }
+    .header-koledar .koledar-dnevi-glava span{ font-size:9px; }
+    .header-koledar .koledar-dan{ font-size:11px; }
+  }
+
+  .koledar-wrap{
+    background:var(--card);
+    border-radius:20px;
+    padding:18px 16px 14px;
+    margin-bottom:22px;
+    box-shadow:0 10px 28px rgba(46,15,77,0.22), 0 2px 8px rgba(46,15,77,0.12);
+    border:1px solid rgba(123,47,181,0.15);
+  }
+  .koledar-glava{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    margin-bottom:12px;
+  }
+  .koledar-naslov{
+    font-weight:800;
+    font-size:16px;
+    color:var(--vijola-dark);
+    text-transform:capitalize;
+  }
+  .koledar-nav{
+    background:var(--vijola-dark);
+    color:var(--zlata);
+    border:none;
+    width:32px;
+    height:32px;
+    border-radius:8px;
+    font-size:18px;
+    font-weight:700;
+    cursor:pointer;
+    transition:transform .15s ease, background-color .15s ease;
+  }
+  .koledar-nav:hover{
+    background:var(--vijola-2);
+    transform:scale(1.08);
+  }
+  .koledar-dnevi-glava{
+    display:grid;
+    grid-template-columns:repeat(7,1fr);
+    gap:4px;
+    margin-bottom:6px;
+  }
+  .koledar-dnevi-glava span{
+    text-align:center;
+    font-size:11px;
+    font-weight:700;
+    color:#9a86b3;
+    text-transform:uppercase;
+  }
+  .koledar-mreza{
+    display:grid;
+    grid-template-columns:repeat(7,1fr);
+    gap:4px;
+  }
+  .koledar-dan{
+    aspect-ratio:1;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    border-radius:9px;
+    font-size:12.5px;
+    font-weight:600;
+    color:var(--vijola-dark);
+    position:relative;
+    background:transparent;
+  }
+  .koledar-dan.prazen{
+    visibility:hidden;
+  }
+  .koledar-dan.danes{
+    box-shadow:inset 0 0 0 2px var(--zlata);
+  }
+  .koledar-dan.ima-tekmo{
+    cursor:pointer;
+    background:linear-gradient(135deg, var(--vijola-2), var(--vijola-dark));
+    transition:transform .15s ease;
+    padding:2px;
+  }
+  .koledar-dan.ima-tekmo:hover{
+    transform:scale(1.15);
+    z-index:2;
+  }
+  .koledar-dan.ima-tekmo.odigrana{
+    opacity:0.5;
+  }
+  .koledar-dan .koledar-grb{
+    width:70%;
+    height:70%;
+    object-fit:contain;
+    filter:drop-shadow(0 1px 2px rgba(0,0,0,0.5));
+  }
+  @media(max-width:520px){
+    .koledar-dan{ font-size:11px; }
   }
 
   .polsezon{
@@ -1538,10 +1797,34 @@
         <h1>NK <span class="accent">MARIBOR</span></h1>
         <div class="header-year">1960</div>
       </div>
+      <div class="koledar-wrap header-koledar" id="koledarWrap">
+        <button class="koledar-povecaj" id="koledarPovecaj" aria-label="Poveči koledar">⤢</button>
+        <div class="koledar-glava">
+          <button class="koledar-nav" id="koledarPrev" aria-label="Prejšnji mesec">‹</button>
+          <div class="koledar-naslov" id="koledarNaslov">Avgust 2026</div>
+          <button class="koledar-nav" id="koledarNext" aria-label="Naslednji mesec">›</button>
+        </div>
+        <div class="koledar-dnevi-glava" id="koledarDnevi"></div>
+        <div class="koledar-mreza" id="koledarMreza"></div>
+      </div>
     </div>
     <p class="sub">Spored in lestvica sezone 26/27</p>
   </div>
 </header>
+
+<div class="koledar-modal" id="koledarModal">
+  <div class="koledar-modal-ozadje" id="koledarModalOzadje"></div>
+  <div class="koledar-modal-vsebina">
+    <button class="koledar-modal-zapri" id="koledarModalZapri" aria-label="Zapri">✕</button>
+    <div class="koledar-glava">
+      <button class="koledar-nav" id="koledarPrevVeliko" aria-label="Prejšnji mesec">‹</button>
+      <div class="koledar-naslov" id="koledarNaslovVeliko">Avgust 2026</div>
+      <button class="koledar-nav" id="koledarNextVeliko" aria-label="Naslednji mesec">›</button>
+    </div>
+    <div class="koledar-dnevi-glava" id="koledarDneviVeliko"></div>
+    <div class="koledar-mreza koledar-mreza-veliko" id="koledarMrezaVeliko"></div>
+  </div>
+</div>
 
 <div class="top-row">
   <div class="countdown" id="countdownBox">
@@ -1779,6 +2062,116 @@ function formatDate(iso){
 
 const container = document.getElementById('fixtures');
 let currentHalf = null;
+
+/* ===== MESEČNI KOLEDAR TEKEM ===== */
+const koledarTekmePoDatumu = {};
+fixtures.forEach(f => {
+  const [krog, datum, dom, gost, prizorisce, homeMatch] = f;
+  koledarTekmePoDatumu[datum] = { krog, dom, gost, homeMatch };
+});
+
+let koledarLetoMesec = { leto: 2026, mesec: 6 };
+
+function izrisiKoledarV(idNaslov, idDnevi, idMreza){
+  const { leto, mesec } = koledarLetoMesec;
+  const naslovEl = document.getElementById(idNaslov);
+  const dneviEl = document.getElementById(idDnevi);
+  const mrezaEl = document.getElementById(idMreza);
+  if(!naslovEl || !mrezaEl) return;
+
+  naslovEl.textContent = `${meseci[mesec]} ${leto}`;
+  dneviEl.innerHTML = ['Pon','Tor','Sre','Čet','Pet','Sob','Ned'].map(d => `<span>${d}</span>`).join('');
+
+  const prviDan = new Date(leto, mesec, 1);
+  let zamik = prviDan.getDay() - 1;
+  if(zamik < 0) zamik = 6;
+  const steviloDni = new Date(leto, mesec + 1, 0).getDate();
+  const danes = new Date();
+  const danesISO = danes.toISOString().slice(0,10);
+
+  let html = '';
+  for(let i = 0; i < zamik; i++){
+    html += '<div class="koledar-dan prazen"></div>';
+  }
+  for(let dan = 1; dan <= steviloDni; dan++){
+    const mm = String(mesec + 1).padStart(2,'0');
+    const dd = String(dan).padStart(2,'0');
+    const iso = `${leto}-${mm}-${dd}`;
+    const tekma = koledarTekmePoDatumu[iso];
+    const jeDanes = iso === danesISO;
+    let razred = 'koledar-dan';
+    if(jeDanes) razred += ' danes';
+    if(tekma){
+      razred += ' ima-tekmo';
+      if(REZULTATI[tekma.krog]) razred += ' odigrana';
+    }
+    const vsebina = tekma
+      ? `<img class="koledar-grb" src="grb.png" alt="NK Maribor">`
+      : `${dan}`;
+    html += `<div class="${razred}" ${tekma ? `data-krog="${tekma.krog}" title="${dan}. ${meseci[mesec]} — ${tekma.dom} — ${tekma.gost}"` : ''}>${vsebina}</div>`;
+  }
+  mrezaEl.innerHTML = html;
+
+  mrezaEl.querySelectorAll('.ima-tekmo').forEach(el => {
+    el.addEventListener('click', (e) => {
+      e.stopPropagation();
+      zapriKoledarModal();
+      const krog = el.dataset.krog;
+      const cilj = document.getElementById(`match-${krog}`);
+      if(cilj){
+        setTimeout(() => {
+          cilj.scrollIntoView({behavior:'smooth', block:'center'});
+          cilj.style.transition = 'box-shadow .3s ease';
+          cilj.style.boxShadow = '0 0 0 3px var(--zlata)';
+          setTimeout(() => { cilj.style.boxShadow = ''; }, 1600);
+        }, 50);
+      }
+    });
+  });
+}
+
+function izrisiKoledar(){
+  izrisiKoledarV('koledarNaslov', 'koledarDnevi', 'koledarMreza');
+  izrisiKoledarV('koledarNaslovVeliko', 'koledarDneviVeliko', 'koledarMrezaVeliko');
+}
+
+function odpriKoledarModal(){
+  document.getElementById('koledarModal')?.classList.add('odprt');
+}
+function zapriKoledarModal(){
+  document.getElementById('koledarModal')?.classList.remove('odprt');
+}
+
+document.getElementById('koledarPrev')?.addEventListener('click', (e) => {
+  e.stopPropagation();
+  koledarLetoMesec.mesec--;
+  if(koledarLetoMesec.mesec < 0){ koledarLetoMesec.mesec = 11; koledarLetoMesec.leto--; }
+  izrisiKoledar();
+});
+document.getElementById('koledarNext')?.addEventListener('click', (e) => {
+  e.stopPropagation();
+  koledarLetoMesec.mesec++;
+  if(koledarLetoMesec.mesec > 11){ koledarLetoMesec.mesec = 0; koledarLetoMesec.leto++; }
+  izrisiKoledar();
+});
+document.getElementById('koledarPrevVeliko')?.addEventListener('click', () => {
+  koledarLetoMesec.mesec--;
+  if(koledarLetoMesec.mesec < 0){ koledarLetoMesec.mesec = 11; koledarLetoMesec.leto--; }
+  izrisiKoledar();
+});
+document.getElementById('koledarNextVeliko')?.addEventListener('click', () => {
+  koledarLetoMesec.mesec++;
+  if(koledarLetoMesec.mesec > 11){ koledarLetoMesec.mesec = 0; koledarLetoMesec.leto++; }
+  izrisiKoledar();
+});
+
+document.getElementById('koledarWrap')?.addEventListener('click', odpriKoledarModal);
+document.getElementById('koledarPovecaj')?.addEventListener('click', (e) => {
+  e.stopPropagation();
+  odpriKoledarModal();
+});
+document.getElementById('koledarModalZapri')?.addEventListener('click', zapriKoledarModal);
+document.getElementById('koledarModalOzadje')?.addEventListener('click', zapriKoledarModal);
 
 /* ROČNO VNESENI REZULTATI ODIGRANIH TEKEM
    Ko je tekma odigrana, se tu doda: krog: "goli_doma:goli_gostov" */
@@ -2195,6 +2588,11 @@ function nalozLestvico(){
 }
 
 nalozLestvico();
+
+const prvaNeodigrana = fixtures.find(f => !REZULTATI[f[0]]) || fixtures[fixtures.length - 1];
+const dKoledar = new Date(prvaNeodigrana[1]+"T12:00:00");
+koledarLetoMesec = { leto: dKoledar.getFullYear(), mesec: dKoledar.getMonth() };
+izrisiKoledar();
 
 function uskladiVisinoKartic(){
   const countdown = document.getElementById('countdownBox');
