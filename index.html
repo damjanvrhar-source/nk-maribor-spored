@@ -302,7 +302,7 @@
     align-items:center;
     justify-content:center;
     padding:22px 28px;
-    min-height:130px;
+    min-height:180px;
   }
   .header-text{width:100%;text-align:center;padding:0 165px;}
   @media(max-width:900px){
@@ -427,16 +427,27 @@
     right:28px;
     top:50%;
     transform:translateY(-50%);
-    width:150px;
-    background:rgba(0,0,0,0.18);
-    border:1px solid rgba(245,197,24,0.35);
+    width:126px;
+    background:rgba(20,8,35,0.35);
+    backdrop-filter:blur(2px);
+    border:1px solid rgba(245,197,24,0.4);
     border-radius:12px;
-    padding:8px 8px 6px;
-    box-shadow:none;
+    padding:7px 7px 5px;
+    box-shadow:0 0 0 rgba(245,197,24,0);
     margin-bottom:0;
     opacity:0;
-    animation:subFadeIn .6s cubic-bezier(.21,.86,.4,1) .65s forwards;
+    animation:subFadeIn .6s cubic-bezier(.21,.86,.4,1) .65s forwards,
+              koledarLebdi 4.5s ease-in-out 1.3s infinite,
+              koledarSij 3.5s ease-in-out 1.3s infinite;
     cursor:pointer;
+  }
+  @keyframes koledarLebdi{
+    0%,100%{ transform:translateY(-50%); }
+    50%{ transform:translateY(calc(-50% - 4px)); }
+  }
+  @keyframes koledarSij{
+    0%,100%{ box-shadow:0 0 0 rgba(245,197,24,0), 0 4px 14px rgba(0,0,0,0.25); }
+    50%{ box-shadow:0 0 14px rgba(245,197,24,0.45), 0 4px 14px rgba(0,0,0,0.25); }
   }
   .koledar-povecaj{
     position:absolute;
@@ -602,17 +613,17 @@
     letter-spacing:0.5px;
   }
   .header-koledar .koledar-glava{
-    margin-bottom:6px;
+    margin-bottom:4px;
   }
   .header-koledar .koledar-naslov{
-    font-size:10.5px;
+    font-size:9.5px;
     color:#fff;
     text-shadow:0 1px 4px rgba(0,0,0,0.5);
   }
   .header-koledar .koledar-nav{
-    width:20px;
-    height:20px;
-    font-size:13px;
+    width:16px;
+    height:16px;
+    font-size:11px;
     background:rgba(245,197,24,0.25);
     color:#fff;
   }
@@ -621,16 +632,16 @@
     color:var(--vijola-dark);
   }
   .header-koledar .koledar-dnevi-glava span{
-    font-size:7px;
+    font-size:6.5px;
     color:rgba(255,255,255,0.65);
   }
   .header-koledar .koledar-dnevi-glava,
   .header-koledar .koledar-mreza{
-    gap:2px;
+    gap:1.5px;
   }
   .header-koledar .koledar-dan{
-    font-size:8.5px;
-    border-radius:4px;
+    font-size:8px;
+    border-radius:3px;
     color:rgba(255,255,255,0.85);
   }
   .header-koledar .koledar-dan.danes{
@@ -640,17 +651,21 @@
     display:none;
   }
   @media(max-width:900px){
-    .header-koledar{
-      width:130px;
+    .koledar-wrap.header-koledar{
+      width:112px;
     }
-    .header-koledar .koledar-naslov{ font-size:9.5px; }
+    .header-koledar .koledar-naslov{ font-size:9px; }
   }
   @media(max-width:640px){
-    .header-koledar{
+    .koledar-wrap.header-koledar{
       position:relative;
+      top:auto;
       transform:none;
       width:200px;
+      max-height:none;
+      overflow-y:visible;
       margin:10px auto 0;
+      animation:subFadeIn .6s cubic-bezier(.21,.86,.4,1) .65s forwards;
     }
     .header-koledar .koledar-naslov{ font-size:13px; }
     .header-koledar .koledar-dnevi-glava span{ font-size:9px; }
