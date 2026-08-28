@@ -425,7 +425,7 @@
   .koledar-wrap.header-koledar{
     position:absolute;
     right:28px;
-    top:var(--koledar-top, 8px);
+    top:8px;
     width:126px;
     background:#fff;
     backdrop-filter:none;
@@ -436,13 +436,8 @@
     margin-bottom:0;
     opacity:0;
     animation:subFadeIn .6s cubic-bezier(.21,.86,.4,1) .65s forwards,
-              koledarLebdi 6s ease-in-out 1.3s infinite,
               koledarSij 3.5s ease-in-out 1.3s infinite;
     cursor:pointer;
-  }
-  @keyframes koledarLebdi{
-    0%,100%{ top:var(--koledar-top, 8px); }
-    50%{ top:var(--koledar-bottom, 140px); }
   }
   @keyframes koledarSij{
     0%,100%{ box-shadow:0 0 0 rgba(245,197,24,0), 0 4px 14px rgba(0,0,0,0.25); }
@@ -2266,17 +2261,39 @@ function izrisiKoledar(){
   namestiLebdenjeKoledarja();
 }
 
+let koledarLebdenjeAnimacija = null;
 function namestiLebdenjeKoledarja(){
   const box = document.getElementById('koledarWrap');
   const headerInner = document.querySelector('.header-inner');
-  if(!box || !headerInner || window.innerWidth <= 640) return;
+  if(!box || !headerInner) return;
+
+  if(koledarLebdenjeAnimacija){
+    koledarLebdenjeAnimacija.cancel();
+    koledarLebdenjeAnimacija = null;
+  }
+
+  if(window.innerWidth <= 640){
+    box.style.top = '';
+    return;
+  }
+
   const rob = 6;
+  box.style.top = rob + 'px';
   const visinaGlave = headerInner.clientHeight;
   const visinaKoledarja = box.offsetHeight;
   const zgoraj = rob;
   const spodaj = Math.max(rob, visinaGlave - visinaKoledarja - rob);
-  box.style.setProperty('--koledar-top', zgoraj + 'px');
-  box.style.setProperty('--koledar-bottom', spodaj + 'px');
+
+  if(spodaj <= zgoraj + 1) return;
+
+  koledarLebdenjeAnimacija = box.animate(
+    [
+      { top: zgoraj + 'px' },
+      { top: spodaj + 'px' },
+      { top: zgoraj + 'px' }
+    ],
+    { duration: 6000, iterations: Infinity, easing: 'ease-in-out', delay: 1300, fill: 'forwards' }
+  );
 }
 window.addEventListener('resize', namestiLebdenjeKoledarja);
 window.addEventListener('load', namestiLebdenjeKoledarja);
