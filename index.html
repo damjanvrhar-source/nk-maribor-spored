@@ -302,7 +302,7 @@
     align-items:center;
     justify-content:center;
     padding:22px 28px;
-    min-height:180px;
+    min-height:190px;
   }
   .header-text{width:100%;text-align:center;padding:0 165px;}
   @media(max-width:900px){
@@ -425,7 +425,8 @@
   .koledar-wrap.header-koledar{
     position:absolute;
     right:28px;
-    top:8px;
+    top:50%;
+    transform:translateY(-50%);
     width:126px;
     background:#fff;
     backdrop-filter:none;
@@ -435,9 +436,18 @@
     box-shadow:0 0 0 rgba(245,197,24,0);
     margin-bottom:0;
     opacity:0;
-    animation:subFadeIn .6s cubic-bezier(.21,.86,.4,1) .65s forwards,
+    animation:koledarPojavi .6s cubic-bezier(.21,.86,.4,1) .65s forwards,
+              koledarLebdi 5s ease-in-out 1.3s infinite,
               koledarSij 3.5s ease-in-out 1.3s infinite;
     cursor:pointer;
+  }
+  @keyframes koledarPojavi{
+    0%{ opacity:0; transform:translateY(-50%) scale(0.9); }
+    100%{ opacity:0.95; transform:translateY(-50%) scale(1); }
+  }
+  @keyframes koledarLebdi{
+    0%,100%{ transform:translateY(calc(-50% - 8px)); }
+    50%{ transform:translateY(calc(-50% + 8px)); }
   }
   @keyframes koledarSij{
     0%,100%{ box-shadow:0 0 0 rgba(245,197,24,0), 0 4px 14px rgba(0,0,0,0.25); }
@@ -1886,16 +1896,16 @@
         <h1>NK <span class="accent">MARIBOR</span></h1>
         <div class="header-year">1960</div>
       </div>
-      <div class="koledar-wrap header-koledar" id="koledarWrap">
-        <button class="koledar-povecaj" id="koledarPovecaj" aria-label="Poveči koledar">⤢</button>
-        <div class="koledar-glava">
-          <button class="koledar-nav" id="koledarPrev" aria-label="Prejšnji mesec">‹</button>
-          <div class="koledar-naslov" id="koledarNaslov">Avgust 2026</div>
-          <button class="koledar-nav" id="koledarNext" aria-label="Naslednji mesec">›</button>
-        </div>
-        <div class="koledar-dnevi-glava" id="koledarDnevi"></div>
-        <div class="koledar-mreza" id="koledarMreza"></div>
+    </div>
+    <div class="koledar-wrap header-koledar" id="koledarWrap">
+      <button class="koledar-povecaj" id="koledarPovecaj" aria-label="Poveči koledar">⤢</button>
+      <div class="koledar-glava">
+        <button class="koledar-nav" id="koledarPrev" aria-label="Prejšnji mesec">‹</button>
+        <div class="koledar-naslov" id="koledarNaslov">Avgust 2026</div>
+        <button class="koledar-nav" id="koledarNext" aria-label="Naslednji mesec">›</button>
       </div>
+      <div class="koledar-dnevi-glava" id="koledarDnevi"></div>
+      <div class="koledar-mreza" id="koledarMreza"></div>
     </div>
     <p class="sub">Spored in lestvica sezone 26/27</p>
   </div>
@@ -2258,46 +2268,7 @@ document.getElementById('tekmaModalOzadje')?.addEventListener('click', zapriTekm
 function izrisiKoledar(){
   izrisiKoledarV('koledarNaslov', 'koledarDnevi', 'koledarMreza');
   izrisiKoledarV('koledarNaslovVeliko', 'koledarDneviVeliko', 'koledarMrezaVeliko');
-  namestiLebdenjeKoledarja();
 }
-
-let koledarLebdenjeAnimacija = null;
-function namestiLebdenjeKoledarja(){
-  const box = document.getElementById('koledarWrap');
-  const headerInner = document.querySelector('.header-inner');
-  if(!box || !headerInner) return;
-
-  if(koledarLebdenjeAnimacija){
-    koledarLebdenjeAnimacija.cancel();
-    koledarLebdenjeAnimacija = null;
-  }
-
-  if(window.innerWidth <= 640){
-    box.style.top = '';
-    return;
-  }
-
-  const rob = 6;
-  box.style.top = rob + 'px';
-  const visinaGlave = headerInner.clientHeight;
-  const visinaKoledarja = box.offsetHeight;
-  const zgoraj = rob;
-  const spodaj = Math.max(rob, visinaGlave - visinaKoledarja - rob);
-
-  if(spodaj <= zgoraj + 1) return;
-
-  koledarLebdenjeAnimacija = box.animate(
-    [
-      { top: zgoraj + 'px' },
-      { top: spodaj + 'px' },
-      { top: zgoraj + 'px' }
-    ],
-    { duration: 6000, iterations: Infinity, easing: 'ease-in-out', delay: 1300, fill: 'forwards' }
-  );
-}
-window.addEventListener('resize', namestiLebdenjeKoledarja);
-window.addEventListener('load', namestiLebdenjeKoledarja);
-setTimeout(namestiLebdenjeKoledarja, 800);
 
 function odpriKoledarModal(){
   document.getElementById('koledarModal')?.classList.add('odprt');
