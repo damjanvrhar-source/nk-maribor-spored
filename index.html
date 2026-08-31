@@ -61,6 +61,19 @@
     z-index:-1;
     pointer-events:none;
   }
+  .grb-vodni-znak{
+    content:"";
+    position:fixed;
+    top:50%;
+    left:50%;
+    width:min(90vw, 900px);
+    height:min(90vw, 900px);
+    transform:translate(-50%, -50%);
+    background:url('grb.png') center/contain no-repeat;
+    opacity:0.05;
+    z-index:-1;
+    pointer-events:none;
+  }
   body::before{
     top:-180px; left:-160px;
     background:radial-gradient(circle, var(--vijola-2), transparent 70%);
@@ -1881,6 +1894,7 @@
 <script defer src="/_vercel/insights/script.js"></script>
 </head>
 <body>
+<div class="grb-vodni-znak"></div>
 <div id="introScreen">
   <div class="intro-flash"></div>
   <div class="intro-halo"></div>
