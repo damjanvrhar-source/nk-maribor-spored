@@ -509,29 +509,18 @@
   }
   .koledar-modal-vsebina{
     position:relative;
-    background:var(--card) url('grb.png') center/55% no-repeat;
-    background-blend-mode:normal;
+    background:
+      linear-gradient(rgba(255,255,255,0.91), rgba(255,255,255,0.91)),
+      url('grb.png');
+    background-size:cover, 55%;
+    background-position:center, center;
+    background-repeat:no-repeat, no-repeat;
     border-radius:20px;
     padding:22px 20px 18px;
     width:min(380px, 92vw);
     box-shadow:0 20px 50px rgba(0,0,0,0.4);
     border:1px solid rgba(123,47,181,0.2);
     animation:koledarModalPop .25s cubic-bezier(.34,1.56,.64,1) both;
-  }
-  .koledar-modal-vsebina::before{
-    content:"";
-    position:absolute;
-    inset:0;
-    border-radius:20px;
-    background:var(--card);
-    opacity:0.91;
-    z-index:0;
-  }
-  .koledar-modal-vsebina .koledar-glava,
-  .koledar-modal-vsebina .koledar-dnevi-glava,
-  .koledar-modal-vsebina .koledar-mreza{
-    position:relative;
-    z-index:1;
   }
   @keyframes koledarModalPop{
     0%{ opacity:0; transform:scale(0.9); }
@@ -1803,11 +1792,22 @@
     transition:transform .1s;
   }
   .kader-modal-notranji{
-    background:var(--card);
+    position:relative;
+    background:
+      linear-gradient(rgba(255,255,255,0.91), rgba(255,255,255,0.91)),
+      url('grb.png');
+    background-size:cover, 60%;
+    background-position:center, center 40%;
+    background-repeat:no-repeat, no-repeat;
     border-radius:15px;
     max-height:calc(85vh - 6px);
     display:flex;
     flex-direction:column;
+    overflow:hidden;
+  }
+  .kader-modal-telo{
+    position:relative;
+    z-index:1;
   }
   .kader-modal.odprt .kader-modal-vsebina{
     animation:kaderModalPop .5s cubic-bezier(.2,1.4,.4,1) forwards;
@@ -1818,6 +1818,8 @@
     100%{ transform:scale(1) translateY(0); opacity:1; filter:blur(0); }
   }
   .kader-modal-glava{
+    position:relative;
+    z-index:1;
     background:linear-gradient(90deg,var(--vijola),var(--vijola-2),var(--vijola));
     background-size:200% 100%;
     animation:tableHeaderSheen 6s ease-in-out infinite;
