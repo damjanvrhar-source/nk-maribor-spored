@@ -28,6 +28,10 @@
     --card:#ffffff;
     --text:#241536;
     --muted:#7d6d95;
+    --muted-light:#9a86b3;
+    --lila-100:#f3ecff;
+    --lila-200:#e8dbf7;
+    --lila-300:#d8c8ee;
     --derby:#e8332e;
     --liga-prvakov:#7b2fb5;
     --konferencna:#2f7cd6;
@@ -563,7 +567,7 @@
     font-size:11px;
     text-transform:uppercase;
     letter-spacing:1.2px;
-    color:#9a86b3;
+    color:var(--muted-light);
     font-weight:700;
     margin-bottom:8px;
   }
@@ -584,13 +588,13 @@
   }
   .tekma-modal-datum{
     font-size:13px;
-    color:#6b5a85;
+    color:var(--muted);
     font-weight:600;
     margin-bottom:4px;
   }
   .tekma-modal-mesto{
     font-size:12px;
-    color:#9a86b3;
+    color:var(--muted-light);
     margin-bottom:12px;
   }
   .tekma-modal-strelci{
@@ -611,7 +615,7 @@
   .tekma-modal-strelci-col b{
     display:block;
     font-size:11px;
-    color:#9a86b3;
+    color:var(--muted-light);
     margin-bottom:4px;
     text-transform:uppercase;
     letter-spacing:0.5px;
@@ -637,7 +641,7 @@
   }
   .header-koledar .koledar-dnevi-glava span{
     font-size:6.5px;
-    color:#9a86b3;
+    color:var(--muted-light);
   }
   .header-koledar .koledar-dnevi-glava,
   .header-koledar .koledar-mreza{
@@ -722,7 +726,7 @@
     text-align:center;
     font-size:11px;
     font-weight:700;
-    color:#9a86b3;
+    color:var(--muted-light);
     text-transform:uppercase;
   }
   .koledar-mreza{
@@ -821,16 +825,20 @@
     z-index:1;
   }
   .match{
-    background:linear-gradient(135deg, #ffffff 0%, #f5eefc 55%, #ede0fa 100%);
+    background:linear-gradient(135deg, #ffffff 0%, var(--lila-100) 55%, var(--lila-200) 100%);
     border-radius:14px;
     padding:14px 16px;
     margin-bottom:10px;
-    box-shadow:0 2px 8px rgba(46,15,77,0.09);
+    box-shadow:0 4px 14px rgba(46,15,77,0.14), 0 1px 3px rgba(46,15,77,0.08);
     border-left:5px solid var(--zlata);
-    border-top:1px solid #eee2ff;
+    border-top:1px solid var(--lila-200);
     transition:transform .18s ease, box-shadow .18s ease;
     opacity:0;
     transform:translateY(18px) scale(0.97);
+  }
+  .match:hover{
+    box-shadow:0 8px 22px rgba(46,15,77,0.2), 0 0 0 1px rgba(245,197,24,0.3);
+    transform:translateY(-2px);
   }
   .match-row{
     display:flex;
@@ -850,7 +858,7 @@
   }
   .strelci-content{
     padding-top:12px;
-    border-top:1px dashed #e5d9f5;
+    border-top:1px dashed var(--lila-200);
     font-size:13px;
     color:var(--vijola-dark);
     line-height:1.6;
@@ -862,7 +870,7 @@
     padding-top:12px;
     padding-left:220px;
     padding-right:170px;
-    border-top:1px dashed #e5d9f5;
+    border-top:1px dashed var(--lila-200);
     font-size:13px;
   }
   .strelci-col{ min-width:0; white-space:nowrap; text-align:center; }
@@ -902,7 +910,7 @@
     text-transform:uppercase;
     letter-spacing:0.5px;
     color:var(--vijola-2);
-    border-bottom:1px solid #ece0fa;
+    border-bottom:1px solid var(--lila-200);
     padding-bottom:4px;
     margin-bottom:6px;
   }
@@ -938,16 +946,17 @@
     justify-content:center;
     width:20px;height:20px;
     border-radius:50%;
-    background:#efe7fb;
+    background:var(--lila-100);
     color:var(--vijola-dark);
     font-weight:700;
     font-size:10px;
     flex-shrink:0;
+    border:1px solid rgba(245,197,24,0.55);
     animation:kaderStPulz 2.4s ease-in-out infinite;
   }
   @keyframes kaderStPulz{
-    0%,100%{ box-shadow:0 0 0 rgba(123,47,181,0.4); transform:scale(1); }
-    50%{ box-shadow:0 0 6px rgba(123,47,181,0.7); transform:scale(1.08); }
+    0%,100%{ box-shadow:0 0 0 rgba(245,197,24,0.35); transform:scale(1); }
+    50%{ box-shadow:0 0 7px rgba(245,197,24,0.8); transform:scale(1.08); }
   }
   .gol-zoga{
     display:inline-block;
@@ -969,7 +978,7 @@
   .gol-zoga:nth-of-type(5){ animation-delay:.8s; }
   .lestvica-strelec{
     background:#fff;
-    border:1px solid #e5d5f7;
+    border:1px solid var(--lila-200);
     border-radius:20px;
     padding:5px 12px;
     font-size:12.5px;
@@ -1018,7 +1027,7 @@
     0%,100%{ box-shadow:0 2px 6px rgba(46,15,77,0.08), 0 0 0 rgba(245,197,24,0.5); }
     50%{ box-shadow:0 4px 14px rgba(46,15,77,0.14), 0 0 14px rgba(245,197,24,0.6); }
   }
-  .match.away{border-left-color:#d8c8ee;}
+  .match.away{border-left-color:var(--lila-300);}
   .match.derby{
     border-left-color:var(--derby);
     background:linear-gradient(90deg,#fff 0%, #fff6f2 100%);
@@ -1165,7 +1174,7 @@
     0%{ opacity:1; transform:scale(0.3) translateY(0) rotate(0deg); }
     100%{ opacity:0; transform:scale(1.4) translateY(-16px) rotate(35deg); }
   }
-  .badge.a{background:#ede4fa;color:var(--vijola);}
+  .badge.a{background:var(--lila-100);color:var(--vijola);}
   .badge.derby{background:var(--derby);color:#fff;animation:derbyPulse 1.6s ease-in-out infinite;}
   @keyframes derbyPulse{
     0%,100%{ box-shadow:0 0 0 rgba(232,51,46,0.5); }
@@ -1484,7 +1493,7 @@
     text-transform:uppercase;
     letter-spacing:0.6px;
     font-weight:700;
-    border-bottom:2px solid #ece3fa;
+    border-bottom:2px solid var(--lila-200);
   }
   table.lestvica th.name-col, table.lestvica td.name-col{
     text-align:left;
@@ -1497,7 +1506,7 @@
   table.lestvica td{
     text-align:center;
     padding:8px 4px;
-    border-bottom:1px solid #f2ecfa;
+    border-bottom:1px solid var(--lila-200);
   }
   table.lestvica tr:last-child td{border-bottom:none;}
   table.lestvica tbody tr{
@@ -1505,8 +1514,8 @@
     animation:rowFadeIn .35s ease forwards;
     transition:background-color .15s ease;
   }
-  table.lestvica tbody tr:hover{ background:#f3ecff; }
-  table.lestvica tbody tr:nth-child(even){ background:#f6f1fd; }
+  table.lestvica tbody tr:hover{ background:var(--lila-100); }
+  table.lestvica tbody tr:nth-child(even){ background:var(--lila-100); }
   @keyframes rowFadeIn{
     from{ opacity:0; transform:translateY(4px); }
     to{ opacity:1; transform:translateY(0); }
@@ -1539,7 +1548,7 @@
     font-weight:700;
     font-size:11px;
     color:var(--vijola-dark);
-    background:#efe7fb;
+    background:var(--lila-100);
   }
   .gib{
     display:inline-block;
@@ -2239,7 +2248,7 @@ function prikaziTekmoModal(krog){
   const gostHtml = gost === "Maribor" ? '<span class="maribor">Maribor</span>' : gost;
 
   const izrisiStrelce = (seznam) => {
-    if(!seznam || seznam.length === 0) return '<div style="color:#b9a9cf;">—</div>';
+    if(!seznam || seznam.length === 0) return '<div style="color:var(--muted-light);">—</div>';
     return seznam.map(s => `<div>${s}</div>`).join('');
   };
 
