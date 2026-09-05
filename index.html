@@ -1084,6 +1084,18 @@
     color:var(--muted);
     text-transform:capitalize;
   }
+  .match.next-up .datum{
+    color:var(--vijola);
+    animation:datumUtripanje 2.4s ease-in-out infinite;
+  }
+  .match.next-up .datum .dan{
+    color:var(--zlata-dark);
+    font-weight:700;
+  }
+  @keyframes datumUtripanje{
+    0%,100%{ opacity:1; text-shadow:0 0 0 rgba(245,197,24,0); }
+    50%{ opacity:0.75; text-shadow:0 0 8px rgba(245,197,24,0.55); }
+  }
   .tekma{
     flex:1;
     font-size:15px;
