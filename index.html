@@ -1353,7 +1353,7 @@
   }
   .countdown .match-title{
     font-family:var(--font-naslov);
-    font-size:20px;
+    font-size:21px;
     font-weight:400;
     letter-spacing:0.5px;
     white-space:nowrap;
@@ -2379,6 +2379,7 @@ const REZULTATI = {
   5: "1:1",
   6: "3:1",
   7: "2:3",
+  8: "1:1",
 };
 
 /* STRELCI ZADETKOV - ko je znano, kdo je zabil, dodaj sem: krog: "besedilo s strelci"
@@ -2391,6 +2392,7 @@ const STRELCI = {
   5: { dom: ["Jošt Urbančič 45'+7"], gost: ["Luka Zahović 85'"] },
   6: { dom: ["Tio Cipot 59'", "Lan Štravs 78' (l.g.)", "Dario Vizinger 81'"], gost: ["Divine Omoregie 13'"] },
   7: { dom: ["Luka Poredoš 45'+2", "Amadej Maroša 52'"], gost: ["Tio Cipot 7'", "Žan Karničnik 18'", "Tio Cipot 78'"] },
+  8: { dom: ["Isaac Tshipamba 2'"], gost: ["Niko Kasalo 44'"] },
 };
 
 fixtures.forEach(f => {
@@ -2587,7 +2589,7 @@ function updateCountdown(){
     requestAnimationFrame(() => {
       const naslovEl = labelEl.querySelector('.match-title');
       if(naslovEl){
-        let velikost = 20;
+        let velikost = 21;
         naslovEl.style.fontSize = velikost + 'px';
         while(naslovEl.scrollWidth > naslovEl.parentElement.clientWidth && velikost > 12){
           velikost -= 1;
@@ -2668,8 +2670,8 @@ const LESTVICA_PODATKI = {
   "Celje":             {played:6, wins:3, draws:2, losses:1, goalsFor:10, goalsAgainst:8},
   "Kalcer Radomlje":   {played:7, wins:1, draws:2, losses:4, goalsFor:8, goalsAgainst:13},
   "Koper":             {played:7, wins:3, draws:3, losses:1, goalsFor:7, goalsAgainst:5},
-  "Maribor":           {played:7, wins:4, draws:3, losses:0, goalsFor:13, goalsAgainst:5},
-  "Mura":              {played:7, wins:2, draws:1, losses:4, goalsFor:8, goalsAgainst:14},
+  "Maribor":           {played:8, wins:4, draws:4, losses:0, goalsFor:14, goalsAgainst:6},
+  "Mura":              {played:8, wins:2, draws:2, losses:4, goalsFor:9, goalsAgainst:15},
   "Nafta 1903":        {played:8, wins:3, draws:1, losses:4, goalsFor:15, goalsAgainst:13},
   "Olimpija":          {played:8, wins:3, draws:2, losses:3, goalsFor:6, goalsAgainst:5},
 };
