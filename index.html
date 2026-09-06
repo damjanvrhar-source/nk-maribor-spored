@@ -1353,7 +1353,7 @@
   }
   .countdown .match-title{
     font-family:var(--font-naslov);
-    font-size:30px;
+    font-size:20px;
     font-weight:400;
     letter-spacing:0.5px;
     white-space:nowrap;
@@ -2587,7 +2587,7 @@ function updateCountdown(){
     requestAnimationFrame(() => {
       const naslovEl = labelEl.querySelector('.match-title');
       if(naslovEl){
-        let velikost = 30;
+        let velikost = 20;
         naslovEl.style.fontSize = velikost + 'px';
         while(naslovEl.scrollWidth > naslovEl.parentElement.clientWidth && velikost > 12){
           velikost -= 1;
