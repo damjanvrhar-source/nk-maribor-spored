@@ -1380,16 +1380,30 @@
     align-items:center;
     margin-bottom:16px;
   }
-  .countdown .match-title{
-    font-family:var(--font-naslov);
-    font-size:21px;
-    font-weight:400;
-    letter-spacing:0.5px;
-    white-space:nowrap;
-    display:inline-block;
-    max-width:100%;
-    text-shadow:0 2px 12px rgba(0,0,0,0.95), 0 0 24px rgba(0,0,0,0.7);
+  .match-title-grbi{
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    gap:16px;
     animation:nextMatchPop .7s cubic-bezier(.34,1.56,.64,1) both, venueBreathe 4s ease-in-out 1s infinite;
+  }
+  .match-title-grb{
+    width:56px;
+    height:56px;
+    object-fit:contain;
+    flex-shrink:0;
+    filter:drop-shadow(0 3px 8px rgba(0,0,0,0.7));
+    transition:transform .2s ease;
+  }
+  .match-title-grb:hover{
+    transform:scale(1.08);
+  }
+  .match-title-vs{
+    font-family:var(--font-naslov);
+    font-size:20px;
+    color:var(--zlata);
+    text-shadow:0 2px 8px rgba(0,0,0,0.8);
+    flex-shrink:0;
   }
   .countdown .kickoff-line{
     margin-top:8px;
@@ -2642,20 +2656,13 @@ function updateCountdown(){
     const uraHtml = next.uraPotrjena
       ? `<span class="kickoff-time confirmed">${dan}, ${labelBrezLeta} · ${uraPrikaz}</span>`
       : `<span class="kickoff-time tentative">${dan}, ${labelBrezLeta} · predvidoma ${uraPrikaz}</span>`;
-    labelEl.innerHTML = `<span class="match-title">${domHtml} — ${gostHtml}${next.derby ? ' ⚡' : ''}</span>
+    labelEl.innerHTML = `<div class="match-title-grbi">
+        <img class="match-title-grb" src="${GRBI_KLUBOV[next.dom] || 'grb.png'}" alt="${next.dom}">
+        <span class="match-title-vs">${next.derby ? '⚡' : '—'}</span>
+        <img class="match-title-grb" src="${GRBI_KLUBOV[next.gost] || 'grb.png'}" alt="${next.gost}">
+      </div>
       <span class="kickoff-line">${uraHtml}</span>`;
     zadnjiPrikazaniKrog = next.krog;
-    requestAnimationFrame(() => {
-      const naslovEl = labelEl.querySelector('.match-title');
-      if(naslovEl){
-        let velikost = 21;
-        naslovEl.style.fontSize = velikost + 'px';
-        while(naslovEl.scrollWidth > naslovEl.parentElement.clientWidth && velikost > 12){
-          velikost -= 1;
-          naslovEl.style.fontSize = velikost + 'px';
-        }
-      }
-    });
   }
 
   const diff = next.kickoff.getTime() - Date.now();
