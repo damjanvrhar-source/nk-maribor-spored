@@ -968,6 +968,17 @@
     color:var(--vijola-2);
     font-weight:800;
   }
+  .kader-zastava{
+    display:inline-block;
+    font-size:9.5px;
+    font-weight:700;
+    color:var(--muted);
+    background:var(--lila-100);
+    padding:1px 4px;
+    border-radius:4px;
+    letter-spacing:0.3px;
+    flex-shrink:0;
+  }
   .gol-zoga-stevilo{
     display:inline-block;
     background:var(--vijola-2);
@@ -2224,42 +2235,39 @@ function izracunajStrelceMaribora(){
 /* KADER NK MARIBOR - razvrščen po pozicijah */
 const KADER = {
   "Napadalci": [
-    { st: "17", ime: "Jan Mlakar" },
-    { st: "79", ime: "Luka Zahović" },
-    { st: "7", ime: "Tio Cipot" },
-    { st: "29", ime: "Dario Vizinger" },
-    { st: "27", ime: "Luka Mlakar" },
-    { st: "36", ime: "Matej Tadić" },
-    { st: "-", ime: "Egon Ljubičić" },
+    { st: "17", ime: "Jan Mlakar", drz: "si" },
+    { st: "29", ime: "Dario Vizinger", drz: "hr" },
+    { st: "79", ime: "Luka Zahović", drz: "si" },
   ],
   "Vezisti": [
-    { st: "14", ime: "Jean Michaël Seri" },
-    { st: "8", ime: "Claude Gonçalves" },
-    { st: "11", ime: "Ali Reghba" },
-    { st: "4", ime: "Nejc Viher" },
-    { st: "99", ime: "Behar Feta" },
-    { st: "70", ime: "Isaac Tshipamba" },
-    { st: "10", ime: "Žiga Repas" },
-    { st: "38", ime: "Niko Osterc" },
-    { st: "-", ime: "Lanej Bakšič" },
+    { st: "4", ime: "Nejc Viher", drz: "si" },
+    { st: "5", ime: "Žan Jevšenak", drz: "si" },
+    { st: "7", ime: "Tio Cipot", drz: "si" },
+    { st: "8", ime: "Claude Gonçalves", drz: "pt" },
+    { st: "10", ime: "Žiga Repas", drz: "si" },
+    { st: "11", ime: "Ali Reghba", drz: "ie" },
+    { st: "14", ime: "Jean Michaël Seri", drz: "ci" },
+    { st: "15", ime: "Eric Taylor", drz: "gh" },
+    { st: "38", ime: "Niko Osterc", drz: "si" },
+    { st: "70", ime: "Isaac Tshipamba", drz: "fr" },
+    { st: "99", ime: "Behar Feta", drz: "mk" },
   ],
   "Branilci": [
-    { st: "44", ime: "Omar Rekik" },
-    { st: "23", ime: "Žan Karničnik" },
-    { st: "16", ime: "Miha Blažič" },
-    { st: "5", ime: "Žan Jevšenak" },
-    { st: "6", ime: "Bradley M'bondo" },
-    { st: "55", ime: "Mark Španring" },
-    { st: "3", ime: "Čedomir Bumbić" },
-    { st: "50", ime: "Lan Vidmar" },
-    { st: "-", ime: "Luka Kokol" },
-    { st: "34", ime: "Timon Kikec" },
+    { st: "3", ime: "Čedomir Bumbić", drz: "at" },
+    { st: "6", ime: "Bradley M'bondo", drz: "fr" },
+    { st: "16", ime: "Luka Kokol", drz: "si" },
+    { st: "21", ime: "Vid Koderman", drz: "si" },
+    { st: "23", ime: "Žan Karničnik", drz: "si" },
+    { st: "25", ime: "Miha Blažič", drz: "si" },
+    { st: "34", ime: "Timon Kikec", drz: "si" },
+    { st: "50", ime: "Lan Vidmar", drz: "si" },
+    { st: "55", ime: "Mark Španring", drz: "si" },
   ],
   "Vratarji": [
-    { st: "98", ime: "Téva Gardies" },
-    { st: "1", ime: "Ažbe Jug" },
-    { st: "43", ime: "Tanej Handanović" },
-    { st: "39", ime: "Ivan Lainović" },
+    { st: "98", ime: "Téva Gardies", drz: "fr" },
+    { st: "1", ime: "Ažbe Jug", drz: "si" },
+    { st: "43", ime: "Tanej Handanović", drz: "si" },
+    { st: "39", ime: "Ivan Lainović", drz: "hr" },
   ],
 };
 
@@ -2284,7 +2292,7 @@ function izrisiStrelceZaLestvico(){
       } else if(st > MEJA_ZOGIC){
         zogice = `<span class="gol-zoga-stevilo">×${st}</span>`;
       }
-      return `<div class="kader-igralec-mini"><span class="kader-st-mini">${ig.st}</span> ${razdeliIme(ig.ime)} ${zogice}</div>`;
+      return `<div class="kader-igralec-mini"><span class="kader-st-mini">${ig.st}</span> ${razdeliIme(ig.ime)} ${ig.drz ? `<span class="kader-zastava">${ig.drz.toUpperCase()}</span>` : ''} ${zogice}</div>`;
     }).join('');
     return `
       <div class="lestvica-kader-skupina">
