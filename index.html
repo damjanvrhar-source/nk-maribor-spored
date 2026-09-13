@@ -152,11 +152,20 @@
     text-shadow:0 2px 6px rgba(0,0,0,0.5);
     animation:introCrestPop 1s cubic-bezier(.34,1.56,.64,1) both,
               introGrow 2.9s ease-in 1s forwards,
-              sloganUtrip 2.2s ease-in-out 3.9s infinite;
+              sloganUtrip 2.2s ease-in-out 3.9s infinite,
+              introSloganLebdi 3s ease-in-out 3.9s infinite;
   }
   @keyframes sloganUtrip{
     0%,100%{ text-shadow:0 2px 6px rgba(0,0,0,0.5), 0 0 6px rgba(245,197,24,0.4); opacity:1; }
     50%{ text-shadow:0 2px 6px rgba(0,0,0,0.5), 0 0 18px rgba(245,197,24,1); opacity:0.85; }
+  }
+  @keyframes sloganLebdi{
+    0%,100%{ transform:translateY(0) scale(1); }
+    50%{ transform:translateY(-3px) scale(1.06); }
+  }
+  @keyframes introSloganLebdi{
+    0%,100%{ transform:scale(1.35) translateY(0); }
+    50%{ transform:scale(1.4) translateY(-3px); }
   }
   .intro-crest{
     width:260px;
@@ -349,7 +358,40 @@
   @media(max-width:640px){
     .header-text{padding:0;}
   }
+  .crest-halo-wrap{
+    position:relative;
+    width:150px;
+    height:150px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+  }
+  .crest-halo,
+  .crest-halo-2{
+    position:absolute;
+    width:150px; height:150px;
+    top:50%; left:50%;
+    transform:translate(-50%,-50%) scale(0.3);
+    border-radius:50%;
+    border:2px solid rgba(245,197,24,0.5);
+    animation:introHaloPulse1 1.8s ease-out .3s infinite;
+    z-index:0;
+  }
+  .crest-halo-2{
+    border-color:rgba(245,197,24,0.35);
+    animation:introHaloPulse2 1.8s ease-out .9s infinite;
+  }
+  @keyframes introHaloPulse1{
+    0%{ transform:translate(-50%,-50%) scale(0.3); opacity:1; }
+    100%{ transform:translate(-50%,-50%) scale(2); opacity:0; }
+  }
+  @keyframes introHaloPulse2{
+    0%{ transform:translate(-50%,-50%) scale(0.3); opacity:1; }
+    100%{ transform:translate(-50%,-50%) scale(2); opacity:0; }
+  }
   .crest{
+    position:relative;
+    z-index:1;
     flex-shrink:0;
     width:150px;
     height:150px;
@@ -457,7 +499,7 @@
     white-space:nowrap;
     text-shadow:0 2px 6px rgba(0,0,0,0.4);
     opacity:0;
-    animation:subFadeIn .6s cubic-bezier(.21,.86,.4,1) .55s forwards, sloganUtrip 2.2s ease-in-out 1.5s infinite;
+    animation:subFadeIn .6s cubic-bezier(.21,.86,.4,1) .55s forwards, sloganUtrip 2.2s ease-in-out 1.5s infinite, sloganLebdi 3s ease-in-out 1.5s infinite;
   }
 
   .koledar-wrap.header-koledar{
@@ -2045,7 +2087,11 @@
   <div class="svetlobni-rob-notranji">
     <div class="header-inner">
       <div class="header-crest-wrap">
-        <img class="crest" src="grb.png" alt="NK Maribor grb">
+        <div class="crest-halo-wrap">
+          <div class="crest-halo"></div>
+          <div class="crest-halo-2"></div>
+          <img class="crest" src="grb.png" alt="NK Maribor grb">
+        </div>
         <div class="header-slogan">en klub, ena čast</div>
       </div>
       <div class="header-text">
