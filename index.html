@@ -994,6 +994,7 @@
   .kader-modal-telo .lestvica-kader-skupina:nth-child(2){animation-delay:.25s;}
   .kader-modal-telo .lestvica-kader-skupina:nth-child(3){animation-delay:.35s;}
   .kader-modal-telo .lestvica-kader-skupina:nth-child(4){animation-delay:.45s;}
+  .kader-modal-telo .lestvica-kader-skupina:nth-child(5){animation-delay:.55s;}
   @keyframes kaderSkupinaIn{
     from{ opacity:0; transform:translateY(8px); }
     to{ opacity:1; transform:translateY(0); }
@@ -1037,6 +1038,20 @@
     letter-spacing:0.3px;
     flex-shrink:0;
   }
+  .top-strelec{
+    display:grid;
+    grid-template-columns:18px minmax(0,auto) 1fr 22px;
+    align-items:center;
+    gap:8px;
+    font-size:15px;
+    color:var(--text);
+  }
+  .top-strelec-mesto{ font-weight:800; font-size:12px; color:var(--muted); text-align:center; }
+  .top-strelec:first-child .top-strelec-mesto{ color:var(--vijola-2); }
+  .top-strelec-trak{ height:6px; border-radius:3px; background:var(--lila-200); overflow:hidden; }
+  .top-strelec-polnilo{ display:block; height:100%; border-radius:3px; background:linear-gradient(90deg,var(--vijola-2),var(--vijola)); }
+  .top-strelec-goli{ font-weight:900; color:var(--vijola-dark); text-align:right; }
+  .top-strelci-opomba{ font-size:11px; color:var(--muted); margin-top:6px; }
   .gol-zoga-stevilo{
     display:inline-block;
     background:var(--vijola-2);
@@ -2357,6 +2372,50 @@ const KADER = {
   ],
 };
 
+function izracunajTopStrelce(){
+  // isto štetje kot izracunajStrelceMaribora, a brez avtogolov nasprotnikov (l.g.)
+  const goli = {};
+  let avtogoli = 0;
+  fixtures.forEach(f => {
+    const podatki = STRELCI[f[0]];
+    if(!podatki) return;
+    const stran = f[2] === "Maribor" ? podatki.dom : (f[3] === "Maribor" ? podatki.gost : null);
+    if(!stran) return;
+    stran.forEach(vnos => {
+      const n = (vnos.match(/\d+'/g) || []).length || 1;
+      if(/\(l\.g\.\)/i.test(vnos)){ avtogoli += n; return; }
+      const ime = vnos.replace(/\s*\d.*$/, '').trim();
+      goli[ime] = (goli[ime] || 0) + n;
+    });
+  });
+  const seznam = Object.entries(goli).sort((a,b) => b[1]-a[1] || a[0].localeCompare(b[0], 'sl'));
+  return { seznam, avtogoli };
+}
+
+function izrisiTopStrelce(){
+  const { seznam, avtogoli } = izracunajTopStrelce();
+  if(seznam.length === 0) return '';
+  const top = seznam.slice(0, 5);
+  const max = top[0][1];
+  const vrstice = top.map(([ime, st], i) => {
+    const deli = ime.split(' ');
+    const priimek = deli.pop();
+    const imeHtml = deli.length ? `${deli.join(' ')} <span class="kader-priimek">${priimek}</span>` : `<span class="kader-priimek">${priimek}</span>`;
+    return `<div class="top-strelec">
+      <span class="top-strelec-mesto">${top.findIndex(t => t[1] === st) + 1}</span>
+      <span>${imeHtml}</span>
+      <span class="top-strelec-trak"><span class="top-strelec-polnilo" style="width:${Math.round(st / max * 100)}%"></span></span>
+      <span class="top-strelec-goli">${st}</span>
+    </div>`;
+  }).join('');
+  const opomba = avtogoli > 0 ? `<div class="top-strelci-opomba">Poleg tega ${avtogoli} ${avtogoli === 1 ? 'avtogol' : 'avtogoli'} nasprotnikov.</div>` : '';
+  return `<div class="lestvica-kader-skupina">
+    <div class="lestvica-kader-naslov">Najboljši strelci</div>
+    <div class="lestvica-kader-seznam">${vrstice}</div>
+    ${opomba}
+  </div>`;
+}
+
 function izrisiStrelceZaLestvico(){
   const golovList = izracunajStrelceMaribora();
   const golovMap = Object.fromEntries(golovList);
@@ -2664,7 +2723,7 @@ document.addEventListener('click', (e) => {
 
 function odpriKaderModal(){
   const telo = document.getElementById('kaderModalTelo');
-  if(telo) telo.innerHTML = izrisiStrelceZaLestvico();
+  if(telo) telo.innerHTML = izrisiTopStrelce() + izrisiStrelceZaLestvico();
   const modal = document.getElementById('kaderModal');
   if(modal){
     modal.classList.add('odprt');
