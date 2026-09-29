@@ -3173,28 +3173,33 @@ function pokaziShareToast(besedilo){
 }
 
 shareBtn.addEventListener('click', async () => {
-  const podatki = {
-    title: 'NK Maribor — Razpored 2026/27',
-    text: 'Spored, lestvica in odštevalnik do naslednje tekme NK Maribor 💜',
-    url: window.location.href
-  };
-
-  if(navigator.share){
-    try{
-      await navigator.share(podatki);
-    }catch(err){
-      // uporabnik je preklical deljenje - ne naredimo nič
-    }
-    return;
-  }
-
+  // Namerno NE uporabljamo navigator.share() - na tej strani je zaradi
+  // vgrajenih (base64) ikon in manifesta povzročilo sesutje zavihka
+  // (RESULT_CODE_KILLED_BAD_MESSAGE), ker brskalnik za sistemsko okno
+  // za deljenje poskuša prebrati favicon/manifest. Gumb zato samo kopira povezavo.
+  const url = window.location.href;
   try{
-    await navigator.clipboard.writeText(podatki.url);
+    await navigator.clipboard.writeText(url);
     shareBtn.classList.add('copied');
     pokaziShareToast('Povezava kopirana!');
     setTimeout(() => shareBtn.classList.remove('copied'), 1600);
   }catch(err){
-    pokaziShareToast(podatki.url);
+    // Zadnja rešitev za brskalnike brez Clipboard API - ročno izbrana povezava
+    try{
+      const zacasno = document.createElement('textarea');
+      zacasno.value = url;
+      zacasno.style.position = 'fixed';
+      zacasno.style.opacity = '0';
+      document.body.appendChild(zacasno);
+      zacasno.select();
+      document.execCommand('copy');
+      document.body.removeChild(zacasno);
+      shareBtn.classList.add('copied');
+      pokaziShareToast('Povezava kopirana!');
+      setTimeout(() => shareBtn.classList.remove('copied'), 1600);
+    }catch(err2){
+      pokaziShareToast(url);
+    }
   }
 });
 </script>
