@@ -9,6 +9,18 @@
 <head>
 <meta charset="UTF-8">
 <title>NK Maribor — Razpored 2026/27</title>
+<meta name="description" content="Spored, lestvica in odštevalnik do naslednje tekme NK Maribor, sezona 2026/27.">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="NK Maribor — Spored in lestvica">
+<meta property="og:title" content="NK Maribor — Razpored 2026/27">
+<meta property="og:description" content="Spored, lestvica in odštevalnik do naslednje tekme NK Maribor, sezona 2026/27.">
+<meta property="og:image" content="https://nk-mb-spored-tekem.vercel.app/grb.png">
+<meta property="og:url" content="https://nk-mb-spored-tekem.vercel.app/">
+<meta property="og:locale" content="sl_SI">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="NK Maribor — Razpored 2026/27">
+<meta name="twitter:description" content="Spored, lestvica in odštevalnik do naslednje tekme NK Maribor, sezona 2026/27.">
+<meta name="twitter:image" content="https://nk-mb-spored-tekem.vercel.app/grb.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Anton&display=swap" rel="stylesheet">
@@ -2051,13 +2063,16 @@
   }
   body.kader-modal-odprt{ overflow:hidden; }
 
-  #musicToggleWrap{
+  #floatingBtnsWrap{
     position:fixed;
     right:18px; top:50%;
     transform:translateY(-50%);
     z-index:50;
+    display:flex;
+    flex-direction:column;
+    gap:12px;
   }
-  #musicToggle{
+  #musicToggle, #shareToggle{
     width:50px; height:50px;
     border-radius:50%;
     border:2px solid var(--zlata);
@@ -2071,7 +2086,7 @@
     animation:musicBtnFloat 3s ease-in-out infinite;
     transition:transform .2s ease, box-shadow .2s ease;
   }
-  #musicToggle:hover{
+  #musicToggle:hover, #shareToggle:hover{
     transform:scale(1.08);
     box-shadow:0 10px 26px rgba(46,15,77,0.5), 0 0 16px rgba(245,197,24,0.5);
   }
@@ -2080,6 +2095,31 @@
     50%{ transform:translateY(-5px); }
   }
   #musicToggle .music-icon{font-size:24px;}
+  #shareToggle .share-icon{font-size:21px;}
+  #shareToggle.copied .share-icon{display:none;}
+  #shareToggle .share-check{display:none; font-size:22px;}
+  #shareToggle.copied .share-check{display:inline;}
+  #shareToast{
+    position:fixed;
+    left:50%; bottom:26px;
+    transform:translateX(-50%) translateY(20px);
+    background:var(--vijola-dark);
+    color:#fff;
+    padding:10px 18px;
+    border-radius:24px;
+    font-size:13.5px;
+    font-weight:700;
+    box-shadow:0 8px 22px rgba(0,0,0,0.3);
+    border:1px solid var(--zlata);
+    opacity:0;
+    pointer-events:none;
+    z-index:100;
+    transition:opacity .25s ease, transform .25s ease;
+  }
+  #shareToast.visible{
+    opacity:1;
+    transform:translateX(-50%) translateY(0);
+  }
   #musicToggle .eq{
     display:none;
     align-items:flex-end;
@@ -2219,7 +2259,7 @@
   <source src="Maribor.mp3" type="audio/mpeg">
 </audio>
 
-<div id="musicToggleWrap">
+<div id="floatingBtnsWrap">
   <button id="musicToggle" aria-label="Vklopi/izklopi glasbo" title="Himna Viole">
     <span class="music-icon">🎵</span>
     <span class="eq">
@@ -2228,7 +2268,12 @@
       <span class="bar"></span>
     </span>
   </button>
+  <button id="shareToggle" aria-label="Deli stran" title="Deli stran">
+    <span class="share-icon">🔗</span>
+    <span class="share-check">✓</span>
+  </button>
 </div>
+<div id="shareToast">Povezava kopirana!</div>
 <script>
 if("scrollRestoration" in history){ history.scrollRestoration = "manual"; }
 window.scrollTo(0, 0);
@@ -3113,6 +3158,43 @@ musicBtn.addEventListener('click', () => {
   } else {
     bgMusic.pause();
     musicBtn.classList.remove('playing');
+  }
+});
+
+/* ===== DELI STRAN ===== */
+const shareBtn = document.getElementById('shareToggle');
+const shareToast = document.getElementById('shareToast');
+
+function pokaziShareToast(besedilo){
+  shareToast.textContent = besedilo;
+  shareToast.classList.add('visible');
+  clearTimeout(pokaziShareToast._t);
+  pokaziShareToast._t = setTimeout(() => shareToast.classList.remove('visible'), 2200);
+}
+
+shareBtn.addEventListener('click', async () => {
+  const podatki = {
+    title: 'NK Maribor — Razpored 2026/27',
+    text: 'Spored, lestvica in odštevalnik do naslednje tekme NK Maribor 💜',
+    url: window.location.href
+  };
+
+  if(navigator.share){
+    try{
+      await navigator.share(podatki);
+    }catch(err){
+      // uporabnik je preklical deljenje - ne naredimo nič
+    }
+    return;
+  }
+
+  try{
+    await navigator.clipboard.writeText(podatki.url);
+    shareBtn.classList.add('copied');
+    pokaziShareToast('Povezava kopirana!');
+    setTimeout(() => shareBtn.classList.remove('copied'), 1600);
+  }catch(err){
+    pokaziShareToast(podatki.url);
   }
 });
 </script>
