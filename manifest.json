@@ -1,0 +1,26 @@
+{
+  "name": "NK Maribor — Spored in lestvica",
+  "short_name": "NK Maribor",
+  "description": "Spored, lestvica in odštevalnik do naslednje tekme NK Maribor, sezona 26/27.",
+  "lang": "sl",
+  "start_url": "./index.html",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#2e0f4d",
+  "theme_color": "#5b1f8c",
+  "icons": [
+    {
+      "src": "icon.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "icon.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    }
+  ]
+}
