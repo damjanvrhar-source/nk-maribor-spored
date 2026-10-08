@@ -1462,6 +1462,36 @@
     0%,100%{ box-shadow:0 10px 26px rgba(46,15,77,0.3), 0 0 0 rgba(245,197,24,0); }
     50%{ box-shadow:0 10px 30px rgba(46,15,77,0.35), 0 0 24px rgba(245,197,24,0.35); }
   }
+  .matchday-badge{
+    display:none;
+    align-items:center;
+    justify-content:center;
+    gap:6px;
+    background:var(--zlata);
+    color:var(--vijola-dark);
+    font-weight:900;
+    font-size:12px;
+    letter-spacing:1px;
+    text-transform:uppercase;
+    padding:6px 14px;
+    border-radius:20px;
+    margin:0 auto 14px;
+    width:fit-content;
+    animation:matchdayPulse 1.6s ease-in-out infinite;
+  }
+  .matchday-badge.visible{ display:inline-flex; }
+
+  @keyframes matchdayPulse{
+    0%,100%{ transform:scale(1); box-shadow:0 0 0 rgba(245,197,24,0.6); }
+    50%{ transform:scale(1.05); box-shadow:0 0 14px rgba(245,197,24,0.85); }
+  }
+  .countdown.matchday{
+    animation:countdownGlow 1.6s ease-in-out infinite, matchdayBorderPulse 1.6s ease-in-out infinite;
+  }
+  @keyframes matchdayBorderPulse{
+    0%,100%{ border-color:var(--zlata); }
+    50%{ border-color:#fff; }
+  }
   .countdown .label{
     font-size:11px;
     text-transform:uppercase;
@@ -2214,6 +2244,7 @@
 <div class="top-row">
   <div class="countdown" id="countdownBox">
     <img src="slika-navijaci.jpg" alt="NK Maribor navijači" class="countdown-bg-img">
+    <div class="matchday-badge" id="matchdayBadge">Danes spet na puno!</div>
     <div class="next-match" id="nextMatchLabel">Nalagam…</div>
     <div class="timer">
       <div class="unit"><div class="num" id="cd-days">--</div><div class="unit-label">dni</div></div>
@@ -2851,6 +2882,18 @@ function getNextFixture(){
 
 function pad(n){ return String(n).padStart(2,"0"); }
 
+/* Današnji datum v slovenskem časovnem pasu (neodvisno od pasu naprave) */
+function danasnjiDatumLjubljana(){
+  return new Intl.DateTimeFormat('en-CA', { timeZone: 'Europe/Ljubljana' }).format(new Date());
+}
+
+function nastaviMatchdayOznako(prikazi){
+  const badge = document.getElementById('matchdayBadge');
+  const box = document.getElementById('countdownBox');
+  if(badge) badge.classList.toggle('visible', prikazi);
+  if(box) box.classList.toggle('matchday', prikazi);
+}
+
 let zadnjiPrikazaniKrog = null;
 
 function updateCountdown(){
@@ -2867,8 +2910,11 @@ function updateCountdown(){
     document.getElementById('cd-hours').textContent = "00";
     document.getElementById('cd-mins').textContent = "00";
     document.getElementById('cd-secs').textContent = "00";
+    nastaviMatchdayOznako(false);
     return;
   }
+
+  nastaviMatchdayOznako(next.datum === danasnjiDatumLjubljana());
 
   if(zadnjiPrikazaniKrog !== next.krog){
     const domHtml = next.dom === "Maribor" ? '<span class="maribor">Maribor</span>' : next.dom;
