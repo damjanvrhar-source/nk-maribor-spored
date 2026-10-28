@@ -23,7 +23,7 @@
 <meta name="twitter:image" content="https://nk-mb-spored-tekem.vercel.app/grb.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Anton&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Bitter:wght@400;600;700;900&display=swap" rel="stylesheet">
 <link rel="manifest" href="manifest.json">
 <meta name="theme-color" content="#5b1f8c">
 <link rel="icon" href="icon.png" type="image/png">
@@ -47,7 +47,7 @@
     --lila-100:#f3ecff;
     --lila-200:#e8dbf7;
     --lila-300:#d8c8ee;
-    --font-naslov:'Anton', -apple-system, sans-serif;
+    --font-naslov:'Bitter', Georgia, 'Times New Roman', serif;
     --derby:#e8332e;
     --liga-prvakov:#7b2fb5;
     --konferencna:#2f7cd6;
@@ -57,7 +57,7 @@
   body{
     margin:0;
     overflow-anchor:none;
-    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    font-family:'Bitter', Georgia, 'Times New Roman', serif;
     background:
       radial-gradient(circle at 15% 0%, #7b2fb522 0%, transparent 45%),
       radial-gradient(circle at 100% 10%, #f5c51822 0%, transparent 40%),
@@ -3020,16 +3020,16 @@ const PREJSNJA_POZICIJA = {
   "Kalcer Radomlje": 10,
 };
 const LESTVICA_PODATKI = {
-  "Aluminij":          {played:12, wins:3, draws:4, losses:5, goalsFor:16, goalsAgainst:13},
+  "Aluminij":          {played:13, wins:3, draws:5, losses:5, goalsFor:16, goalsAgainst:13},
   "Bravo":             {played:12, wins:5, draws:4, losses:3, goalsFor:14, goalsAgainst:13},
   "Brinje-Grosuplje":  {played:12, wins:3, draws:2, losses:7, goalsFor:15, goalsAgainst:25},
-  "Celje":             {played:11, wins:4, draws:4, losses:3, goalsFor:12, goalsAgainst:11},
+  "Celje":             {played:12, wins:4, draws:5, losses:3, goalsFor:13, goalsAgainst:12},
   "Kalcer Radomlje":   {played:12, wins:1, draws:5, losses:6, goalsFor:15, goalsAgainst:24},
   "Koper":             {played:13, wins:7, draws:4, losses:2, goalsFor:23, goalsAgainst:11},
   "Maribor":           {played:13, wins:6, draws:6, losses:1, goalsFor:21, goalsAgainst:13},
   "Mura":              {played:13, wins:2, draws:6, losses:5, goalsFor:14, goalsAgainst:25},
-  "Nafta 1903":        {played:12, wins:5, draws:2, losses:5, goalsFor:18, goalsAgainst:16},
-  "Olimpija":          {played:12, wins:5, draws:3, losses:4, goalsFor:14, goalsAgainst:11},
+  "Nafta 1903":        {played:13, wins:5, draws:3, losses:5, goalsFor:18, goalsAgainst:16},
+  "Olimpija":          {played:13, wins:5, draws:4, losses:4, goalsFor:15, goalsAgainst:12},
 };
 
 /* FORMA - zadnjih 5 tekem, od najstarejše do najnovejše: Z = zmaga, N = neodločeno, P = poraz
@@ -3037,15 +3037,15 @@ const LESTVICA_PODATKI = {
    Vrstni red je po datumu odigrane tekme (preložene tekme štejejo po dejanskem datumu).
    Zadnja posodobitev: po 10. krogu. Prazen niz = sivi krogci. */
 const FORMA_RUCNO = {
-  "Aluminij": "NZNPP",
+  "Aluminij": "ZNPPN",
   "Bravo": "NZZPN",
   "Brinje-Grosuplje": "PPZPP",
-  "Celje": "PPNZN",
+  "Celje": "PNZNN",
   "Kalcer Radomlje": "PPNNN",
   "Koper": "PZNZZ",
   "Mura": "PNNNN",
-  "Nafta 1903": "ZZPZN",
-  "Olimpija": "ZZPNZ",
+  "Nafta 1903": "ZPZNN",
+  "Olimpija": "ZPNZN",
 };
 
 function formaMariborja(){
