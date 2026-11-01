@@ -2712,6 +2712,7 @@ const REZULTATI = {
   11: "1:2",
   12: "0:0",
   13: "4:0",
+  14: "0:1",
 };
 
 /* STRELCI ZADETKOV - ko je znano, kdo je zabil, dodaj sem: krog: "besedilo s strelci"
@@ -2730,6 +2731,7 @@ const STRELCI = {
   11: { dom: ["Haris Vučkić 44'"], gost: ["Tio Cipot 46'", "Jaka Zrnec 68' (l.g.)"] },
   12: { dom: [], gost: [] },
   13: { dom: ["Josip Iličić 45'+6 (11m)", "Brown Irabor 55'", "Fran Tomek 67'", "Bassirou N'Diaye 89'"], gost: [] },
+  14: { dom: [], gost: ["Indrit Tuci 56'"] },
 };
 
 fixtures.forEach(f => {
@@ -3020,16 +3022,16 @@ const PREJSNJA_POZICIJA = {
   "Kalcer Radomlje": 10,
 };
 const LESTVICA_PODATKI = {
-  "Aluminij":          {played:13, wins:3, draws:5, losses:5, goalsFor:16, goalsAgainst:13},
+  "Aluminij":          {played:14, wins:4, draws:5, losses:5, goalsFor:21, goalsAgainst:13},
   "Bravo":             {played:13, wins:5, draws:5, losses:3, goalsFor:14, goalsAgainst:13},
   "Brinje-Grosuplje":  {played:13, wins:3, draws:3, losses:7, goalsFor:15, goalsAgainst:25},
   "Celje":             {played:12, wins:4, draws:5, losses:3, goalsFor:13, goalsAgainst:12},
-  "Kalcer Radomlje":   {played:12, wins:1, draws:5, losses:6, goalsFor:15, goalsAgainst:24},
+  "Kalcer Radomlje":   {played:13, wins:1, draws:5, losses:7, goalsFor:15, goalsAgainst:29},
   "Koper":             {played:13, wins:7, draws:4, losses:2, goalsFor:23, goalsAgainst:11},
-  "Maribor":           {played:13, wins:6, draws:6, losses:1, goalsFor:21, goalsAgainst:13},
+  "Maribor":           {played:14, wins:6, draws:6, losses:2, goalsFor:21, goalsAgainst:14},
   "Mura":              {played:13, wins:2, draws:6, losses:5, goalsFor:14, goalsAgainst:25},
   "Nafta 1903":        {played:13, wins:5, draws:3, losses:5, goalsFor:18, goalsAgainst:16},
-  "Olimpija":          {played:13, wins:5, draws:4, losses:4, goalsFor:15, goalsAgainst:12},
+  "Olimpija":          {played:14, wins:6, draws:4, losses:4, goalsFor:16, goalsAgainst:12},
 };
 
 /* FORMA - zadnjih 5 tekem, od najstarejše do najnovejše: Z = zmaga, N = neodločeno, P = poraz
@@ -3037,15 +3039,15 @@ const LESTVICA_PODATKI = {
    Vrstni red je po datumu odigrane tekme (preložene tekme štejejo po dejanskem datumu).
    Zadnja posodobitev: po 10. krogu. Prazen niz = sivi krogci. */
 const FORMA_RUCNO = {
-  "Aluminij": "ZNPPN",
+  "Aluminij": "NPPNZ",
   "Bravo": "ZZPNN",
   "Brinje-Grosuplje": "PZPPN",
   "Celje": "PNZNN",
-  "Kalcer Radomlje": "PPNNN",
+  "Kalcer Radomlje": "PNNNP",
   "Koper": "PZNZZ",
   "Mura": "PNNNN",
   "Nafta 1903": "ZPZNN",
-  "Olimpija": "ZPNZN",
+  "Olimpija": "PNZNZ",
 };
 
 function formaMariborja(){
